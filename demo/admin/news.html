@@ -62,6 +62,10 @@
         </div>
         <div class="admin-menu-group">
           <div class="admin-menu-title">内容管理</div>
+          <a href="about.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📖</span>
+            项目介绍
+          </a>
           <a href="news.html" class="admin-menu-item active">
             <span class="admin-menu-icon">📰</span>
             新闻资讯
@@ -84,6 +88,10 @@
         </div>
         <div class="admin-menu-group">
           <div class="admin-menu-title">系统设置</div>
+          <a href="navigation.html" class="admin-menu-item">
+            <span class="admin-menu-icon">🧭</span>
+            导航管理
+          </a>
           <a href="settings.html" class="admin-menu-item">
             <span class="admin-menu-icon">⚙️</span>
             基础配置
@@ -230,19 +238,40 @@
       <div class="modal-body">
         <form id="newsForm">
           <input type="hidden" id="newsId">
+          <!-- 发布方式选择 -->
+          <div class="form-group">
+            <label class="form-label">发布方式 <span style="color: red;">*</span></label>
+            <div style="display: flex; gap: 16px;">
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="newsPublishType" value="content" checked onchange="toggleNewsType('content')"> 图文编辑
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="newsPublishType" value="link" onchange="toggleNewsType('link')"> 外部链接
+              </label>
+            </div>
+          </div>
           <div class="form-group">
             <label class="form-label">新闻标题 <span style="color: red;">*</span></label>
             <input type="text" class="form-input" id="newsTitle" placeholder="请输入新闻标题" required>
           </div>
-          <div class="form-group">
-            <label class="form-label">新闻摘要</label>
-            <textarea class="form-input" id="newsSummary" rows="3" placeholder="请输入新闻摘要"></textarea>
+          <!-- 外部链接输入 -->
+          <div class="form-group" id="newsLinkGroup" style="display: none;">
+            <label class="form-label">外部链接 <span style="color: red;">*</span></label>
+            <input type="url" class="form-input" id="newsExternalLink" placeholder="请输入外部链接URL，如 https://example.com/news">
+            <p style="font-size: 12px; color: var(--neutral-500); margin-top: 4px;">用户点击后将直接跳转至外部页面</p>
           </div>
-          <div class="form-group">
-            <label class="form-label">新闻内容 <span style="color: red;">*</span></label>
-            <div class="editor-container">
-              <div id="editorToolbar" class="editor-toolbar"></div>
-              <div id="editorContent" class="editor-content"></div>
+          <!-- 图文编辑内容 -->
+          <div id="newsContentGroup">
+            <div class="form-group">
+              <label class="form-label">新闻摘要</label>
+              <textarea class="form-input" id="newsSummary" rows="3" placeholder="请输入新闻摘要"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">新闻内容 <span style="color: red;">*</span></label>
+              <div class="editor-container">
+                <div id="editorToolbar" class="editor-toolbar"></div>
+                <div id="editorContent" class="editor-content"></div>
+              </div>
             </div>
           </div>
           <div class="form-group">
@@ -301,6 +330,19 @@
 
     let editor = null;
     let deleteId = null;
+
+    // 切换发布类型
+    function toggleNewsType(type) {
+      const linkGroup = document.getElementById('newsLinkGroup');
+      const contentGroup = document.getElementById('newsContentGroup');
+      if (type === 'link') {
+        linkGroup.style.display = 'block';
+        contentGroup.style.display = 'none';
+      } else {
+        linkGroup.style.display = 'none';
+        contentGroup.style.display = 'block';
+      }
+    }
 
     // 初始化编辑器
     function initEditor() {
@@ -366,6 +408,7 @@
       document.getElementById('newsForm').reset();
       document.getElementById('newsId').value = '';
       document.getElementById('uploadedCover').style.display = 'none';
+      toggleNewsType('content');
       document.getElementById('newsModal').classList.add('active');
 
       // 初始化编辑器并清空内容

@@ -31,6 +31,10 @@
         </div>
         <div class="admin-menu-group">
           <div class="admin-menu-title">内容管理</div>
+          <a href="about.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📖</span>
+            项目介绍
+          </a>
           <a href="news.html" class="admin-menu-item">
             <span class="admin-menu-icon">📰</span>
             新闻资讯
@@ -53,6 +57,10 @@
         </div>
         <div class="admin-menu-group">
           <div class="admin-menu-title">系统设置</div>
+          <a href="navigation.html" class="admin-menu-item">
+            <span class="admin-menu-icon">🧭</span>
+            导航管理
+          </a>
           <a href="settings.html" class="admin-menu-item">
             <span class="admin-menu-icon">⚙️</span>
             基础配置
@@ -287,70 +295,91 @@
       <div class="modal-body">
         <form id="resourceForm">
           <input type="hidden" id="resourceId">
+          <!-- 发布方式选择 -->
+          <div class="form-group">
+            <label class="form-label">发布方式 <span style="color: red;">*</span></label>
+            <div style="display: flex; gap: 16px;">
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="resourcePublishType" value="file" checked onchange="toggleResourceType('file')"> 上传文件
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="resourcePublishType" value="link" onchange="toggleResourceType('link')"> 外部链接
+              </label>
+            </div>
+          </div>
           <div class="form-group">
             <label class="form-label">资源名称 <span style="color: red;">*</span></label>
             <input type="text" class="form-input" id="resourceName" placeholder="请输入资源名称" required>
           </div>
-          <div class="form-row">
-            <div class="form-group" style="flex: 1;">
-              <label class="form-label">资源类型 <span style="color: red;">*</span></label>
-              <select class="form-input" id="resourceType" required>
-                <option value="">请选择类型</option>
-                <option value="教学设计">教学设计</option>
-                <option value="课件资源">课件资源</option>
-                <option value="教学视频">教学视频</option>
-                <option value="研究成果">研究成果</option>
-              </select>
-            </div>
-            <div class="form-group" style="flex: 1;">
-              <label class="form-label">学科 <span style="color: red;">*</span></label>
-              <select class="form-input" id="resourceSubject" required>
-                <option value="">请选择学科</option>
-                <option value="语文">语文</option>
-                <option value="数学">数学</option>
-                <option value="英语">英语</option>
-                <option value="科学">科学</option>
-                <option value="综合">综合</option>
-              </select>
-            </div>
+          <!-- 外部链接输入 -->
+          <div class="form-group" id="resourceLinkGroup" style="display: none;">
+            <label class="form-label">外部链接 <span style="color: red;">*</span></label>
+            <input type="url" class="form-input" id="resourceExternalLink" placeholder="请输入外部链接URL">
+            <p style="font-size: 12px; color: var(--neutral-500); margin-top: 4px;">用户点击后将直接跳转至外部页面下载或查看资源</p>
           </div>
-          <div class="form-row">
-            <div class="form-group" style="flex: 1;">
-              <label class="form-label">年级</label>
-              <select class="form-input" id="resourceGrade">
-                <option value="">请选择年级</option>
-                <option value="一年级">一年级</option>
-                <option value="二年级">二年级</option>
-                <option value="三年级">三年级</option>
-                <option value="四年级">四年级</option>
-                <option value="五年级">五年级</option>
-                <option value="六年级">六年级</option>
-                <option value="通用">通用</option>
-              </select>
+          <!-- 上传文件内容 -->
+          <div id="resourceContentGroup">
+            <div class="form-row">
+              <div class="form-group" style="flex: 1;">
+                <label class="form-label">资源类型 <span style="color: red;">*</span></label>
+                <select class="form-input" id="resourceType" required>
+                  <option value="">请选择类型</option>
+                  <option value="教学设计">教学设计</option>
+                  <option value="课件资源">课件资源</option>
+                  <option value="教学视频">教学视频</option>
+                  <option value="研究成果">研究成果</option>
+                </select>
+              </div>
+              <div class="form-group" style="flex: 1;">
+                <label class="form-label">学科 <span style="color: red;">*</span></label>
+                <select class="form-input" id="resourceSubject" required>
+                  <option value="">请选择学科</option>
+                  <option value="语文">语文</option>
+                  <option value="数学">数学</option>
+                  <option value="英语">英语</option>
+                  <option value="科学">科学</option>
+                  <option value="综合">综合</option>
+                </select>
+              </div>
             </div>
-            <div class="form-group" style="flex: 1;">
-              <label class="form-label">来源学校</label>
-              <select class="form-input" id="resourceSchool">
-                <option value="平台上传">平台上传</option>
-                <option value="信阳董家河小学">信阳董家河小学</option>
-                <option value="濮阳市开德小学">濮阳市开德小学</option>
-                <option value="扶沟县实验小学">扶沟县实验小学</option>
-              </select>
+            <div class="form-row">
+              <div class="form-group" style="flex: 1;">
+                <label class="form-label">年级</label>
+                <select class="form-input" id="resourceGrade">
+                  <option value="">请选择年级</option>
+                  <option value="一年级">一年级</option>
+                  <option value="二年级">二年级</option>
+                  <option value="三年级">三年级</option>
+                  <option value="四年级">四年级</option>
+                  <option value="五年级">五年级</option>
+                  <option value="六年级">六年级</option>
+                  <option value="通用">通用</option>
+                </select>
+              </div>
+              <div class="form-group" style="flex: 1;">
+                <label class="form-label">来源学校</label>
+                <select class="form-input" id="resourceSchool">
+                  <option value="平台上传">平台上传</option>
+                  <option value="信阳董家河小学">信阳董家河小学</option>
+                  <option value="濮阳市开德小学">濮阳市开德小学</option>
+                  <option value="扶沟县实验小学">扶沟县实验小学</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">资源描述</label>
-            <textarea class="form-input" id="resourceDesc" rows="3" placeholder="请输入资源描述"></textarea>
-          </div>
-          <div class="form-group">
-            <label class="form-label">资源文件 <span style="color: red;">*</span></label>
-            <div class="file-upload-area" onclick="document.getElementById('resourceFile').click()">
-              <input type="file" id="resourceFile" style="display: none;" accept=".pdf,.doc,.docx,.ppt,.pptx,.mp4,.zip">
-              <div class="file-upload-icon">📁</div>
-              <div class="file-upload-text">点击或拖拽文件到此处上传</div>
-              <div class="file-upload-hint">支持 PDF、DOC、PPT、MP4、ZIP 格式，最大 500MB</div>
+            <div class="form-group">
+              <label class="form-label">资源描述</label>
+              <textarea class="form-input" id="resourceDesc" rows="3" placeholder="请输入资源描述"></textarea>
             </div>
-            <div id="uploadedFile" class="uploaded-file" style="display: none;"></div>
+            <div class="form-group">
+              <label class="form-label">资源文件 <span style="color: red;">*</span></label>
+              <div class="file-upload-area" onclick="document.getElementById('resourceFile').click()">
+                <input type="file" id="resourceFile" style="display: none;" accept=".pdf,.doc,.docx,.ppt,.pptx,.mp4,.zip">
+                <div class="file-upload-icon">📁</div>
+                <div class="file-upload-text">点击或拖拽文件到此处上传</div>
+                <div class="file-upload-hint">支持 PDF、DOC、PPT、MP4、ZIP 格式，最大 500MB</div>
+              </div>
+              <div id="uploadedFile" class="uploaded-file" style="display: none;"></div>
+            </div>
           </div>
         </form>
       </div>
@@ -438,11 +467,25 @@
   <script>
     let deleteId = null;
 
+    // 切换发布类型
+    function toggleResourceType(type) {
+      const linkGroup = document.getElementById('resourceLinkGroup');
+      const contentGroup = document.getElementById('resourceContentGroup');
+      if (type === 'link') {
+        linkGroup.style.display = 'block';
+        contentGroup.style.display = 'none';
+      } else {
+        linkGroup.style.display = 'none';
+        contentGroup.style.display = 'block';
+      }
+    }
+
     function openAddModal() {
       document.getElementById('modalTitle').textContent = '上传资源';
       document.getElementById('resourceForm').reset();
       document.getElementById('resourceId').value = '';
       document.getElementById('uploadedFile').style.display = 'none';
+      toggleResourceType('file');
       document.getElementById('resourceModal').classList.add('active');
     }
 

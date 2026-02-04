@@ -31,6 +31,10 @@
         </div>
         <div class="admin-menu-group">
           <div class="admin-menu-title">内容管理</div>
+          <a href="about.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📖</span>
+            项目介绍
+          </a>
           <a href="news.html" class="admin-menu-item">
             <span class="admin-menu-icon">📰</span>
             新闻资讯
@@ -53,6 +57,10 @@
         </div>
         <div class="admin-menu-group">
           <div class="admin-menu-title">系统设置</div>
+          <a href="navigation.html" class="admin-menu-item">
+            <span class="admin-menu-icon">🧭</span>
+            导航管理
+          </a>
           <a href="settings.html" class="admin-menu-item">
             <span class="admin-menu-icon">⚙️</span>
             基础配置
@@ -208,39 +216,60 @@
       <div class="modal-body">
         <form id="policyForm">
           <input type="hidden" id="policyId">
+          <!-- 发布方式选择 -->
+          <div class="form-group">
+            <label class="form-label">发布方式 <span style="color: red;">*</span></label>
+            <div style="display: flex; gap: 16px;">
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="policyPublishType" value="content" checked onchange="togglePolicyType('content')"> 图文/附件
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="policyPublishType" value="link" onchange="togglePolicyType('link')"> 外部链接
+              </label>
+            </div>
+          </div>
           <div class="form-group">
             <label class="form-label">政策标题 <span style="color: red;">*</span></label>
             <input type="text" class="form-input" id="policyTitle" placeholder="请输入政策标题" required>
           </div>
-          <div class="form-row">
-            <div class="form-group" style="flex: 1;">
-              <label class="form-label">分类 <span style="color: red;">*</span></label>
-              <select class="form-input" id="policyCategory" required>
-                <option value="">请选择分类</option>
-                <option value="国家政策">国家政策</option>
-                <option value="省级政策">省级政策</option>
-                <option value="实施方案">实施方案</option>
-                <option value="通知公告">通知公告</option>
-              </select>
-            </div>
-            <div class="form-group" style="flex: 1;">
-              <label class="form-label">发布机构 <span style="color: red;">*</span></label>
-              <input type="text" class="form-input" id="policyOrg" placeholder="如：教育部、河南省教育厅" required>
-            </div>
+          <!-- 外部链接输入 -->
+          <div class="form-group" id="policyLinkGroup" style="display: none;">
+            <label class="form-label">外部链接 <span style="color: red;">*</span></label>
+            <input type="url" class="form-input" id="policyExternalLink" placeholder="请输入外部链接URL">
+            <p style="font-size: 12px; color: var(--neutral-500); margin-top: 4px;">用户点击后将直接跳转至外部页面</p>
           </div>
-          <div class="form-group">
-            <label class="form-label">政策摘要</label>
-            <textarea class="form-input" id="policySummary" rows="3" placeholder="请输入政策摘要"></textarea>
-          </div>
-          <div class="form-group">
-            <label class="form-label">附件上传</label>
-            <div class="file-upload-area" onclick="document.getElementById('policyFile').click()">
-              <input type="file" id="policyFile" style="display: none;" accept=".pdf,.doc,.docx">
-              <div class="file-upload-icon">📁</div>
-              <div class="file-upload-text">点击或拖拽文件到此处上传</div>
-              <div class="file-upload-hint">支持 PDF、DOC、DOCX 格式，最大 20MB</div>
+          <!-- 图文/附件内容 -->
+          <div id="policyContentGroup">
+            <div class="form-row">
+              <div class="form-group" style="flex: 1;">
+                <label class="form-label">分类 <span style="color: red;">*</span></label>
+                <select class="form-input" id="policyCategory" required>
+                  <option value="">请选择分类</option>
+                  <option value="国家政策">国家政策</option>
+                  <option value="省级政策">省级政策</option>
+                  <option value="实施方案">实施方案</option>
+                  <option value="通知公告">通知公告</option>
+                </select>
+              </div>
+              <div class="form-group" style="flex: 1;">
+                <label class="form-label">发布机构 <span style="color: red;">*</span></label>
+                <input type="text" class="form-input" id="policyOrg" placeholder="如：教育部、河南省教育厅" required>
+              </div>
             </div>
-            <div id="uploadedFile" class="uploaded-file" style="display: none;"></div>
+            <div class="form-group">
+              <label class="form-label">政策摘要</label>
+              <textarea class="form-input" id="policySummary" rows="3" placeholder="请输入政策摘要"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">附件上传</label>
+              <div class="file-upload-area" onclick="document.getElementById('policyFile').click()">
+                <input type="file" id="policyFile" style="display: none;" accept=".pdf,.doc,.docx">
+                <div class="file-upload-icon">📁</div>
+                <div class="file-upload-text">点击或拖拽文件到此处上传</div>
+                <div class="file-upload-hint">支持 PDF、DOC、DOCX 格式，最大 20MB</div>
+              </div>
+              <div id="uploadedFile" class="uploaded-file" style="display: none;"></div>
+            </div>
           </div>
           <div class="form-group">
             <label class="form-label">发布状态</label>
@@ -284,11 +313,25 @@
   <script>
     let deleteId = null;
 
+    // 切换发布类型
+    function togglePolicyType(type) {
+      const linkGroup = document.getElementById('policyLinkGroup');
+      const contentGroup = document.getElementById('policyContentGroup');
+      if (type === 'link') {
+        linkGroup.style.display = 'block';
+        contentGroup.style.display = 'none';
+      } else {
+        linkGroup.style.display = 'none';
+        contentGroup.style.display = 'block';
+      }
+    }
+
     function openAddModal() {
       document.getElementById('modalTitle').textContent = '发布政策文件';
       document.getElementById('policyForm').reset();
       document.getElementById('policyId').value = '';
       document.getElementById('uploadedFile').style.display = 'none';
+      togglePolicyType('content');
       document.getElementById('policyModal').classList.add('active');
     }
 
