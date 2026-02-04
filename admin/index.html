@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理后台 - 河南城乡学校共同体发展平台</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/admin-modal.css">
+</head>
+<body>
+  <div class="admin-wrapper">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-logo">
+        <div class="admin-logo-icon">豫</div>
+        <div class="admin-logo-text">城乡学校共同体<br>管理后台</div>
+      </div>
+
+      <nav class="admin-menu">
+        <div class="admin-menu-group">
+          <a href="index.html" class="admin-menu-item active">
+            <span class="admin-menu-icon">📊</span>
+            工作台
+          </a>
+        </div>
+
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">用户管理</div>
+          <a href="users.html" class="admin-menu-item">
+            <span class="admin-menu-icon">👥</span>
+            学校管理员
+          </a>
+        </div>
+
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">内容管理</div>
+          <a href="about.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📖</span>
+            项目介绍
+          </a>
+          <a href="news.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📰</span>
+            新闻资讯
+          </a>
+          <a href="policy.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📋</span>
+            政策文件
+          </a>
+          <a href="resources.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📚</span>
+            资源共享
+          </a>
+        </div>
+
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">示范校管理</div>
+          <a href="schools.html" class="admin-menu-item">
+            <span class="admin-menu-icon">🏫</span>
+            示范校列表
+          </a>
+        </div>
+
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">系统设置</div>
+          <a href="navigation.html" class="admin-menu-item">
+            <span class="admin-menu-icon">🧭</span>
+            导航管理
+          </a>
+          <a href="settings.html" class="admin-menu-item">
+            <span class="admin-menu-icon">⚙️</span>
+            基础配置
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <!-- Header -->
+      <header class="admin-header">
+        <div class="admin-breadcrumb">
+          首页 / 工作台
+        </div>
+        <div class="admin-user">
+          <span style="font-size: 14px; color: var(--neutral-600);">欢迎，超级管理员</span>
+          <div class="admin-avatar">管</div>
+          <a href="../pages/admin-login.html" style="font-size: 14px; color: var(--accent-600);">退出</a>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="admin-content">
+        <div class="admin-page-header">
+          <h1 class="admin-page-title">工作台</h1>
+          <p class="admin-page-desc">欢迎使用河南城乡学校共同体发展平台管理后台</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="admin-stats">
+          <div class="admin-stat-card" onclick="location.href='schools.html'" style="cursor: pointer;">
+            <div class="admin-stat-title">示范校数量</div>
+            <div class="admin-stat-value">32</div>
+            <div class="admin-stat-change">覆盖全省18个地市</div>
+          </div>
+          <div class="admin-stat-card" onclick="location.href='news.html'" style="cursor: pointer;">
+            <div class="admin-stat-title">新闻资讯</div>
+            <div class="admin-stat-value">128</div>
+            <div class="admin-stat-change">+12 本月新增</div>
+          </div>
+          <div class="admin-stat-card" onclick="location.href='policy.html'" style="cursor: pointer;">
+            <div class="admin-stat-title">政策文件</div>
+            <div class="admin-stat-value">45</div>
+            <div class="admin-stat-change">+3 本月新增</div>
+          </div>
+          <div class="admin-stat-card" onclick="location.href='resources.html'" style="cursor: pointer;">
+            <div class="admin-stat-title">资源下载</div>
+            <div class="admin-stat-value">2,847</div>
+            <div class="admin-stat-change">+234 本周</div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="admin-card" style="margin-bottom: 24px;">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">快捷操作</h3>
+          </div>
+          <div class="admin-card-body" style="display: flex; gap: 16px; flex-wrap: wrap;">
+            <button class="btn btn-primary" style="padding: 12px 24px;" onclick="openNewsModal()">
+              📰 发布新闻
+            </button>
+            <button class="btn btn-accent" style="padding: 12px 24px;" onclick="openPolicyModal()">
+              📋 发布政策
+            </button>
+            <button class="btn btn-outline" style="padding: 12px 24px;" onclick="location.href='resources.html'">
+              📚 上传资源
+            </button>
+            <button class="btn btn-outline" style="padding: 12px 24px;" onclick="location.href='schools.html'">
+              🏫 管理示范校
+            </button>
+            <button class="btn btn-outline" style="padding: 12px 24px;" onclick="location.href='users.html'">
+              👥 管理用户
+            </button>
+          </div>
+        </div>
+
+        <!-- Recent News -->
+        <div class="admin-card" style="margin-bottom: 24px;">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">最新发布的新闻资讯</h3>
+            <a href="news.html" class="btn btn-outline" style="padding: 6px 16px; font-size: 13px;">查看全部</a>
+          </div>
+          <div class="admin-card-body" style="padding: 0;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width: 50%;">标题</th>
+                  <th>来源</th>
+                  <th>发布时间</th>
+                  <th>浏览量</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>河南省召开城乡义务教育一体化发展推进会</td>
+                  <td><span class="admin-badge admin-badge-info">平台发布</span></td>
+                  <td>2025-03-15</td>
+                  <td>1,234</td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline" onclick="editNews(1)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="confirmDeleteNews(1)">删除</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>信阳董家河小学与乡村学校开展教学研讨活动</td>
+                  <td><span class="admin-badge admin-badge-success">信阳董家河小学</span></td>
+                  <td>2025-03-12</td>
+                  <td>856</td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline" onclick="editNews(2)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="confirmDeleteNews(2)">删除</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>濮阳市开德小学共同体建设成果展示会圆满举办</td>
+                  <td><span class="admin-badge admin-badge-success">濮阳市开德小学</span></td>
+                  <td>2025-03-10</td>
+                  <td>723</td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline" onclick="editNews(3)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="confirmDeleteNews(3)">删除</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>省教育厅领导调研扶沟县实验小学共同体建设工作</td>
+                  <td><span class="admin-badge admin-badge-info">平台发布</span></td>
+                  <td>2025-03-08</td>
+                  <td>1,567</td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline" onclick="editNews(4)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="confirmDeleteNews(4)">删除</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>栾川县第四实验小学开展城乡教师交流培训活动</td>
+                  <td><span class="admin-badge admin-badge-success">栾川县第四实验小学</span></td>
+                  <td>2025-03-05</td>
+                  <td>645</td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline" onclick="editNews(5)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="confirmDeleteNews(5)">删除</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Schools Overview -->
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">示范校概览</h3>
+            <a href="schools.html" class="btn btn-outline" style="padding: 6px 16px; font-size: 13px;">管理示范校</a>
+          </div>
+          <div class="admin-card-body" style="padding: 0;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>学校名称</th>
+                  <th>所属区域</th>
+                  <th>管理员</th>
+                  <th>发布内容数</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>信阳董家河小学中心校</td>
+                  <td>河南省信阳市浉河区</td>
+                  <td>李老师</td>
+                  <td>23</td>
+                  <td><span class="admin-badge admin-badge-success">正常</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline" onclick="editSchool(1)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-primary" onclick="viewSchool(1)">查看</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>濮阳市开德小学</td>
+                  <td>河南省濮阳市华龙区</td>
+                  <td>王老师</td>
+                  <td>18</td>
+                  <td><span class="admin-badge admin-badge-success">正常</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline" onclick="editSchool(2)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-primary" onclick="viewSchool(2)">查看</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>扶沟县实验小学</td>
+                  <td>河南省周口市扶沟县</td>
+                  <td>张老师</td>
+                  <td>15</td>
+                  <td><span class="admin-badge admin-badge-success">正常</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline" onclick="editSchool(3)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-primary" onclick="viewSchool(3)">查看</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>修武县方庄中心小学</td>
+                  <td>河南省焦作市修武县</td>
+                  <td>刘老师</td>
+                  <td>12</td>
+                  <td><span class="admin-badge admin-badge-success">正常</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline" onclick="editSchool(4)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-primary" onclick="viewSchool(4)">查看</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>栾川县第四实验小学</td>
+                  <td>河南省洛阳市栾川县</td>
+                  <td>陈老师</td>
+                  <td>20</td>
+                  <td><span class="admin-badge admin-badge-success">正常</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline" onclick="editSchool(5)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-primary" onclick="viewSchool(5)">查看</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>航空港区科技一街小学</td>
+                  <td>河南省郑州市航空港区</td>
+                  <td>赵老师</td>
+                  <td>16</td>
+                  <td><span class="admin-badge admin-badge-success">正常</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline" onclick="editSchool(6)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-primary" onclick="viewSchool(6)">查看</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Quick Publish News Modal -->
+  <div class="modal-overlay" id="newsModal">
+    <div class="modal" style="max-width: 700px;">
+      <div class="modal-header">
+        <h3 class="modal-title">发布新闻</h3>
+        <button class="modal-close" onclick="closeNewsModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="newsForm">
+          <!-- 发布方式选择 -->
+          <div class="form-group">
+            <label class="form-label">发布方式 <span style="color: red;">*</span></label>
+            <div style="display: flex; gap: 16px;">
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="newsPublishType" value="content" checked onchange="toggleNewsType('content')"> 图文编辑
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="newsPublishType" value="link" onchange="toggleNewsType('link')"> 外部链接
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">新闻标题 <span style="color: red;">*</span></label>
+            <input type="text" class="form-input" id="newsTitle" placeholder="请输入新闻标题" required>
+          </div>
+          <!-- 外部链接输入 -->
+          <div class="form-group" id="newsLinkGroup" style="display: none;">
+            <label class="form-label">外部链接 <span style="color: red;">*</span></label>
+            <input type="url" class="form-input" id="newsExternalLink" placeholder="请输入外部链接URL，如 https://example.com/news">
+            <p style="font-size: 12px; color: var(--neutral-500); margin-top: 4px;">用户点击后将直接跳转至外部页面</p>
+          </div>
+          <!-- 图文编辑内容 -->
+          <div id="newsContentGroup">
+            <div class="form-group">
+              <label class="form-label">新闻摘要</label>
+              <textarea class="form-input" id="newsSummary" rows="3" placeholder="请输入新闻摘要"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">新闻内容 <span style="color: red;">*</span></label>
+              <textarea class="form-input" id="newsContent" rows="6" placeholder="请输入新闻正文内容" required></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">封面图片</label>
+            <div class="file-upload-area" onclick="document.getElementById('newsCover').click()">
+              <input type="file" id="newsCover" style="display: none;" accept="image/*">
+              <div class="file-upload-icon">🖼️</div>
+              <div class="file-upload-text">点击上传封面图</div>
+              <div class="file-upload-hint">建议尺寸：800×450，支持 JPG、PNG 格式</div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeNewsModal()">取消</button>
+        <button class="btn btn-primary" onclick="publishNews()">发布</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Publish Policy Modal -->
+  <div class="modal-overlay" id="policyModal">
+    <div class="modal" style="max-width: 700px;">
+      <div class="modal-header">
+        <h3 class="modal-title">发布政策</h3>
+        <button class="modal-close" onclick="closePolicyModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="policyForm">
+          <!-- 发布方式选择 -->
+          <div class="form-group">
+            <label class="form-label">发布方式 <span style="color: red;">*</span></label>
+            <div style="display: flex; gap: 16px;">
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="policyPublishType" value="content" checked onchange="togglePolicyType('content')"> 图文/附件
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="policyPublishType" value="link" onchange="togglePolicyType('link')"> 外部链接
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">政策标题 <span style="color: red;">*</span></label>
+            <input type="text" class="form-input" id="policyTitle" placeholder="请输入政策标题" required>
+          </div>
+          <!-- 外部链接输入 -->
+          <div class="form-group" id="policyLinkGroup" style="display: none;">
+            <label class="form-label">外部链接 <span style="color: red;">*</span></label>
+            <input type="url" class="form-input" id="policyExternalLink" placeholder="请输入外部链接URL">
+            <p style="font-size: 12px; color: var(--neutral-500); margin-top: 4px;">用户点击后将直接跳转至外部页面</p>
+          </div>
+          <!-- 图文/附件内容 -->
+          <div id="policyContentGroup">
+            <div class="form-row" style="display: flex; gap: 16px;">
+              <div class="form-group" style="flex: 1;">
+                <label class="form-label">分类 <span style="color: red;">*</span></label>
+                <select class="form-input" id="policyCategory" required>
+                  <option value="">请选择分类</option>
+                  <option value="国家政策">国家政策</option>
+                  <option value="省级政策">省级政策</option>
+                  <option value="实施方案">实施方案</option>
+                  <option value="通知公告">通知公告</option>
+                </select>
+              </div>
+              <div class="form-group" style="flex: 1;">
+                <label class="form-label">发布机构 <span style="color: red;">*</span></label>
+                <input type="text" class="form-input" id="policyOrg" placeholder="如：河南省教育厅" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">附件上传</label>
+              <div class="file-upload-area" onclick="document.getElementById('policyFile').click()">
+                <input type="file" id="policyFile" style="display: none;" accept=".pdf,.doc,.docx">
+                <div class="file-upload-icon">📁</div>
+                <div class="file-upload-text">点击上传政策文件</div>
+                <div class="file-upload-hint">支持 PDF、DOC、DOCX 格式</div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closePolicyModal()">取消</button>
+        <button class="btn btn-primary" onclick="publishPolicy()">发布</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirm Modal -->
+  <div class="modal-overlay" id="deleteModal">
+    <div class="modal" style="max-width: 400px;">
+      <div class="modal-header">
+        <h3 class="modal-title">确认删除</h3>
+        <button class="modal-close" onclick="closeDeleteModal()">&times;</button>
+      </div>
+      <div class="modal-body" style="text-align: center; padding: 30px 20px;">
+        <div style="font-size: 48px; margin-bottom: 16px;">⚠️</div>
+        <p style="font-size: 16px; color: var(--neutral-700); margin-bottom: 8px;">确定要删除这条新闻吗？</p>
+        <p style="font-size: 14px; color: var(--neutral-500);">删除后将无法恢复</p>
+      </div>
+      <div class="modal-footer" style="justify-content: center;">
+        <button class="btn btn-outline" onclick="closeDeleteModal()">取消</button>
+        <button class="btn btn-danger" onclick="doDeleteNews()">确认删除</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- School Detail Modal -->
+  <div class="modal-overlay" id="schoolModal">
+    <div class="modal" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3 class="modal-title">学校详情</h3>
+        <button class="modal-close" onclick="closeSchoolModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="display: flex; gap: 16px; margin-bottom: 24px;">
+          <div style="width: 64px; height: 64px; background: var(--primary-100); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 32px;">🏫</div>
+          <div>
+            <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 4px;">信阳董家河小学中心校</h3>
+            <p style="color: var(--neutral-600); font-size: 14px;">河南省信阳市浉河区</p>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;">
+          <div style="background: var(--neutral-100); padding: 16px; border-radius: 8px; text-align: center;">
+            <div style="font-size: 24px; font-weight: 700; color: var(--primary-800);">23</div>
+            <div style="font-size: 14px; color: var(--neutral-600);">发布内容</div>
+          </div>
+          <div style="background: var(--neutral-100); padding: 16px; border-radius: 8px; text-align: center;">
+            <div style="font-size: 24px; font-weight: 700; color: var(--accent-600);">5,678</div>
+            <div style="font-size: 14px; color: var(--neutral-600);">总浏览量</div>
+          </div>
+        </div>
+        <div style="font-size: 14px; color: var(--neutral-700);">
+          <p><strong>管理员：</strong>李老师</p>
+          <p style="margin-top: 8px;"><strong>联系电话：</strong>0376-XXXXXXX</p>
+          <p style="margin-top: 8px;"><strong>成员校数：</strong>5所</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeSchoolModal()">关闭</button>
+        <button class="btn btn-primary" onclick="location.href='schools.html'">管理学校</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let deleteNewsId = null;
+
+    // 切换新闻发布类型
+    function toggleNewsType(type) {
+      const linkGroup = document.getElementById('newsLinkGroup');
+      const contentGroup = document.getElementById('newsContentGroup');
+      if (type === 'link') {
+        linkGroup.style.display = 'block';
+        contentGroup.style.display = 'none';
+      } else {
+        linkGroup.style.display = 'none';
+        contentGroup.style.display = 'block';
+      }
+    }
+
+    // 切换政策发布类型
+    function togglePolicyType(type) {
+      const linkGroup = document.getElementById('policyLinkGroup');
+      const contentGroup = document.getElementById('policyContentGroup');
+      if (type === 'link') {
+        linkGroup.style.display = 'block';
+        contentGroup.style.display = 'none';
+      } else {
+        linkGroup.style.display = 'none';
+        contentGroup.style.display = 'block';
+      }
+    }
+
+    function openNewsModal() {
+      document.getElementById('newsForm').reset();
+      toggleNewsType('content');
+      document.getElementById('newsModal').classList.add('active');
+    }
+
+    function closeNewsModal() {
+      document.getElementById('newsModal').classList.remove('active');
+    }
+
+    function publishNews() {
+      const title = document.getElementById('newsTitle').value;
+      const content = document.getElementById('newsContent').value;
+      if (!title || !content) {
+        alert('请填写必填项');
+        return;
+      }
+      showToast('新闻发布成功！');
+      closeNewsModal();
+    }
+
+    function editNews(id) {
+      showToast('跳转到编辑页面...');
+      location.href = 'news.html';
+    }
+
+    function confirmDeleteNews(id) {
+      deleteNewsId = id;
+      document.getElementById('deleteModal').classList.add('active');
+    }
+
+    function closeDeleteModal() {
+      document.getElementById('deleteModal').classList.remove('active');
+      deleteNewsId = null;
+    }
+
+    function doDeleteNews() {
+      showToast('新闻已删除');
+      closeDeleteModal();
+    }
+
+    function openPolicyModal() {
+      document.getElementById('policyForm').reset();
+      document.getElementById('policyModal').classList.add('active');
+    }
+
+    function closePolicyModal() {
+      document.getElementById('policyModal').classList.remove('active');
+    }
+
+    function publishPolicy() {
+      const title = document.getElementById('policyTitle').value;
+      const category = document.getElementById('policyCategory').value;
+      const org = document.getElementById('policyOrg').value;
+      if (!title || !category || !org) {
+        alert('请填写必填项');
+        return;
+      }
+      showToast('政策发布成功！');
+      closePolicyModal();
+    }
+
+    function viewSchool(id) {
+      document.getElementById('schoolModal').classList.add('active');
+    }
+
+    function closeSchoolModal() {
+      document.getElementById('schoolModal').classList.remove('active');
+    }
+
+    function editSchool(id) {
+      showToast('跳转到编辑页面...');
+      location.href = 'schools.html';
+    }
+
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 10);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 2000);
+    }
+  </script>
+</body>
+</html>

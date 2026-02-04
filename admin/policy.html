@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>政策文件管理 - 管理后台</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/admin-modal.css">
+</head>
+<body>
+  <div class="admin-wrapper">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-logo">
+        <div class="admin-logo-icon">豫</div>
+        <div class="admin-logo-text">城乡学校共同体<br>管理后台</div>
+      </div>
+      <nav class="admin-menu">
+        <div class="admin-menu-group">
+          <a href="index.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📊</span>
+            工作台
+          </a>
+        </div>
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">用户管理</div>
+          <a href="users.html" class="admin-menu-item">
+            <span class="admin-menu-icon">👥</span>
+            学校管理员
+          </a>
+        </div>
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">内容管理</div>
+          <a href="about.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📖</span>
+            项目介绍
+          </a>
+          <a href="news.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📰</span>
+            新闻资讯
+          </a>
+          <a href="policy.html" class="admin-menu-item active">
+            <span class="admin-menu-icon">📋</span>
+            政策文件
+          </a>
+          <a href="resources.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📚</span>
+            资源共享
+          </a>
+        </div>
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">示范校管理</div>
+          <a href="schools.html" class="admin-menu-item">
+            <span class="admin-menu-icon">🏫</span>
+            示范校列表
+          </a>
+        </div>
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">系统设置</div>
+          <a href="navigation.html" class="admin-menu-item">
+            <span class="admin-menu-icon">🧭</span>
+            导航管理
+          </a>
+          <a href="settings.html" class="admin-menu-item">
+            <span class="admin-menu-icon">⚙️</span>
+            基础配置
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <header class="admin-header">
+        <div class="admin-breadcrumb">内容管理 / 政策文件</div>
+        <div class="admin-user">
+          <span style="font-size: 14px; color: var(--neutral-600);">欢迎，超级管理员</span>
+          <div class="admin-avatar">管</div>
+          <a href="../pages/admin-login.html" style="font-size: 14px; color: var(--accent-600);">退出</a>
+        </div>
+      </header>
+
+      <div class="admin-content">
+        <div class="admin-page-header">
+          <h1 class="admin-page-title">政策文件管理</h1>
+          <p class="admin-page-desc">管理平台发布的政策文件</p>
+        </div>
+
+        <!-- Filter -->
+        <div class="admin-card" style="margin-bottom: 20px;">
+          <div class="admin-card-body" style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <label style="font-size: 14px; color: var(--neutral-600);">分类：</label>
+              <select class="form-input" style="width: 150px; padding: 8px 12px;" id="categoryFilter">
+                <option value="">全部</option>
+                <option value="国家政策">国家政策</option>
+                <option value="省级政策">省级政策</option>
+                <option value="实施方案">实施方案</option>
+                <option value="通知公告">通知公告</option>
+              </select>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <label style="font-size: 14px; color: var(--neutral-600);">关键词：</label>
+              <input type="text" class="form-input" style="width: 200px; padding: 8px 12px;" placeholder="搜索标题..." id="searchInput">
+            </div>
+            <button class="btn btn-primary" style="padding: 8px 20px; font-size: 14px;" onclick="handleSearch()">搜索</button>
+            <button class="btn btn-outline" style="padding: 8px 20px; font-size: 14px;" onclick="resetFilter()">重置</button>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">政策文件列表 (共<span id="totalCount">45</span>条)</h3>
+            <button class="btn btn-primary" style="padding: 8px 20px; font-size: 14px;" onclick="openAddModal()">+ 发布政策</button>
+          </div>
+          <div class="admin-card-body" style="padding: 0;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width: 35%;">标题</th>
+                  <th>分类</th>
+                  <th>发布机构</th>
+                  <th>发布时间</th>
+                  <th>下载次数</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="policyTableBody">
+                <tr>
+                  <td>关于加快推进城乡义务教育一体化发展的实施意见</td>
+                  <td><span class="admin-badge admin-badge-info">国家政策</span></td>
+                  <td>教育部</td>
+                  <td>2025-03-10</td>
+                  <td>3,456</td>
+                  <td><span class="admin-badge admin-badge-success">已发布</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline" onclick="openEditModal(1)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="confirmDelete(1)">删除</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>河南省城乡学校共同体建设实施方案</td>
+                  <td><span class="admin-badge admin-badge-success">省级政策</span></td>
+                  <td>河南省教育厅</td>
+                  <td>2025-02-28</td>
+                  <td>2,189</td>
+                  <td><span class="admin-badge admin-badge-success">已发布</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline" onclick="openEditModal(2)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="confirmDelete(2)">删除</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2025年城乡学校共同体建设工作要点</td>
+                  <td><span class="admin-badge admin-badge-warning">实施方案</span></td>
+                  <td>河南省教育厅</td>
+                  <td>2025-02-15</td>
+                  <td>1,567</td>
+                  <td><span class="admin-badge admin-badge-success">已发布</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline" onclick="openEditModal(3)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="confirmDelete(3)">删除</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>关于开展第二批示范校共同体评选工作的通知</td>
+                  <td><span class="admin-badge admin-badge-default">通知公告</span></td>
+                  <td>河南省教育厅</td>
+                  <td>2025-02-01</td>
+                  <td>987</td>
+                  <td><span class="admin-badge admin-badge-success">已发布</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline" onclick="openEditModal(4)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="confirmDelete(4)">删除</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>城乡学校共同体资源共享管理办法</td>
+                  <td><span class="admin-badge admin-badge-warning">实施方案</span></td>
+                  <td>河南省教育厅</td>
+                  <td>2025-01-20</td>
+                  <td>756</td>
+                  <td><span class="admin-badge admin-badge-success">已发布</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline" onclick="openEditModal(5)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="confirmDelete(5)">删除</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" style="margin-top: 20px;">
+          <span class="page-item disabled">&lt;</span>
+          <span class="page-item active">1</span>
+          <span class="page-item" onclick="goToPage(2)">2</span>
+          <span class="page-item" onclick="goToPage(3)">3</span>
+          <span class="page-item">...</span>
+          <span class="page-item" onclick="goToPage(5)">5</span>
+          <span class="page-item" onclick="goToPage(2)">&gt;</span>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Add/Edit Modal -->
+  <div class="modal-overlay" id="policyModal">
+    <div class="modal" style="max-width: 700px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">发布政策文件</h3>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="policyForm">
+          <input type="hidden" id="policyId">
+          <!-- 发布方式选择 -->
+          <div class="form-group">
+            <label class="form-label">发布方式 <span style="color: red;">*</span></label>
+            <div style="display: flex; gap: 16px;">
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="policyPublishType" value="content" checked onchange="togglePolicyType('content')"> 图文/附件
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="policyPublishType" value="link" onchange="togglePolicyType('link')"> 外部链接
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">政策标题 <span style="color: red;">*</span></label>
+            <input type="text" class="form-input" id="policyTitle" placeholder="请输入政策标题" required>
+          </div>
+          <!-- 外部链接输入 -->
+          <div class="form-group" id="policyLinkGroup" style="display: none;">
+            <label class="form-label">外部链接 <span style="color: red;">*</span></label>
+            <input type="url" class="form-input" id="policyExternalLink" placeholder="请输入外部链接URL">
+            <p style="font-size: 12px; color: var(--neutral-500); margin-top: 4px;">用户点击后将直接跳转至外部页面</p>
+          </div>
+          <!-- 图文/附件内容 -->
+          <div id="policyContentGroup">
+            <div class="form-row">
+              <div class="form-group" style="flex: 1;">
+                <label class="form-label">分类 <span style="color: red;">*</span></label>
+                <select class="form-input" id="policyCategory" required>
+                  <option value="">请选择分类</option>
+                  <option value="国家政策">国家政策</option>
+                  <option value="省级政策">省级政策</option>
+                  <option value="实施方案">实施方案</option>
+                  <option value="通知公告">通知公告</option>
+                </select>
+              </div>
+              <div class="form-group" style="flex: 1;">
+                <label class="form-label">发布机构 <span style="color: red;">*</span></label>
+                <input type="text" class="form-input" id="policyOrg" placeholder="如：教育部、河南省教育厅" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">政策摘要</label>
+              <textarea class="form-input" id="policySummary" rows="3" placeholder="请输入政策摘要"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">附件上传</label>
+              <div class="file-upload-area" onclick="document.getElementById('policyFile').click()">
+                <input type="file" id="policyFile" style="display: none;" accept=".pdf,.doc,.docx">
+                <div class="file-upload-icon">📁</div>
+                <div class="file-upload-text">点击或拖拽文件到此处上传</div>
+                <div class="file-upload-hint">支持 PDF、DOC、DOCX 格式，最大 20MB</div>
+              </div>
+              <div id="uploadedFile" class="uploaded-file" style="display: none;"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">发布状态</label>
+            <div style="display: flex; gap: 20px;">
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="policyStatus" value="published" checked> 立即发布
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="policyStatus" value="draft"> 保存为草稿
+              </label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal()">取消</button>
+        <button class="btn btn-primary" onclick="savePolicy()">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirm Modal -->
+  <div class="modal-overlay" id="deleteModal">
+    <div class="modal" style="max-width: 400px;">
+      <div class="modal-header">
+        <h3 class="modal-title">确认删除</h3>
+        <button class="modal-close" onclick="closeDeleteModal()">&times;</button>
+      </div>
+      <div class="modal-body" style="text-align: center; padding: 30px 20px;">
+        <div style="font-size: 48px; margin-bottom: 16px;">⚠️</div>
+        <p style="font-size: 16px; color: var(--neutral-700); margin-bottom: 8px;">确定要删除这条政策文件吗？</p>
+        <p style="font-size: 14px; color: var(--neutral-500);">删除后将无法恢复</p>
+      </div>
+      <div class="modal-footer" style="justify-content: center;">
+        <button class="btn btn-outline" onclick="closeDeleteModal()">取消</button>
+        <button class="btn btn-danger" onclick="doDelete()">确认删除</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let deleteId = null;
+
+    // 切换发布类型
+    function togglePolicyType(type) {
+      const linkGroup = document.getElementById('policyLinkGroup');
+      const contentGroup = document.getElementById('policyContentGroup');
+      if (type === 'link') {
+        linkGroup.style.display = 'block';
+        contentGroup.style.display = 'none';
+      } else {
+        linkGroup.style.display = 'none';
+        contentGroup.style.display = 'block';
+      }
+    }
+
+    function openAddModal() {
+      document.getElementById('modalTitle').textContent = '发布政策文件';
+      document.getElementById('policyForm').reset();
+      document.getElementById('policyId').value = '';
+      document.getElementById('uploadedFile').style.display = 'none';
+      togglePolicyType('content');
+      document.getElementById('policyModal').classList.add('active');
+    }
+
+    function openEditModal(id) {
+      document.getElementById('modalTitle').textContent = '编辑政策文件';
+      document.getElementById('policyId').value = id;
+      // 模拟加载数据
+      document.getElementById('policyTitle').value = '关于加快推进城乡义务教育一体化发展的实施意见';
+      document.getElementById('policyCategory').value = '国家政策';
+      document.getElementById('policyOrg').value = '教育部';
+      document.getElementById('policySummary').value = '为贯彻落实党中央、国务院关于推进城乡义务教育一体化发展的决策部署...';
+      document.getElementById('uploadedFile').innerHTML = '📄 关于加快推进城乡义务教育一体化发展的实施意见.pdf <span onclick="removeFile()" style="color: var(--accent-600); cursor: pointer; margin-left: 10px;">删除</span>';
+      document.getElementById('uploadedFile').style.display = 'block';
+      document.getElementById('policyModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('policyModal').classList.remove('active');
+    }
+
+    function savePolicy() {
+      const title = document.getElementById('policyTitle').value;
+      const category = document.getElementById('policyCategory').value;
+      const org = document.getElementById('policyOrg').value;
+
+      if (!title || !category || !org) {
+        alert('请填写必填项');
+        return;
+      }
+
+      const id = document.getElementById('policyId').value;
+      if (id) {
+        showToast('政策文件更新成功！');
+      } else {
+        showToast('政策文件发布成功！');
+      }
+      closeModal();
+    }
+
+    function confirmDelete(id) {
+      deleteId = id;
+      document.getElementById('deleteModal').classList.add('active');
+    }
+
+    function closeDeleteModal() {
+      document.getElementById('deleteModal').classList.remove('active');
+      deleteId = null;
+    }
+
+    function doDelete() {
+      showToast('政策文件已删除');
+      closeDeleteModal();
+      // 模拟删除行
+      // 实际项目中应该刷新列表
+    }
+
+    function handleSearch() {
+      const keyword = document.getElementById('searchInput').value;
+      const category = document.getElementById('categoryFilter').value;
+      showToast('搜索条件：分类=' + (category || '全部') + '，关键词=' + (keyword || '无'));
+    }
+
+    function resetFilter() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('categoryFilter').value = '';
+      showToast('筛选条件已重置');
+    }
+
+    function goToPage(page) {
+      showToast('跳转到第 ' + page + ' 页');
+    }
+
+    function removeFile() {
+      document.getElementById('uploadedFile').style.display = 'none';
+    }
+
+    // 文件上传处理
+    document.getElementById('policyFile').addEventListener('change', function(e) {
+      if (e.target.files.length > 0) {
+        const file = e.target.files[0];
+        document.getElementById('uploadedFile').innerHTML = '📄 ' + file.name + ' <span onclick="removeFile()" style="color: var(--accent-600); cursor: pointer; margin-left: 10px;">删除</span>';
+        document.getElementById('uploadedFile').style.display = 'block';
+      }
+    });
+
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 10);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 2000);
+    }
+  </script>
+</body>
+</html>

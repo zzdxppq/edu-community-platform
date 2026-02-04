@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学校管理后台 - 信阳董家河小学中心校</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/admin-modal.css">
+</head>
+<body>
+  <div class="admin-wrapper">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar" style="background: linear-gradient(180deg, #1a3d6e 0%, #2C5AA0 100%);">
+      <div class="admin-logo">
+        <div class="admin-logo-icon" style="background: #fff;">豫</div>
+        <div class="admin-logo-text">信阳董家河小学<br>学校管理后台</div>
+      </div>
+
+      <nav class="admin-menu">
+        <div class="admin-menu-group">
+          <a href="school-admin.html" class="admin-menu-item active">
+            <span class="admin-menu-icon">📊</span>
+            工作台
+          </a>
+        </div>
+
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">内容管理</div>
+          <a href="#" class="admin-menu-item" onclick="showSection('intro')">
+            <span class="admin-menu-icon">🏫</span>
+            校共同体介绍
+          </a>
+          <a href="#" class="admin-menu-item" onclick="showSection('activity')">
+            <span class="admin-menu-icon">📝</span>
+            校共同体活动
+          </a>
+          <a href="#" class="admin-menu-item" onclick="showSection('report')">
+            <span class="admin-menu-icon">📄</span>
+            校共同体月报
+          </a>
+        </div>
+
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">个人中心</div>
+          <a href="#" class="admin-menu-item" onclick="showSection('profile')">
+            <span class="admin-menu-icon">👤</span>
+            账号设置
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <header class="admin-header">
+        <div class="admin-breadcrumb">学校管理后台 / 工作台</div>
+        <div class="admin-user">
+          <span style="font-size: 14px; color: var(--neutral-600);">李老师 (学校管理员)</span>
+          <div class="admin-avatar" style="background: var(--accent-600);">李</div>
+          <a href="../pages/admin-login.html" style="font-size: 14px; color: var(--accent-600);">退出</a>
+        </div>
+      </header>
+
+      <div class="admin-content">
+        <div class="admin-page-header">
+          <h1 class="admin-page-title">信阳董家河小学中心校 - 工作台</h1>
+          <p class="admin-page-desc">管理本校共同体建设相关内容</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="admin-stats">
+          <div class="admin-stat-card">
+            <div class="admin-stat-title">校共同体活动</div>
+            <div class="admin-stat-value">23</div>
+            <div class="admin-stat-change">已发布活动</div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-title">校共同体月报</div>
+            <div class="admin-stat-value">12</div>
+            <div class="admin-stat-change">累计提交</div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-title">总浏览量</div>
+            <div class="admin-stat-value">5,678</div>
+            <div class="admin-stat-change">本校内容</div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="admin-card" style="margin-bottom: 24px;">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">快捷操作</h3>
+          </div>
+          <div class="admin-card-body" style="display: flex; gap: 16px; flex-wrap: wrap;">
+            <button class="btn btn-primary" style="padding: 12px 24px;" onclick="openActivityModal()">
+              📝 发布校共同体活动
+            </button>
+            <button class="btn btn-accent" style="padding: 12px 24px;" onclick="openReportModal()">
+              📄 提交校共同体月报
+            </button>
+            <button class="btn btn-outline" style="padding: 12px 24px;" onclick="openIntroModal()">
+              🏫 编辑校共同体介绍
+            </button>
+          </div>
+        </div>
+
+        <!-- Recent Activities -->
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">最近发布的校共同体活动</h3>
+            <button class="btn btn-outline" style="padding: 6px 16px; font-size: 13px;">查看全部</button>
+          </div>
+          <div class="admin-card-body" style="padding: 0;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width: 50%;">标题</th>
+                  <th>发布时间</th>
+                  <th>浏览量</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>信阳董家河小学与乡村学校开展教学研讨活动</td>
+                  <td>2025-03-12</td>
+                  <td>856</td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger">删除</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2025年春季学期共同体工作部署会议召开</td>
+                  <td>2025-02-28</td>
+                  <td>534</td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger">删除</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>教师交流轮岗首批10名教师顺利到岗</td>
+                  <td>2025-02-15</td>
+                  <td>623</td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger">删除</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>共同体信息化平台建设项目启动</td>
+                  <td>2025-01-20</td>
+                  <td>478</td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger">删除</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Monthly Reports -->
+        <div class="admin-card" style="margin-top: 24px;">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">月报提交记录</h3>
+            <button class="btn btn-primary" style="padding: 6px 16px; font-size: 13px;" onclick="openReportModal()">+ 提交月报</button>
+          </div>
+          <div class="admin-card-body" style="padding: 0;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>月份</th>
+                  <th>提交时间</th>
+                  <th>文件</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2025年3月</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td><span class="admin-badge admin-badge-warning">待提交</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-primary">提交</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2025年2月</td>
+                  <td>2025-03-05</td>
+                  <td>2025年2月月报.pdf</td>
+                  <td><span class="admin-badge admin-badge-success">已提交</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">查看</button>
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2025年1月</td>
+                  <td>2025-02-03</td>
+                  <td>2025年1月月报.pdf</td>
+                  <td><span class="admin-badge admin-badge-success">已提交</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">查看</button>
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Activity Modal -->
+  <div class="modal-overlay" id="activityModal">
+    <div class="modal" style="max-width: 800px;">
+      <div class="modal-header">
+        <h3 class="modal-title">发布校共同体活动</h3>
+        <button class="modal-close" onclick="closeActivityModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="activityForm">
+          <!-- 发布方式选择 -->
+          <div class="form-group">
+            <label class="form-label">发布方式 <span style="color: red;">*</span></label>
+            <div style="display: flex; gap: 16px;">
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="activityPublishType" value="content" checked onchange="toggleActivityType('content')"> 图文编辑
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="activityPublishType" value="link" onchange="toggleActivityType('link')"> 外部链接
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">活动标题 <span style="color: red;">*</span></label>
+            <input type="text" class="form-input" id="activityTitle" placeholder="请输入活动标题" required>
+          </div>
+          <!-- 外部链接输入 -->
+          <div class="form-group" id="activityLinkGroup" style="display: none;">
+            <label class="form-label">外部链接 <span style="color: red;">*</span></label>
+            <input type="url" class="form-input" id="activityExternalLink" placeholder="请输入外部链接URL">
+            <p style="font-size: 12px; color: var(--neutral-500); margin-top: 4px;">用户点击后将直接跳转至外部页面</p>
+          </div>
+          <!-- 图文编辑内容 -->
+          <div id="activityContentGroup">
+            <div class="form-group">
+              <label class="form-label">活动内容 <span style="color: red;">*</span></label>
+              <div style="border: 1px solid var(--neutral-300); border-radius: 4px; overflow: hidden;">
+                <!-- 富文本工具栏 -->
+                <div style="background: var(--neutral-100); padding: 8px 12px; border-bottom: 1px solid var(--neutral-300); display: flex; gap: 8px; flex-wrap: wrap;">
+                  <button type="button" class="editor-btn" title="加粗" onclick="formatText('bold')"><b>B</b></button>
+                  <button type="button" class="editor-btn" title="斜体" onclick="formatText('italic')"><i>I</i></button>
+                  <button type="button" class="editor-btn" title="下划线" onclick="formatText('underline')"><u>U</u></button>
+                  <span style="border-left: 1px solid var(--neutral-300); margin: 0 4px;"></span>
+                  <button type="button" class="editor-btn" title="标题" onclick="formatText('h2')">H</button>
+                  <button type="button" class="editor-btn" title="无序列表" onclick="formatText('ul')">•</button>
+                  <button type="button" class="editor-btn" title="有序列表" onclick="formatText('ol')">1.</button>
+                  <span style="border-left: 1px solid var(--neutral-300); margin: 0 4px;"></span>
+                  <button type="button" class="editor-btn" title="插入链接" onclick="insertLink()">🔗</button>
+                  <button type="button" class="editor-btn" title="插入图片" onclick="insertImage()">🖼️</button>
+                </div>
+                <!-- 编辑区域 -->
+                <div id="activityEditor" contenteditable="true" style="min-height: 200px; padding: 16px; outline: none; line-height: 1.8;" placeholder="请输入活动详细内容..."></div>
+              </div>
+              <style>
+                .editor-btn { background: #fff; border: 1px solid var(--neutral-300); border-radius: 4px; padding: 4px 8px; cursor: pointer; font-size: 14px; }
+                .editor-btn:hover { background: var(--primary-100); border-color: var(--primary-800); }
+                [contenteditable]:empty:before { content: attr(placeholder); color: var(--neutral-500); }
+              </style>
+            </div>
+            <div class="form-group">
+              <label class="form-label">封面图片</label>
+              <div class="file-upload-area" onclick="document.getElementById('activityImages').click()">
+                <input type="file" id="activityImages" style="display: none;" accept="image/*">
+                <div class="file-upload-icon">🖼️</div>
+                <div class="file-upload-text">点击上传封面图</div>
+                <div class="file-upload-hint">建议尺寸：800×450，支持 JPG、PNG 格式</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">附件上传（可选）</label>
+              <div class="file-upload-area" onclick="document.getElementById('activityFile').click()">
+                <input type="file" id="activityFile" style="display: none;" accept=".pdf,.doc,.docx,.ppt,.pptx">
+                <div class="file-upload-icon">📁</div>
+                <div class="file-upload-text">点击上传附件</div>
+                <div class="file-upload-hint">支持 PDF、DOC、PPT 格式</div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeActivityModal()">取消</button>
+        <button class="btn btn-primary" onclick="saveActivity()">发布</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Report Modal -->
+  <div class="modal-overlay" id="reportModal">
+    <div class="modal" style="max-width: 800px;">
+      <div class="modal-header">
+        <h3 class="modal-title">提交校共同体月报</h3>
+        <button class="modal-close" onclick="closeReportModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="reportForm">
+          <!-- 发布方式选择 -->
+          <div class="form-group">
+            <label class="form-label">发布方式 <span style="color: red;">*</span></label>
+            <div style="display: flex; gap: 16px;">
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="reportPublishType" value="content" checked onchange="toggleReportType('content')"> 图文编辑
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="reportPublishType" value="link" onchange="toggleReportType('link')"> 外部链接
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">月份 <span style="color: red;">*</span></label>
+            <select class="form-input" id="reportMonth" required>
+              <option value="">请选择月份</option>
+              <option value="2025-03" selected>2025年3月</option>
+              <option value="2025-02">2025年2月</option>
+              <option value="2025-01">2025年1月</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">月报标题 <span style="color: red;">*</span></label>
+            <input type="text" class="form-input" id="reportTitle" placeholder="如：2025年3月校共同体工作月报" required>
+          </div>
+          <!-- 外部链接输入 -->
+          <div class="form-group" id="reportLinkGroup" style="display: none;">
+            <label class="form-label">外部链接 <span style="color: red;">*</span></label>
+            <input type="url" class="form-input" id="reportExternalLink" placeholder="请输入外部链接URL">
+            <p style="font-size: 12px; color: var(--neutral-500); margin-top: 4px;">用户点击后将直接跳转至外部页面</p>
+          </div>
+          <!-- 图文编辑内容 -->
+          <div id="reportContentGroup">
+            <div class="form-group">
+              <label class="form-label">月报内容</label>
+              <div style="border: 1px solid var(--neutral-300); border-radius: 4px; overflow: hidden;">
+                <!-- 富文本工具栏 -->
+                <div style="background: var(--neutral-100); padding: 8px 12px; border-bottom: 1px solid var(--neutral-300); display: flex; gap: 8px; flex-wrap: wrap;">
+                  <button type="button" class="editor-btn" title="加粗"><b>B</b></button>
+                  <button type="button" class="editor-btn" title="斜体"><i>I</i></button>
+                  <button type="button" class="editor-btn" title="下划线"><u>U</u></button>
+                  <span style="border-left: 1px solid var(--neutral-300); margin: 0 4px;"></span>
+                  <button type="button" class="editor-btn" title="标题">H</button>
+                  <button type="button" class="editor-btn" title="无序列表">•</button>
+                  <button type="button" class="editor-btn" title="有序列表">1.</button>
+                  <span style="border-left: 1px solid var(--neutral-300); margin: 0 4px;"></span>
+                  <button type="button" class="editor-btn" title="插入链接">🔗</button>
+                  <button type="button" class="editor-btn" title="插入图片">🖼️</button>
+                </div>
+                <!-- 编辑区域 -->
+                <div id="reportEditor" contenteditable="true" style="min-height: 150px; padding: 16px; outline: none; line-height: 1.8;" placeholder="请输入月报内容..."></div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">月报附件 <span style="color: red;">*</span></label>
+              <div class="file-upload-area" onclick="document.getElementById('reportFile').click()">
+                <input type="file" id="reportFile" style="display: none;" accept=".pdf,.doc,.docx">
+                <div class="file-upload-icon">📄</div>
+                <div class="file-upload-text">点击上传月报文件</div>
+                <div class="file-upload-hint">支持 PDF、DOC、DOCX 格式</div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeReportModal()">取消</button>
+        <button class="btn btn-primary" onclick="submitReport()">提交</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Intro Edit Modal -->
+  <div class="modal-overlay" id="introModal">
+    <div class="modal" style="max-width: 700px;">
+      <div class="modal-header">
+        <h3 class="modal-title">编辑校共体介绍</h3>
+        <button class="modal-close" onclick="closeIntroModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="introForm">
+          <div class="form-group">
+            <label class="form-label">共同体名称</label>
+            <input type="text" class="form-input" id="introName" value="信阳董家河小学中心校城乡学校共同体">
+          </div>
+          <div class="form-group">
+            <label class="form-label">共同体简介 <span style="color: red;">*</span></label>
+            <textarea class="form-input" id="introContent" rows="6" required>信阳董家河小学中心校城乡学校共同体成立于2024年，是河南省首批城乡学校共同体示范项目之一。共同体以董家河小学为核心校，联合周边5所乡村学校，通过教师交流、资源共享、教研协作等方式，促进城乡教育均衡发展。
+
+共同体围绕"同步课堂、联合教研、教师交流、资源共享"四大核心工作，积极探索城乡教育一体化发展的有效路径，取得了显著成效。</textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">成员校列表</label>
+            <div style="background: var(--neutral-100); padding: 16px; border-radius: 8px;">
+              <p style="margin-bottom: 8px;">1. 董家河镇中心小学（城镇）</p>
+              <p style="margin-bottom: 8px;">2. 绿之风希望小学（乡村）</p>
+              <p style="margin-bottom: 8px;">3. 白雀园镇中心小学（乡村）</p>
+              <p style="margin-bottom: 8px;">4. 泼陂河镇第一小学（乡村）</p>
+              <p>5. 龙山乡中心小学（乡村）</p>
+            </div>
+            <p style="font-size: 12px; color: var(--neutral-500); margin-top: 8px;">如需修改成员校请联系平台管理员</p>
+          </div>
+          <div class="form-group">
+            <label class="form-label">封面图片</label>
+            <div class="file-upload-area" onclick="document.getElementById('introCover').click()">
+              <input type="file" id="introCover" style="display: none;" accept="image/*">
+              <div class="file-upload-icon">🖼️</div>
+              <div class="file-upload-text">点击上传封面图</div>
+              <div class="file-upload-hint">建议尺寸：1200×400，支持 JPG、PNG 格式</div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeIntroModal()">取消</button>
+        <button class="btn btn-primary" onclick="saveIntro()">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showSection(section) {
+      const sectionNames = {
+        'intro': '校共同体介绍',
+        'activity': '校共同体活动',
+        'report': '校共同体月报',
+        'profile': '账号设置'
+      };
+      showToast('正在加载：' + (sectionNames[section] || section));
+    }
+
+    // 切换活动发布类型
+    function toggleActivityType(type) {
+      const linkGroup = document.getElementById('activityLinkGroup');
+      const contentGroup = document.getElementById('activityContentGroup');
+      if (type === 'link') {
+        linkGroup.style.display = 'block';
+        contentGroup.style.display = 'none';
+      } else {
+        linkGroup.style.display = 'none';
+        contentGroup.style.display = 'block';
+      }
+    }
+
+    // 切换月报发布类型
+    function toggleReportType(type) {
+      const linkGroup = document.getElementById('reportLinkGroup');
+      const contentGroup = document.getElementById('reportContentGroup');
+      if (type === 'link') {
+        linkGroup.style.display = 'block';
+        contentGroup.style.display = 'none';
+      } else {
+        linkGroup.style.display = 'none';
+        contentGroup.style.display = 'block';
+      }
+    }
+
+    // 富文本编辑器功能
+    function formatText(command) {
+      document.execCommand(command, false, null);
+    }
+
+    function insertLink() {
+      const url = prompt('请输入链接地址：', 'https://');
+      if (url) {
+        document.execCommand('createLink', false, url);
+      }
+    }
+
+    function insertImage() {
+      const url = prompt('请输入图片地址：', 'https://');
+      if (url) {
+        document.execCommand('insertImage', false, url);
+      }
+    }
+
+    // Activity Modal
+    function openActivityModal() {
+      document.getElementById('activityForm').reset();
+      document.getElementById('activityEditor').innerHTML = '';
+      toggleActivityType('content');
+      document.getElementById('activityModal').classList.add('active');
+    }
+
+    function closeActivityModal() {
+      document.getElementById('activityModal').classList.remove('active');
+    }
+
+    function saveActivity() {
+      const title = document.getElementById('activityTitle').value;
+      const publishType = document.querySelector('input[name="activityPublishType"]:checked').value;
+
+      if (!title) {
+        alert('请填写活动标题');
+        return;
+      }
+
+      if (publishType === 'link') {
+        const link = document.getElementById('activityExternalLink').value;
+        if (!link) {
+          alert('请填写外部链接');
+          return;
+        }
+      } else {
+        const content = document.getElementById('activityEditor').innerHTML;
+        if (!content || content === '<br>') {
+          alert('请填写活动内容');
+          return;
+        }
+      }
+
+      showToast('校共同体活动发布成功！');
+      closeActivityModal();
+    }
+
+    // Report Modal
+    function openReportModal() {
+      document.getElementById('reportForm').reset();
+      if (document.getElementById('reportEditor')) {
+        document.getElementById('reportEditor').innerHTML = '';
+      }
+      toggleReportType('content');
+      document.getElementById('reportModal').classList.add('active');
+    }
+
+    function closeReportModal() {
+      document.getElementById('reportModal').classList.remove('active');
+    }
+
+    function submitReport() {
+      const month = document.getElementById('reportMonth').value;
+      const title = document.getElementById('reportTitle').value;
+      if (!month || !title) {
+        alert('请填写必填项');
+        return;
+      }
+      showToast('校共同体月报提交成功！');
+      closeReportModal();
+    }
+
+    // Intro Modal
+    function openIntroModal() {
+      document.getElementById('introModal').classList.add('active');
+    }
+
+    function closeIntroModal() {
+      document.getElementById('introModal').classList.remove('active');
+    }
+
+    function saveIntro() {
+      const content = document.getElementById('introContent').value;
+      if (!content) {
+        alert('请填写共同体简介');
+        return;
+      }
+      showToast('校共同体介绍更新成功！');
+      closeIntroModal();
+    }
+
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 10);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 2000);
+    }
+  </script>
+</body>
+</html>

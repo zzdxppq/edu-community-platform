@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>项目介绍管理 - 管理后台</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/admin-modal.css">
+  <style>
+    .rich-editor {
+      border: 1px solid var(--neutral-300);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .editor-toolbar {
+      background: var(--neutral-100);
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--neutral-300);
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .editor-btn {
+      padding: 6px 10px;
+      border: 1px solid var(--neutral-300);
+      background: white;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 32px;
+    }
+    .editor-btn:hover {
+      background: var(--neutral-200);
+    }
+    .editor-content {
+      min-height: 400px;
+      padding: 20px;
+      outline: none;
+      line-height: 1.8;
+    }
+    .editor-content:focus {
+      background: var(--neutral-50);
+    }
+    .section-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+    }
+    .section-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--neutral-200);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--neutral-800);
+    }
+    .section-body {
+      padding: 24px;
+    }
+    .preview-box {
+      background: var(--neutral-50);
+      border: 1px dashed var(--neutral-300);
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      color: var(--neutral-500);
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-wrapper">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-logo">
+        <div class="admin-logo-icon">豫</div>
+        <div class="admin-logo-text">城乡学校共同体<br>管理后台</div>
+      </div>
+
+      <nav class="admin-menu">
+        <div class="admin-menu-group">
+          <a href="index.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📊</span>
+            工作台
+          </a>
+        </div>
+
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">用户管理</div>
+          <a href="users.html" class="admin-menu-item">
+            <span class="admin-menu-icon">👥</span>
+            学校管理员
+          </a>
+        </div>
+
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">内容管理</div>
+          <a href="about.html" class="admin-menu-item active">
+            <span class="admin-menu-icon">📖</span>
+            项目介绍
+          </a>
+          <a href="news.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📰</span>
+            新闻资讯
+          </a>
+          <a href="policy.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📋</span>
+            政策文件
+          </a>
+          <a href="resources.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📚</span>
+            资源共享
+          </a>
+        </div>
+
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">示范校管理</div>
+          <a href="schools.html" class="admin-menu-item">
+            <span class="admin-menu-icon">🏫</span>
+            示范校列表
+          </a>
+        </div>
+
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">系统设置</div>
+          <a href="navigation.html" class="admin-menu-item">
+            <span class="admin-menu-icon">🧭</span>
+            导航管理
+          </a>
+          <a href="settings.html" class="admin-menu-item">
+            <span class="admin-menu-icon">⚙️</span>
+            基础配置
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <!-- Header -->
+      <header class="admin-header">
+        <div class="admin-breadcrumb">
+          首页 / 内容管理 / 项目介绍
+        </div>
+        <div class="admin-user">
+          <span style="font-size: 14px; color: var(--neutral-600);">欢迎，超级管理员</span>
+          <div class="admin-avatar">管</div>
+          <a href="../pages/admin-login.html" style="font-size: 14px; color: var(--accent-600);">退出</a>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="admin-content">
+        <div class="admin-page-header">
+          <h1 class="admin-page-title">项目介绍管理</h1>
+          <p class="admin-page-desc">编辑和管理官网"项目介绍"页面的内容</p>
+        </div>
+
+        <!-- Banner Section -->
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-title">页面头图</div>
+            <button class="btn btn-outline" onclick="changeBanner()">更换图片</button>
+          </div>
+          <div class="section-body">
+            <div class="preview-box" style="height: 200px; display: flex; align-items: center; justify-content: center;">
+              <div>
+                <div style="font-size: 48px; margin-bottom: 8px;">🖼️</div>
+                <div>当前头图：about-banner.jpg</div>
+                <div style="font-size: 12px; margin-top: 4px;">建议尺寸：1920×400px</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Background -->
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-title">项目背景</div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-outline" onclick="previewSection('background')">预览</button>
+              <button class="btn btn-primary" onclick="saveSection('background')">保存</button>
+            </div>
+          </div>
+          <div class="section-body">
+            <div class="rich-editor">
+              <div class="editor-toolbar">
+                <button type="button" class="editor-btn" onclick="formatText('bold')" title="加粗"><b>B</b></button>
+                <button type="button" class="editor-btn" onclick="formatText('italic')" title="斜体"><i>I</i></button>
+                <button type="button" class="editor-btn" onclick="formatText('underline')" title="下划线"><u>U</u></button>
+                <span style="width: 1px; background: var(--neutral-300); margin: 0 4px;"></span>
+                <button type="button" class="editor-btn" onclick="formatBlock('h2')" title="标题">H2</button>
+                <button type="button" class="editor-btn" onclick="formatBlock('h3')" title="副标题">H3</button>
+                <button type="button" class="editor-btn" onclick="formatBlock('p')" title="正文">P</button>
+                <span style="width: 1px; background: var(--neutral-300); margin: 0 4px;"></span>
+                <button type="button" class="editor-btn" onclick="formatText('insertUnorderedList')" title="无序列表">•</button>
+                <button type="button" class="editor-btn" onclick="formatText('insertOrderedList')" title="有序列表">1.</button>
+                <span style="width: 1px; background: var(--neutral-300); margin: 0 4px;"></span>
+                <button type="button" class="editor-btn" onclick="insertLink()" title="插入链接">🔗</button>
+                <button type="button" class="editor-btn" onclick="insertImage()" title="插入图片">🖼️</button>
+              </div>
+              <div id="backgroundEditor" class="editor-content" contenteditable="true">
+                <h2>项目背景</h2>
+                <p>为深入贯彻党的二十大精神和习近平总书记关于教育的重要论述，落实《中共中央 国务院关于深化教育教学改革全面提高义务教育质量的意见》等文件精神，加快推进县域内城乡义务教育一体化发展，促进教育公平，提高教育质量，河南省教育厅启动了城乡学校共同体建设项目。</p>
+                <p>城乡学校共同体是以优质学校为核心，联合若干农村学校或薄弱学校，建立"管理互通、师资共育、教研共享、资源共建、考评共促"的紧密型教育共同体，推动城乡学校协同发展，促进优质教育资源共享。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Goals -->
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-title">建设目标</div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-outline" onclick="previewSection('goals')">预览</button>
+              <button class="btn btn-primary" onclick="saveSection('goals')">保存</button>
+            </div>
+          </div>
+          <div class="section-body">
+            <div class="rich-editor">
+              <div class="editor-toolbar">
+                <button type="button" class="editor-btn" onclick="formatText('bold')" title="加粗"><b>B</b></button>
+                <button type="button" class="editor-btn" onclick="formatText('italic')" title="斜体"><i>I</i></button>
+                <button type="button" class="editor-btn" onclick="formatText('underline')" title="下划线"><u>U</u></button>
+                <span style="width: 1px; background: var(--neutral-300); margin: 0 4px;"></span>
+                <button type="button" class="editor-btn" onclick="formatBlock('h2')" title="标题">H2</button>
+                <button type="button" class="editor-btn" onclick="formatBlock('h3')" title="副标题">H3</button>
+                <button type="button" class="editor-btn" onclick="formatBlock('p')" title="正文">P</button>
+                <span style="width: 1px; background: var(--neutral-300); margin: 0 4px;"></span>
+                <button type="button" class="editor-btn" onclick="formatText('insertUnorderedList')" title="无序列表">•</button>
+                <button type="button" class="editor-btn" onclick="formatText('insertOrderedList')" title="有序列表">1.</button>
+                <span style="width: 1px; background: var(--neutral-300); margin: 0 4px;"></span>
+                <button type="button" class="editor-btn" onclick="insertLink()" title="插入链接">🔗</button>
+                <button type="button" class="editor-btn" onclick="insertImage()" title="插入图片">🖼️</button>
+              </div>
+              <div id="goalsEditor" class="editor-content" contenteditable="true">
+                <h2>建设目标</h2>
+                <p>通过城乡学校共同体建设，力争实现以下目标：</p>
+                <ul>
+                  <li><strong>管理水平提升：</strong>建立城乡学校一体化管理机制，提升农村学校管理水平</li>
+                  <li><strong>教师专业发展：</strong>促进城乡教师交流互访，提高农村教师专业素养</li>
+                  <li><strong>教学质量提高：</strong>共享优质教学资源，缩小城乡教学质量差距</li>
+                  <li><strong>学生全面发展：</strong>丰富农村学生学习资源，促进学生全面发展</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Implementation Path -->
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-title">实施路径</div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-outline" onclick="previewSection('path')">预览</button>
+              <button class="btn btn-primary" onclick="saveSection('path')">保存</button>
+            </div>
+          </div>
+          <div class="section-body">
+            <div class="rich-editor">
+              <div class="editor-toolbar">
+                <button type="button" class="editor-btn" onclick="formatText('bold')" title="加粗"><b>B</b></button>
+                <button type="button" class="editor-btn" onclick="formatText('italic')" title="斜体"><i>I</i></button>
+                <button type="button" class="editor-btn" onclick="formatText('underline')" title="下划线"><u>U</u></button>
+                <span style="width: 1px; background: var(--neutral-300); margin: 0 4px;"></span>
+                <button type="button" class="editor-btn" onclick="formatBlock('h2')" title="标题">H2</button>
+                <button type="button" class="editor-btn" onclick="formatBlock('h3')" title="副标题">H3</button>
+                <button type="button" class="editor-btn" onclick="formatBlock('p')" title="正文">P</button>
+                <span style="width: 1px; background: var(--neutral-300); margin: 0 4px;"></span>
+                <button type="button" class="editor-btn" onclick="formatText('insertUnorderedList')" title="无序列表">•</button>
+                <button type="button" class="editor-btn" onclick="formatText('insertOrderedList')" title="有序列表">1.</button>
+                <span style="width: 1px; background: var(--neutral-300); margin: 0 4px;"></span>
+                <button type="button" class="editor-btn" onclick="insertLink()" title="插入链接">🔗</button>
+                <button type="button" class="editor-btn" onclick="insertImage()" title="插入图片">🖼️</button>
+              </div>
+              <div id="pathEditor" class="editor-content" contenteditable="true">
+                <h2>实施路径</h2>
+                <h3>一、组建共同体</h3>
+                <p>以县域为单位，遴选优质学校作为核心校，与2-5所农村学校或薄弱学校结成共同体。</p>
+                <h3>二、建立机制</h3>
+                <p>制定共同体章程，明确成员校责任与分工，建立定期交流、联合教研等工作机制。</p>
+                <h3>三、深化合作</h3>
+                <p>开展管理互通、教学共研、师资共培、资源共享等多维度合作。</p>
+                <h3>四、考核评估</h3>
+                <p>建立共同体发展评估体系，定期考核共同体建设成效。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div style="display: flex; gap: 16px; justify-content: center; margin-top: 32px;">
+          <button class="btn btn-outline" style="padding: 12px 32px;" onclick="previewAll()">整体预览</button>
+          <button class="btn btn-primary" style="padding: 12px 32px;" onclick="saveAll()">保存全部</button>
+          <button class="btn btn-accent" style="padding: 12px 32px;" onclick="publishAll()">发布更新</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function formatText(command) {
+      document.execCommand(command, false, null);
+    }
+
+    function formatBlock(tag) {
+      document.execCommand('formatBlock', false, '<' + tag + '>');
+    }
+
+    function insertLink() {
+      const url = prompt('请输入链接地址：', 'https://');
+      if (url) {
+        document.execCommand('createLink', false, url);
+      }
+    }
+
+    function insertImage() {
+      const url = prompt('请输入图片地址：', 'https://');
+      if (url) {
+        document.execCommand('insertImage', false, url);
+      }
+    }
+
+    function changeBanner() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = function(e) {
+        if (e.target.files.length > 0) {
+          showToast('头图上传成功！');
+        }
+      };
+      input.click();
+    }
+
+    function previewSection(section) {
+      showToast('正在预览 ' + section + ' 部分...');
+    }
+
+    function saveSection(section) {
+      showToast(section + ' 部分保存成功！');
+    }
+
+    function previewAll() {
+      window.open('../pages/about.html', '_blank');
+    }
+
+    function saveAll() {
+      showToast('所有内容保存成功！');
+    }
+
+    function publishAll() {
+      if (confirm('确定要发布更新吗？发布后将立即在前台生效。')) {
+        showToast('项目介绍已发布更新！');
+      }
+    }
+
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 10);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 2000);
+    }
+  </script>
+</body>
+</html>

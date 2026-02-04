@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>搜索结果 - 河南城乡学校共同体发展平台</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .search-hero {
+      background: linear-gradient(135deg, var(--primary-800) 0%, var(--accent-600) 100%);
+      padding: 40px 0;
+      margin-bottom: 30px;
+    }
+
+    .search-hero-content {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .search-hero h1 {
+      color: #fff;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .search-box-large {
+      display: flex;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    .search-box-large input {
+      flex: 1;
+      padding: 16px 20px;
+      border: none;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .search-box-large button {
+      padding: 16px 32px;
+      background: var(--primary-800);
+      color: #fff;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .search-box-large button:hover {
+      background: var(--primary-900);
+    }
+
+    .search-stats {
+      color: rgba(255,255,255,0.9);
+      font-size: 14px;
+      margin-top: 16px;
+    }
+
+    .search-filters {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 8px 20px;
+      border: 1px solid var(--neutral-400);
+      border-radius: 20px;
+      background: var(--neutral-50);
+      color: var(--neutral-700);
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--primary-800);
+      color: var(--primary-800);
+    }
+
+    .filter-btn.active {
+      background: var(--primary-800);
+      border-color: var(--primary-800);
+      color: #fff;
+    }
+
+    .filter-count {
+      background: rgba(0,0,0,0.1);
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 12px;
+      margin-left: 6px;
+    }
+
+    .filter-btn.active .filter-count {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .search-results {
+      background: var(--neutral-50);
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    .result-item {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--neutral-300);
+      transition: background 0.2s;
+    }
+
+    .result-item:last-child {
+      border-bottom: none;
+    }
+
+    .result-item:hover {
+      background: var(--neutral-100);
+    }
+
+    .result-type {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .result-type-news {
+      background: rgba(66, 108, 198, 0.1);
+      color: var(--accent-600);
+    }
+
+    .result-type-policy {
+      background: rgba(40, 167, 69, 0.1);
+      color: var(--success);
+    }
+
+    .result-type-school {
+      background: rgba(224, 118, 40, 0.1);
+      color: var(--secondary-600);
+    }
+
+    .result-type-resource {
+      background: rgba(23, 162, 184, 0.1);
+      color: var(--info);
+    }
+
+    .result-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--neutral-900);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .result-title:hover {
+      color: var(--primary-800);
+    }
+
+    .result-title mark {
+      background: rgba(66, 108, 198, 0.2);
+      color: var(--primary-800);
+      padding: 0 2px;
+      border-radius: 2px;
+    }
+
+    .result-desc {
+      font-size: 14px;
+      color: var(--neutral-600);
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .result-desc mark {
+      background: rgba(66, 108, 198, 0.15);
+      color: var(--primary-800);
+      padding: 0 2px;
+      border-radius: 2px;
+    }
+
+    .result-meta {
+      font-size: 13px;
+      color: var(--neutral-500);
+      display: flex;
+      gap: 16px;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .no-results-icon {
+      font-size: 64px;
+      margin-bottom: 20px;
+    }
+
+    .no-results h3 {
+      font-size: 20px;
+      color: var(--neutral-800);
+      margin-bottom: 12px;
+    }
+
+    .no-results p {
+      color: var(--neutral-600);
+      font-size: 14px;
+    }
+
+    .search-suggestions {
+      margin-top: 20px;
+    }
+
+    .search-suggestions h4 {
+      font-size: 14px;
+      color: var(--neutral-600);
+      margin-bottom: 12px;
+    }
+
+    .suggestion-tags {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .suggestion-tag {
+      padding: 6px 14px;
+      background: var(--neutral-100);
+      border-radius: 16px;
+      font-size: 13px;
+      color: var(--accent-600);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .suggestion-tag:hover {
+      background: var(--primary-800);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <a href="../index.html" class="logo">
+          <span class="logo-icon">豫</span>
+          <span>河南城乡学校共同体发展</span>
+        </a>
+        <nav class="nav">
+          <a href="../index.html" class="nav-link">首页</a>
+          <a href="about.html" class="nav-link">项目介绍</a>
+          <a href="policy.html" class="nav-link">政策文件</a>
+          <a href="schools.html" class="nav-link">示范校共体</a>
+          <a href="resources.html" class="nav-link">资源共享</a>
+        </nav>
+        <div class="nav-search">
+          <input type="text" class="search-input" placeholder="搜索..." id="headerSearch">
+          <button class="search-btn" onclick="doSearch()">搜索</button>
+        </div>
+        <a href="#" class="nav-login">登录</a>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Search Hero -->
+      <section class="search-hero">
+        <div class="search-hero-content">
+          <h1>搜索结果</h1>
+          <div class="search-box-large">
+            <input type="text" id="searchInput" placeholder="输入关键词搜索..." value="">
+            <button onclick="doSearch()">搜索</button>
+          </div>
+          <p class="search-stats" id="searchStats">找到 <strong>15</strong> 条与 "<span id="keywordDisplay">城乡教育</span>" 相关的结果</p>
+        </div>
+      </section>
+
+      <div class="container">
+        <!-- Filters -->
+        <div class="search-filters">
+          <button class="filter-btn active" onclick="filterResults('all', this)">
+            全部<span class="filter-count">15</span>
+          </button>
+          <button class="filter-btn" onclick="filterResults('news', this)">
+            新闻资讯<span class="filter-count">6</span>
+          </button>
+          <button class="filter-btn" onclick="filterResults('policy', this)">
+            政策文件<span class="filter-count">4</span>
+          </button>
+          <button class="filter-btn" onclick="filterResults('school', this)">
+            示范校<span class="filter-count">3</span>
+          </button>
+          <button class="filter-btn" onclick="filterResults('resource', this)">
+            资源共享<span class="filter-count">2</span>
+          </button>
+        </div>
+
+        <!-- Results -->
+        <div class="search-results" id="resultsContainer">
+          <!-- News Results -->
+          <div class="result-item" data-type="news">
+            <span class="result-type result-type-news">新闻资讯</span>
+            <a href="news-detail.html" class="result-title">河南省召开<mark>城乡</mark>义务<mark>教育</mark>一体化发展推进会</a>
+            <p class="result-desc">3月15日，河南省<mark>城乡</mark>义务<mark>教育</mark>一体化发展推进会在郑州召开。省教育厅相关负责同志、各地市教育局代表、首批示范校校长等参加会议...</p>
+            <div class="result-meta">
+              <span>来源：平台发布</span>
+              <span>2025-03-15</span>
+              <span>浏览：1,234次</span>
+            </div>
+          </div>
+
+          <div class="result-item" data-type="policy">
+            <span class="result-type result-type-policy">政策文件</span>
+            <a href="policy-detail.html" class="result-title">河南省县域<mark>城乡</mark>义务<mark>教育</mark>学校共同体建设指导意见</a>
+            <p class="result-desc">豫教基〔2025〕220号 为深入贯彻落实党的二十大精神，加快推进县域内<mark>城乡</mark>义务<mark>教育</mark>一体化发展，促进优质教育资源共建共享...</p>
+            <div class="result-meta">
+              <span>来源：河南省教育厅</span>
+              <span>2025-03-01</span>
+            </div>
+          </div>
+
+          <div class="result-item" data-type="school">
+            <span class="result-type result-type-school">示范校</span>
+            <a href="school-detail.html" class="result-title">信阳董家河小学中心校 - <mark>城乡</mark>学校共同体建设示范校</a>
+            <p class="result-desc">采取"1+5"模式，由董家河小学中心校牵头，联合周边5所村级小学组建<mark>城乡</mark>学校共同体，形成了"管理一体化、教学同步化"的运行机制...</p>
+            <div class="result-meta">
+              <span>河南省信阳市浉河区</span>
+              <span>小学</span>
+            </div>
+          </div>
+
+          <div class="result-item" data-type="news">
+            <span class="result-type result-type-news">新闻资讯</span>
+            <a href="news-detail.html" class="result-title">信阳董家河小学与乡村学校开展<mark>教育</mark>教学研讨活动</a>
+            <p class="result-desc">为促进<mark>城乡</mark><mark>教育</mark>资源共享，提升农村学校教学质量，信阳董家河小学中心校组织共同体成员校开展联合教研活动...</p>
+            <div class="result-meta">
+              <span>来源：信阳董家河小学</span>
+              <span>2025-03-12</span>
+              <span>浏览：856次</span>
+            </div>
+          </div>
+
+          <div class="result-item" data-type="resource">
+            <span class="result-type result-type-resource">资源共享</span>
+            <a href="resource-detail.html" class="result-title"><mark>城乡</mark>义务<mark>教育</mark>一体化发展的理论与实践</a>
+            <p class="result-desc">本资料系统梳理了<mark>城乡</mark>义务<mark>教育</mark>一体化发展的理论基础、政策演进和实践探索，为相关研究和实践提供参考...</p>
+            <div class="result-meta">
+              <span>河南大学教育学部</span>
+              <span>研究文献</span>
+              <span>856KB</span>
+            </div>
+          </div>
+
+          <div class="result-item" data-type="policy">
+            <span class="result-type result-type-policy">政策文件</span>
+            <a href="policy-detail.html" class="result-title">关于深入推进义务<mark>教育</mark>优质均衡发展的意见</a>
+            <p class="result-desc">教基〔2024〕15号 为加快推进<mark>城乡</mark>义务<mark>教育</mark>优质均衡发展，缩小城乡、区域、校际差距，促进教育公平...</p>
+            <div class="result-meta">
+              <span>来源：教育部</span>
+              <span>2025-02-15</span>
+            </div>
+          </div>
+
+          <div class="result-item" data-type="school">
+            <span class="result-type result-type-school">示范校</span>
+            <a href="school-detail.html" class="result-title">濮阳市开德小学 - 推动<mark>城乡</mark><mark>教育</mark>均衡发展</a>
+            <p class="result-desc">濮阳市开德小学作为首批示范校，积极探索<mark>城乡</mark><mark>教育</mark>合作新模式，与周边农村学校建立紧密的教学交流机制...</p>
+            <div class="result-meta">
+              <span>河南省濮阳市华龙区</span>
+              <span>小学</span>
+            </div>
+          </div>
+
+          <div class="result-item" data-type="news">
+            <span class="result-type result-type-news">新闻资讯</span>
+            <a href="news-detail.html" class="result-title">省教育厅领导调研<mark>城乡</mark>学校共同体建设工作</a>
+            <p class="result-desc">省教育厅相关领导赴扶沟县实验小学调研<mark>城乡</mark>学校共同体建设工作，深入了解<mark>城乡</mark><mark>教育</mark>资源共享、教师交流等情况...</p>
+            <div class="result-meta">
+              <span>来源：平台发布</span>
+              <span>2025-03-08</span>
+              <span>浏览：1,567次</span>
+            </div>
+          </div>
+
+          <div class="result-item" data-type="resource">
+            <span class="result-type result-type-resource">资源共享</span>
+            <a href="resource-detail.html" class="result-title">浙江省<mark>城乡</mark><mark>教育</mark>共同体建设经验汇编</a>
+            <p class="result-desc">本资料汇编了浙江省近年来在<mark>城乡</mark><mark>教育</mark>共同体建设方面的实践经验和典型案例，形成了多种可复制、可推广的建设模式...</p>
+            <div class="result-meta">
+              <span>浙江省教育厅</span>
+              <span>省外经验</span>
+              <span>2.5MB</span>
+            </div>
+          </div>
+
+          <div class="result-item" data-type="policy">
+            <span class="result-type result-type-policy">政策文件</span>
+            <a href="policy-detail.html" class="result-title">国务院办公厅关于推进县域<mark>城乡</mark><mark>教育</mark>一体化发展的若干意见</a>
+            <p class="result-desc">为统筹推进县域内<mark>城乡</mark>义务<mark>教育</mark>一体化改革发展，加快缩小县域内城乡教育差距，促进教育公平...</p>
+            <div class="result-meta">
+              <span>来源：国务院办公厅</span>
+              <span>2025-01-20</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- No Results (Hidden by default) -->
+        <div class="search-results" id="noResults" style="display: none;">
+          <div class="no-results">
+            <div class="no-results-icon">🔍</div>
+            <h3>未找到相关结果</h3>
+            <p>请尝试其他关键词，或浏览以下热门内容</p>
+            <div class="search-suggestions">
+              <h4>热门搜索</h4>
+              <div class="suggestion-tags">
+                <span class="suggestion-tag" onclick="searchKeyword('城乡教育')">城乡教育</span>
+                <span class="suggestion-tag" onclick="searchKeyword('共同体建设')">共同体建设</span>
+                <span class="suggestion-tag" onclick="searchKeyword('示范校')">示范校</span>
+                <span class="suggestion-tag" onclick="searchKeyword('教师交流')">教师交流</span>
+                <span class="suggestion-tag" onclick="searchKeyword('政策文件')">政策文件</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" style="margin: 30px 0;">
+          <span class="page-item disabled">&lt;</span>
+          <span class="page-item active">1</span>
+          <span class="page-item">2</span>
+          <span class="page-item">&gt;</span>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-info">
+            <h3>河南城乡学校共同体发展平台</h3>
+            <p>地址：河南省郑州市金水区XX路XX号</p>
+            <p>邮箱：contact@example.edu.cn</p>
+          </div>
+          <div class="footer-links">
+            <h4>快速导航</h4>
+            <a href="about.html">项目介绍</a>
+            <a href="policy.html">政策文件</a>
+            <a href="schools.html">示范校共体</a>
+            <a href="resources.html">资源共享</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 河南城乡学校共同体发展平台 版权所有</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // 获取URL参数
+    function getUrlParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    // 页面加载时检查是否有搜索参数
+    document.addEventListener('DOMContentLoaded', function() {
+      const keyword = getUrlParam('q');
+      if (keyword) {
+        document.getElementById('searchInput').value = keyword;
+        document.getElementById('keywordDisplay').textContent = keyword;
+        document.getElementById('headerSearch').value = keyword;
+        highlightKeyword(keyword);
+      }
+    });
+
+    // 执行搜索
+    function doSearch() {
+      const keyword = document.getElementById('searchInput').value.trim() ||
+                      document.getElementById('headerSearch').value.trim();
+      if (keyword) {
+        window.location.href = 'search.html?q=' + encodeURIComponent(keyword);
+      }
+    }
+
+    // 回车搜索
+    document.getElementById('searchInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') doSearch();
+    });
+    document.getElementById('headerSearch').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') doSearch();
+    });
+
+    // 点击建议标签搜索
+    function searchKeyword(keyword) {
+      document.getElementById('searchInput').value = keyword;
+      doSearch();
+    }
+
+    // 筛选结果
+    function filterResults(type, btn) {
+      // 更新按钮状态
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // 筛选结果
+      const items = document.querySelectorAll('.result-item');
+      let visibleCount = 0;
+
+      items.forEach(item => {
+        if (type === 'all' || item.dataset.type === type) {
+          item.style.display = 'block';
+          visibleCount++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      // 更新统计
+      const keyword = document.getElementById('searchInput').value || '城乡教育';
+      document.getElementById('searchStats').innerHTML =
+        `找到 <strong>${visibleCount}</strong> 条与 "<span id="keywordDisplay">${keyword}</span>" 相关的结果`;
+    }
+
+    // 高亮关键词（简化版）
+    function highlightKeyword(keyword) {
+      // 这是一个简化的演示，实际应该在后端处理
+      console.log('Searching for:', keyword);
+    }
+  </script>
+</body>
+</html>
