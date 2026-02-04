@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理员登录 - 河南城乡学校共同体发展平台</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .login-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--primary-800) 0%, var(--accent-600) 100%);
+    }
+
+    .login-card {
+      background: var(--neutral-50);
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      width: 420px;
+      max-width: 90%;
+      padding: 48px 40px;
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .login-logo {
+      width: 60px;
+      height: 60px;
+      background: var(--primary-800);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--neutral-50);
+      font-size: 28px;
+      font-weight: bold;
+      margin: 0 auto 16px;
+    }
+
+    .login-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin-bottom: 8px;
+    }
+
+    .login-subtitle {
+      font-size: 14px;
+      color: var(--neutral-600);
+    }
+
+    .role-selector {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .role-option {
+      flex: 1;
+      padding: 16px;
+      border: 2px solid var(--neutral-300);
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .role-option:hover {
+      border-color: var(--primary-600);
+    }
+
+    .role-option.active {
+      border-color: var(--primary-800);
+      background: rgba(44, 90, 160, 0.05);
+    }
+
+    .role-option input {
+      display: none;
+    }
+
+    .role-icon {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .role-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--neutral-800);
+    }
+
+    .login-form .form-group {
+      margin-bottom: 20px;
+    }
+
+    .login-form .form-input {
+      padding: 14px 16px;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      margin-top: 8px;
+    }
+
+    .login-footer {
+      text-align: center;
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid var(--neutral-300);
+    }
+
+    .login-footer a {
+      color: var(--accent-600);
+      font-size: 14px;
+    }
+
+    .demo-tip {
+      background: var(--neutral-100);
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--neutral-600);
+    }
+
+    .demo-tip strong {
+      color: var(--neutral-800);
+    }
+  </style>
+</head>
+<body>
+  <div class="login-page">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="login-logo">豫</div>
+        <h1 class="login-title">管理后台登录</h1>
+        <p class="login-subtitle">河南城乡学校共同体发展平台</p>
+      </div>
+
+      <div class="role-selector">
+        <label class="role-option active" onclick="selectRole(this)">
+          <input type="radio" name="role" value="super" checked>
+          <div class="role-icon">&#128100;</div>
+          <div class="role-name">超级管理员</div>
+        </label>
+        <label class="role-option" onclick="selectRole(this)">
+          <input type="radio" name="role" value="school">
+          <div class="role-icon">&#127979;</div>
+          <div class="role-name">学校管理员</div>
+        </label>
+      </div>
+
+      <form class="login-form" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label class="form-label">账号</label>
+          <input type="text" class="form-input" placeholder="请输入账号" id="username">
+        </div>
+        <div class="form-group">
+          <label class="form-label">密码</label>
+          <input type="password" class="form-input" placeholder="请输入密码" id="password">
+        </div>
+        <button type="submit" class="btn btn-primary login-btn">登 录</button>
+      </form>
+
+      <div class="demo-tip">
+        <strong>演示说明：</strong><br>
+        这是一个前端Demo页面，登录功能仅作展示。<br>
+        实际系统需要对接后端服务进行身份验证。
+      </div>
+
+      <div class="login-footer">
+        <a href="../index.html">&larr; 返回网站首页</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function selectRole(element) {
+      document.querySelectorAll('.role-option').forEach(el => el.classList.remove('active'));
+      element.classList.add('active');
+    }
+
+    function handleLogin(event) {
+      event.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const role = document.querySelector('input[name="role"]:checked').value;
+
+      if (!username || !password) {
+        alert('请输入账号和密码');
+        return;
+      }
+
+      const roleName = role === 'super' ? '超级管理员' : '学校管理员';
+      alert(`登录演示成功！\n\n角色：${roleName}\n账号：${username}\n\n注：这是前端Demo，实际需要对接后端服务`);
+    }
+  </script>
+</body>
+</html>
