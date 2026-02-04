@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>新闻资讯管理 - 管理后台</title>
+  <title>政策文件管理 - 管理后台</title>
   <link rel="stylesheet" href="../css/styles.css">
   <link rel="stylesheet" href="../css/admin-modal.css">
 </head>
@@ -31,11 +31,11 @@
         </div>
         <div class="admin-menu-group">
           <div class="admin-menu-title">内容管理</div>
-          <a href="news.html" class="admin-menu-item active">
+          <a href="news.html" class="admin-menu-item">
             <span class="admin-menu-icon">📰</span>
             新闻资讯
           </a>
-          <a href="policy.html" class="admin-menu-item">
+          <a href="policy.html" class="admin-menu-item active">
             <span class="admin-menu-icon">📋</span>
             政策文件
           </a>
@@ -64,7 +64,7 @@
     <!-- Main Content -->
     <main class="admin-main">
       <header class="admin-header">
-        <div class="admin-breadcrumb">内容管理 / 新闻资讯</div>
+        <div class="admin-breadcrumb">内容管理 / 政策文件</div>
         <div class="admin-user">
           <span style="font-size: 14px; color: var(--neutral-600);">欢迎，超级管理员</span>
           <div class="admin-avatar">管</div>
@@ -74,52 +74,57 @@
 
       <div class="admin-content">
         <div class="admin-page-header">
-          <h1 class="admin-page-title">新闻资讯管理</h1>
-          <p class="admin-page-desc">管理平台发布的新闻资讯内容</p>
+          <h1 class="admin-page-title">政策文件管理</h1>
+          <p class="admin-page-desc">管理平台发布的政策文件</p>
         </div>
 
         <!-- Filter -->
         <div class="admin-card" style="margin-bottom: 20px;">
           <div class="admin-card-body" style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
             <div style="display: flex; align-items: center; gap: 8px;">
-              <label style="font-size: 14px; color: var(--neutral-600);">来源：</label>
-              <select class="form-input" style="width: 150px; padding: 8px 12px;">
-                <option>全部</option>
-                <option>平台发布</option>
-                <option>学校发布</option>
+              <label style="font-size: 14px; color: var(--neutral-600);">分类：</label>
+              <select class="form-input" style="width: 150px; padding: 8px 12px;" id="categoryFilter">
+                <option value="">全部</option>
+                <option value="国家政策">国家政策</option>
+                <option value="省级政策">省级政策</option>
+                <option value="实施方案">实施方案</option>
+                <option value="通知公告">通知公告</option>
               </select>
             </div>
             <div style="display: flex; align-items: center; gap: 8px;">
               <label style="font-size: 14px; color: var(--neutral-600);">关键词：</label>
-              <input type="text" class="form-input" style="width: 200px; padding: 8px 12px;" placeholder="搜索标题...">
+              <input type="text" class="form-input" style="width: 200px; padding: 8px 12px;" placeholder="搜索标题..." id="searchInput">
             </div>
-            <button class="btn btn-primary" style="padding: 8px 20px; font-size: 14px;">搜索</button>
+            <button class="btn btn-primary" style="padding: 8px 20px; font-size: 14px;" onclick="handleSearch()">搜索</button>
+            <button class="btn btn-outline" style="padding: 8px 20px; font-size: 14px;" onclick="resetFilter()">重置</button>
           </div>
         </div>
 
         <div class="admin-card">
           <div class="admin-card-header">
-            <h3 class="admin-card-title">新闻列表 (共128条)</h3>
-            <button class="btn btn-primary" style="padding: 8px 20px; font-size: 14px;" onclick="openAddModal()">+ 发布新闻</button>
+            <h3 class="admin-card-title">政策文件列表 (共<span id="totalCount">45</span>条)</h3>
+            <button class="btn btn-primary" style="padding: 8px 20px; font-size: 14px;" onclick="openAddModal()">+ 发布政策</button>
           </div>
           <div class="admin-card-body" style="padding: 0;">
             <table class="admin-table">
               <thead>
                 <tr>
-                  <th style="width: 40%;">标题</th>
-                  <th>来源</th>
+                  <th style="width: 35%;">标题</th>
+                  <th>分类</th>
+                  <th>发布机构</th>
                   <th>发布时间</th>
-                  <th>浏览量</th>
+                  <th>下载次数</th>
                   <th>状态</th>
                   <th>操作</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="policyTableBody">
                 <tr>
-                  <td>河南省召开城乡义务教育一体化发展推进会</td>
-                  <td><span class="admin-badge admin-badge-info">平台发布</span></td>
-                  <td>2025-03-15</td>
-                  <td>1,234</td>
+                  <td>关于加快推进城乡义务教育一体化发展的实施意见</td>
+                  <td><span class="admin-badge admin-badge-info">国家政策</span></td>
+                  <td>教育部</td>
+                  <td>2025-03-10</td>
+                  <td>3,456</td>
                   <td><span class="admin-badge admin-badge-success">已发布</span></td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="openEditModal(1)">编辑</button>
@@ -127,10 +132,11 @@
                   </td>
                 </tr>
                 <tr>
-                  <td>信阳董家河小学与乡村学校开展教学研讨活动</td>
-                  <td><span class="admin-badge admin-badge-success">信阳董家河小学</span></td>
-                  <td>2025-03-12</td>
-                  <td>856</td>
+                  <td>河南省城乡学校共同体建设实施方案</td>
+                  <td><span class="admin-badge admin-badge-success">省级政策</span></td>
+                  <td>河南省教育厅</td>
+                  <td>2025-02-28</td>
+                  <td>2,189</td>
                   <td><span class="admin-badge admin-badge-success">已发布</span></td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="openEditModal(2)">编辑</button>
@@ -138,10 +144,11 @@
                   </td>
                 </tr>
                 <tr>
-                  <td>濮阳市开德小学共同体建设成果展示会圆满举办</td>
-                  <td><span class="admin-badge admin-badge-success">濮阳市开德小学</span></td>
-                  <td>2025-03-10</td>
-                  <td>723</td>
+                  <td>2025年城乡学校共同体建设工作要点</td>
+                  <td><span class="admin-badge admin-badge-warning">实施方案</span></td>
+                  <td>河南省教育厅</td>
+                  <td>2025-02-15</td>
+                  <td>1,567</td>
                   <td><span class="admin-badge admin-badge-success">已发布</span></td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="openEditModal(3)">编辑</button>
@@ -149,10 +156,11 @@
                   </td>
                 </tr>
                 <tr>
-                  <td>省教育厅领导调研扶沟县实验小学共同体建设工作</td>
-                  <td><span class="admin-badge admin-badge-info">平台发布</span></td>
-                  <td>2025-03-08</td>
-                  <td>1,567</td>
+                  <td>关于开展第二批示范校共同体评选工作的通知</td>
+                  <td><span class="admin-badge admin-badge-default">通知公告</span></td>
+                  <td>河南省教育厅</td>
+                  <td>2025-02-01</td>
+                  <td>987</td>
                   <td><span class="admin-badge admin-badge-success">已发布</span></td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="openEditModal(4)">编辑</button>
@@ -160,10 +168,11 @@
                   </td>
                 </tr>
                 <tr>
-                  <td>2025年春季学期共同体工作计划发布</td>
-                  <td><span class="admin-badge admin-badge-info">平台发布</span></td>
-                  <td>2025-03-01</td>
-                  <td>2,105</td>
+                  <td>城乡学校共同体资源共享管理办法</td>
+                  <td><span class="admin-badge admin-badge-warning">实施方案</span></td>
+                  <td>河南省教育厅</td>
+                  <td>2025-01-20</td>
+                  <td>756</td>
                   <td><span class="admin-badge admin-badge-success">已发布</span></td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="openEditModal(5)">编辑</button>
@@ -179,56 +188,68 @@
         <div class="pagination" style="margin-top: 20px;">
           <span class="page-item disabled">&lt;</span>
           <span class="page-item active">1</span>
-          <span class="page-item">2</span>
-          <span class="page-item">3</span>
+          <span class="page-item" onclick="goToPage(2)">2</span>
+          <span class="page-item" onclick="goToPage(3)">3</span>
           <span class="page-item">...</span>
-          <span class="page-item">13</span>
-          <span class="page-item">&gt;</span>
+          <span class="page-item" onclick="goToPage(5)">5</span>
+          <span class="page-item" onclick="goToPage(2)">&gt;</span>
         </div>
       </div>
     </main>
   </div>
 
-  <!-- Add/Edit News Modal -->
-  <div class="modal-overlay" id="newsModal">
+  <!-- Add/Edit Modal -->
+  <div class="modal-overlay" id="policyModal">
     <div class="modal" style="max-width: 700px;">
       <div class="modal-header">
-        <h3 class="modal-title" id="modalTitle">发布新闻</h3>
+        <h3 class="modal-title" id="modalTitle">发布政策文件</h3>
         <button class="modal-close" onclick="closeModal()">&times;</button>
       </div>
       <div class="modal-body">
-        <form id="newsForm">
-          <input type="hidden" id="newsId">
+        <form id="policyForm">
+          <input type="hidden" id="policyId">
           <div class="form-group">
-            <label class="form-label">新闻标题 <span style="color: red;">*</span></label>
-            <input type="text" class="form-input" id="newsTitle" placeholder="请输入新闻标题" required>
+            <label class="form-label">政策标题 <span style="color: red;">*</span></label>
+            <input type="text" class="form-input" id="policyTitle" placeholder="请输入政策标题" required>
           </div>
-          <div class="form-group">
-            <label class="form-label">新闻摘要</label>
-            <textarea class="form-input" id="newsSummary" rows="3" placeholder="请输入新闻摘要"></textarea>
-          </div>
-          <div class="form-group">
-            <label class="form-label">新闻内容 <span style="color: red;">*</span></label>
-            <textarea class="form-input" id="newsContent" rows="8" placeholder="请输入新闻正文内容" required></textarea>
-          </div>
-          <div class="form-group">
-            <label class="form-label">封面图片</label>
-            <div class="file-upload-area" onclick="document.getElementById('newsCover').click()">
-              <input type="file" id="newsCover" style="display: none;" accept="image/*">
-              <div class="file-upload-icon">🖼️</div>
-              <div class="file-upload-text">点击上传封面图</div>
-              <div class="file-upload-hint">建议尺寸：800×450，支持 JPG、PNG 格式</div>
+          <div class="form-row">
+            <div class="form-group" style="flex: 1;">
+              <label class="form-label">分类 <span style="color: red;">*</span></label>
+              <select class="form-input" id="policyCategory" required>
+                <option value="">请选择分类</option>
+                <option value="国家政策">国家政策</option>
+                <option value="省级政策">省级政策</option>
+                <option value="实施方案">实施方案</option>
+                <option value="通知公告">通知公告</option>
+              </select>
             </div>
-            <div id="uploadedCover" class="uploaded-file" style="display: none;"></div>
+            <div class="form-group" style="flex: 1;">
+              <label class="form-label">发布机构 <span style="color: red;">*</span></label>
+              <input type="text" class="form-input" id="policyOrg" placeholder="如：教育部、河南省教育厅" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">政策摘要</label>
+            <textarea class="form-input" id="policySummary" rows="3" placeholder="请输入政策摘要"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">附件上传</label>
+            <div class="file-upload-area" onclick="document.getElementById('policyFile').click()">
+              <input type="file" id="policyFile" style="display: none;" accept=".pdf,.doc,.docx">
+              <div class="file-upload-icon">📁</div>
+              <div class="file-upload-text">点击或拖拽文件到此处上传</div>
+              <div class="file-upload-hint">支持 PDF、DOC、DOCX 格式，最大 20MB</div>
+            </div>
+            <div id="uploadedFile" class="uploaded-file" style="display: none;"></div>
           </div>
           <div class="form-group">
             <label class="form-label">发布状态</label>
             <div style="display: flex; gap: 20px;">
               <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                <input type="radio" name="newsStatus" value="published" checked> 立即发布
+                <input type="radio" name="policyStatus" value="published" checked> 立即发布
               </label>
               <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                <input type="radio" name="newsStatus" value="draft"> 保存为草稿
+                <input type="radio" name="policyStatus" value="draft"> 保存为草稿
               </label>
             </div>
           </div>
@@ -236,7 +257,7 @@
       </div>
       <div class="modal-footer">
         <button class="btn btn-outline" onclick="closeModal()">取消</button>
-        <button class="btn btn-primary" onclick="saveNews()">保存</button>
+        <button class="btn btn-primary" onclick="savePolicy()">保存</button>
       </div>
     </div>
   </div>
@@ -250,7 +271,7 @@
       </div>
       <div class="modal-body" style="text-align: center; padding: 30px 20px;">
         <div style="font-size: 48px; margin-bottom: 16px;">⚠️</div>
-        <p style="font-size: 16px; color: var(--neutral-700); margin-bottom: 8px;">确定要删除这条新闻吗？</p>
+        <p style="font-size: 16px; color: var(--neutral-700); margin-bottom: 8px;">确定要删除这条政策文件吗？</p>
         <p style="font-size: 14px; color: var(--neutral-500);">删除后将无法恢复</p>
       </div>
       <div class="modal-footer" style="justify-content: center;">
@@ -264,43 +285,45 @@
     let deleteId = null;
 
     function openAddModal() {
-      document.getElementById('modalTitle').textContent = '发布新闻';
-      document.getElementById('newsForm').reset();
-      document.getElementById('newsId').value = '';
-      document.getElementById('uploadedCover').style.display = 'none';
-      document.getElementById('newsModal').classList.add('active');
+      document.getElementById('modalTitle').textContent = '发布政策文件';
+      document.getElementById('policyForm').reset();
+      document.getElementById('policyId').value = '';
+      document.getElementById('uploadedFile').style.display = 'none';
+      document.getElementById('policyModal').classList.add('active');
     }
 
     function openEditModal(id) {
-      document.getElementById('modalTitle').textContent = '编辑新闻';
-      document.getElementById('newsId').value = id;
+      document.getElementById('modalTitle').textContent = '编辑政策文件';
+      document.getElementById('policyId').value = id;
       // 模拟加载数据
-      document.getElementById('newsTitle').value = '河南省召开城乡义务教育一体化发展推进会';
-      document.getElementById('newsSummary').value = '3月15日，河南省教育厅召开城乡义务教育一体化发展工作推进会...';
-      document.getElementById('newsContent').value = '3月15日，河南省教育厅在郑州召开全省城乡义务教育一体化发展工作推进会议。会议总结了近年来我省城乡学校共同体建设的成效和经验，分析了当前面临的困难和挑战，部署了下一阶段的重点任务。\n\n会议指出，城乡学校共同体建设是促进城乡义务教育均衡发展的重要举措...';
-      document.getElementById('uploadedCover').innerHTML = '🖼️ news_cover_1.jpg <span onclick="removeCover()" style="color: var(--accent-600); cursor: pointer; margin-left: 10px;">删除</span>';
-      document.getElementById('uploadedCover').style.display = 'block';
-      document.getElementById('newsModal').classList.add('active');
+      document.getElementById('policyTitle').value = '关于加快推进城乡义务教育一体化发展的实施意见';
+      document.getElementById('policyCategory').value = '国家政策';
+      document.getElementById('policyOrg').value = '教育部';
+      document.getElementById('policySummary').value = '为贯彻落实党中央、国务院关于推进城乡义务教育一体化发展的决策部署...';
+      document.getElementById('uploadedFile').innerHTML = '📄 关于加快推进城乡义务教育一体化发展的实施意见.pdf <span onclick="removeFile()" style="color: var(--accent-600); cursor: pointer; margin-left: 10px;">删除</span>';
+      document.getElementById('uploadedFile').style.display = 'block';
+      document.getElementById('policyModal').classList.add('active');
     }
 
     function closeModal() {
-      document.getElementById('newsModal').classList.remove('active');
+      document.getElementById('policyModal').classList.remove('active');
     }
 
-    function saveNews() {
-      const title = document.getElementById('newsTitle').value;
-      const content = document.getElementById('newsContent').value;
+    function savePolicy() {
+      const title = document.getElementById('policyTitle').value;
+      const category = document.getElementById('policyCategory').value;
+      const org = document.getElementById('policyOrg').value;
 
-      if (!title || !content) {
+      if (!title || !category || !org) {
         alert('请填写必填项');
         return;
       }
 
-      const id = document.getElementById('newsId').value;
+      const id = document.getElementById('policyId').value;
       if (id) {
-        showToast('新闻更新成功！');
+        showToast('政策文件更新成功！');
       } else {
-        showToast('新闻发布成功！');
+        showToast('政策文件发布成功！');
       }
       closeModal();
     }
@@ -316,20 +339,38 @@
     }
 
     function doDelete() {
-      showToast('新闻已删除');
+      showToast('政策文件已删除');
       closeDeleteModal();
+      // 模拟删除行
+      // 实际项目中应该刷新列表
     }
 
-    function removeCover() {
-      document.getElementById('uploadedCover').style.display = 'none';
+    function handleSearch() {
+      const keyword = document.getElementById('searchInput').value;
+      const category = document.getElementById('categoryFilter').value;
+      showToast('搜索条件：分类=' + (category || '全部') + '，关键词=' + (keyword || '无'));
+    }
+
+    function resetFilter() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('categoryFilter').value = '';
+      showToast('筛选条件已重置');
+    }
+
+    function goToPage(page) {
+      showToast('跳转到第 ' + page + ' 页');
+    }
+
+    function removeFile() {
+      document.getElementById('uploadedFile').style.display = 'none';
     }
 
     // 文件上传处理
-    document.getElementById('newsCover').addEventListener('change', function(e) {
+    document.getElementById('policyFile').addEventListener('change', function(e) {
       if (e.target.files.length > 0) {
         const file = e.target.files[0];
-        document.getElementById('uploadedCover').innerHTML = '🖼️ ' + file.name + ' <span onclick="removeCover()" style="color: var(--accent-600); cursor: pointer; margin-left: 10px;">删除</span>';
-        document.getElementById('uploadedCover').style.display = 'block';
+        document.getElementById('uploadedFile').innerHTML = '📄 ' + file.name + ' <span onclick="removeFile()" style="color: var(--accent-600); cursor: pointer; margin-left: 10px;">删除</span>';
+        document.getElementById('uploadedFile').style.display = 'block';
       }
     });
 
