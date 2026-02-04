@@ -96,6 +96,39 @@
     .report-list.show-all .resource-item {
       display: flex;
     }
+
+    /* Tab导航样式 */
+    .content-tabs {
+      display: flex;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+    .content-tab {
+      flex: 1;
+      padding: 16px 20px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--neutral-600);
+      background: #fff;
+      border: none;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .content-tab:hover {
+      color: var(--primary-800);
+      background: var(--primary-50);
+    }
+    .content-tab.active {
+      color: var(--primary-800);
+      border-bottom-color: var(--primary-800);
+      background: var(--primary-50);
+    }
   </style>
 </head>
 <body>
@@ -166,6 +199,13 @@
                   <p style="color: var(--neutral-600);">联系电话：0376-XXXXXXXX</p>
                 </div>
               </div>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="content-tabs" id="contentTabs">
+              <a href="#intro" class="content-tab active" data-target="intro">校共同体介绍</a>
+              <a href="#activity" class="content-tab" data-target="activity">校共同体活动</a>
+              <a href="#report" class="content-tab" data-target="report">校共同体月报</a>
             </div>
 
             <!-- 校共同体介绍 -->
@@ -432,6 +472,52 @@
         btn.style.display = 'none';
         content.classList.add('expanded');
       }
+
+      // Tab导航功能
+      const tabs = document.querySelectorAll('.content-tab');
+      const sections = ['intro', 'activity', 'report'];
+
+      // 点击tab滚动到对应位置
+      tabs.forEach(tab => {
+        tab.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('data-target');
+          const targetElement = document.getElementById(targetId);
+
+          if (targetElement) {
+            const headerOffset = 80;
+            const elementPosition = targetElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+
+            // 更新active状态
+            tabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+          }
+        });
+      });
+
+      // 滚动时自动高亮对应tab
+      window.addEventListener('scroll', function() {
+        const scrollPos = window.scrollY + 150;
+
+        sections.forEach((sectionId, index) => {
+          const section = document.getElementById(sectionId);
+          if (section) {
+            const sectionTop = section.offsetTop;
+            const sectionBottom = sectionTop + section.offsetHeight;
+
+            if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
+              tabs.forEach(t => t.classList.remove('active'));
+              tabs[index].classList.add('active');
+            }
+          }
+        });
+      });
     });
   </script>
 </body>
