@@ -18,45 +18,83 @@
       background: var(--primary-200) !important;
     }
 
-    /* Tab导航样式 */
-    .content-tabs {
+    /* 模块标题样式 */
+    .section-title-bar {
       display: flex;
-      background: var(--neutral-50);
-      border-radius: var(--radius-md) var(--radius-md) 0 0;
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
-      margin-bottom: 0;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--primary-800);
     }
-    .content-tab {
-      flex: 1;
-      padding: 16px 24px;
-      text-align: center;
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--neutral-600);
-      background: var(--neutral-100);
-      border: none;
-      cursor: pointer;
-      transition: all 0.2s;
-      border-bottom: 3px solid transparent;
-    }
-    .content-tab:hover {
+    .section-title-bar h2 {
+      font-size: 20px;
       color: var(--primary-800);
-      background: var(--neutral-50);
+      margin: 0;
+      display: flex;
+      align-items: center;
     }
-    .content-tab.active {
-      color: var(--primary-800);
-      background: var(--neutral-50);
-      border-bottom-color: var(--primary-800);
+    .section-title-bar h2::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 20px;
+      background: var(--primary-800);
+      margin-right: 10px;
     }
 
-    /* Tab内容样式 */
-    .tab-content {
-      border-radius: 0 0 var(--radius-md) var(--radius-md);
-      margin-top: 0;
+    /* 展开收起功能 */
+    .intro-content {
+      position: relative;
+      max-height: 400px;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
     }
-    .tab-content:not(.active) {
+    .intro-content.expanded {
+      max-height: none;
+    }
+    .intro-content:not(.expanded)::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+      pointer-events: none;
+    }
+    .expand-btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin-top: 16px;
+      background: var(--neutral-100);
+      border: 1px solid var(--neutral-300);
+      border-radius: 6px;
+      color: var(--primary-800);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .expand-btn:hover {
+      background: var(--primary-100);
+      border-color: var(--primary-800);
+    }
+
+    /* 活动和月报列表样式 */
+    .activity-list .news-item:nth-child(n+4) {
       display: none;
+    }
+    .activity-list.show-all .news-item {
+      display: flex;
+    }
+    .report-list .resource-item:nth-child(n+4) {
+      display: none;
+    }
+    .report-list.show-all .resource-item {
+      display: flex;
     }
   </style>
 </head>
@@ -74,7 +112,6 @@
           <a href="about.html" class="nav-link">项目介绍</a>
           <a href="policy.html" class="nav-link">政策文件</a>
           <a href="schools.html" class="nav-link active">示范校共体</a>
-          <a href="news.html" class="nav-link">新闻资讯</a>
           <a href="resources.html" class="nav-link">资源共享</a>
         </nav>
         <div class="nav-search">
@@ -131,61 +168,63 @@
               </div>
             </div>
 
-            <!-- Tab Navigation -->
-            <div class="content-tabs">
-              <a href="#intro" class="content-tab active" data-tab="intro">校共同体介绍</a>
-              <a href="#activity" class="content-tab" data-tab="activity">校共同体活动</a>
-              <a href="#report" class="content-tab" data-tab="report">校共同体月报</a>
-            </div>
+            <!-- 校共同体介绍 -->
+            <div class="content-card" id="intro" style="margin-bottom: 24px;">
+              <div class="section-title-bar">
+                <h2>校共同体介绍</h2>
+              </div>
+              <div class="intro-content" id="introContent">
+                <h3 style="font-size: 18px; margin: 0 0 16px; color: var(--neutral-800);">学校简介</h3>
+                <p style="line-height: 1.8; text-indent: 2em; margin-bottom: 16px;">
+                  信阳董家河小学中心校位于信阳市浉河区董家河镇，是一所具有悠久办学历史的农村中心小学。学校占地面积XX亩，现有教学班XX个，在校学生XXXX人，教职工XX人。学校坚持"让每一个孩子都能享受优质教育"的办学理念，近年来在教育教学质量方面取得了显著成效。
+                </p>
 
-            <!-- Tab Content: 校共同体介绍 -->
-            <div class="content-card tab-content active" id="intro">
-              <h3 style="font-size: 18px; margin: 0 0 16px; color: var(--neutral-800);">学校简介</h3>
-              <p style="line-height: 1.8; text-indent: 2em; margin-bottom: 16px;">
-                信阳董家河小学中心校位于信阳市浉河区董家河镇，是一所具有悠久办学历史的农村中心小学。学校占地面积XX亩，现有教学班XX个，在校学生XXXX人，教职工XX人。学校坚持"让每一个孩子都能享受优质教育"的办学理念，近年来在教育教学质量方面取得了显著成效。
-              </p>
+                <h3 style="font-size: 18px; margin: 20px 0 12px; color: var(--neutral-800);">共同体组建模式</h3>
+                <p style="line-height: 1.8; text-indent: 2em; margin-bottom: 16px;">
+                  采取"1+5"模式，由董家河小学中心校牵头，联合周边5所村级小学组建城乡学校共同体。通过建立理事会制度，统筹推进共同体各项工作，形成了"管理一体化、教学同步化、资源共享化、师资流动化"的运行机制。
+                </p>
 
-              <h3 style="font-size: 18px; margin: 20px 0 12px; color: var(--neutral-800);">共同体组建模式</h3>
-              <p style="line-height: 1.8; text-indent: 2em; margin-bottom: 16px;">
-                采取"1+5"模式，由董家河小学中心校牵头，联合周边5所村级小学组建城乡学校共同体。通过建立理事会制度，统筹推进共同体各项工作，形成了"管理一体化、教学同步化、资源共享化、师资流动化"的运行机制。
-              </p>
+                <h3 style="font-size: 18px; margin: 20px 0 12px; color: var(--neutral-800);">核心优势</h3>
+                <ul style="line-height: 2; margin-left: 2em; margin-bottom: 16px;">
+                  <li style="list-style: disc;">拥有一支经验丰富、业务精湛的教师队伍</li>
+                  <li style="list-style: disc;">建立了完善的校本教研制度</li>
+                  <li style="list-style: disc;">信息化教学设施完备，实现了班班通全覆盖</li>
+                  <li style="list-style: disc;">积累了丰富的城乡教育合作经验</li>
+                </ul>
 
-              <h3 style="font-size: 18px; margin: 20px 0 12px; color: var(--neutral-800);">核心优势</h3>
-              <ul style="line-height: 2; margin-left: 2em;">
-                <li style="list-style: disc;">拥有一支经验丰富、业务精湛的教师队伍</li>
-                <li style="list-style: disc;">建立了完善的校本教研制度</li>
-                <li style="list-style: disc;">信息化教学设施完备，实现了班班通全覆盖</li>
-                <li style="list-style: disc;">积累了丰富的城乡教育合作经验</li>
-              </ul>
-
-              <h3 style="font-size: 18px; margin: 20px 0 12px; color: var(--neutral-800);">成员学校</h3>
-              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px;">
-                <div style="padding: 16px; background: var(--neutral-100); border-radius: 8px; text-align: center;">
-                  <div style="font-weight: 600; color: var(--neutral-800);">董家河镇第一小学</div>
-                  <div style="font-size: 14px; color: var(--neutral-500); margin-top: 4px;">成员校</div>
-                </div>
-                <div style="padding: 16px; background: var(--neutral-100); border-radius: 8px; text-align: center;">
-                  <div style="font-weight: 600; color: var(--neutral-800);">董家河镇第二小学</div>
-                  <div style="font-size: 14px; color: var(--neutral-500); margin-top: 4px;">成员校</div>
-                </div>
-                <div style="padding: 16px; background: var(--neutral-100); border-radius: 8px; text-align: center;">
-                  <div style="font-weight: 600; color: var(--neutral-800);">董家河镇黄龙寺小学</div>
-                  <div style="font-size: 14px; color: var(--neutral-500); margin-top: 4px;">成员校</div>
-                </div>
-                <div style="padding: 16px; background: var(--neutral-100); border-radius: 8px; text-align: center;">
-                  <div style="font-weight: 600; color: var(--neutral-800);">董家河镇睡仙桥小学</div>
-                  <div style="font-size: 14px; color: var(--neutral-500); margin-top: 4px;">成员校</div>
-                </div>
-                <div style="padding: 16px; background: var(--neutral-100); border-radius: 8px; text-align: center;">
-                  <div style="font-weight: 600; color: var(--neutral-800);">董家河镇绿之风小学</div>
-                  <div style="font-size: 14px; color: var(--neutral-500); margin-top: 4px;">成员校</div>
+                <h3 style="font-size: 18px; margin: 20px 0 12px; color: var(--neutral-800);">成员学校</h3>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px;">
+                  <div style="padding: 16px; background: var(--neutral-100); border-radius: 8px; text-align: center;">
+                    <div style="font-weight: 600; color: var(--neutral-800);">董家河镇第一小学</div>
+                    <div style="font-size: 14px; color: var(--neutral-500); margin-top: 4px;">成员校</div>
+                  </div>
+                  <div style="padding: 16px; background: var(--neutral-100); border-radius: 8px; text-align: center;">
+                    <div style="font-weight: 600; color: var(--neutral-800);">董家河镇第二小学</div>
+                    <div style="font-size: 14px; color: var(--neutral-500); margin-top: 4px;">成员校</div>
+                  </div>
+                  <div style="padding: 16px; background: var(--neutral-100); border-radius: 8px; text-align: center;">
+                    <div style="font-weight: 600; color: var(--neutral-800);">董家河镇黄龙寺小学</div>
+                    <div style="font-size: 14px; color: var(--neutral-500); margin-top: 4px;">成员校</div>
+                  </div>
+                  <div style="padding: 16px; background: var(--neutral-100); border-radius: 8px; text-align: center;">
+                    <div style="font-weight: 600; color: var(--neutral-800);">董家河镇睡仙桥小学</div>
+                    <div style="font-size: 14px; color: var(--neutral-500); margin-top: 4px;">成员校</div>
+                  </div>
+                  <div style="padding: 16px; background: var(--neutral-100); border-radius: 8px; text-align: center;">
+                    <div style="font-weight: 600; color: var(--neutral-800);">董家河镇绿之风小学</div>
+                    <div style="font-size: 14px; color: var(--neutral-500); margin-top: 4px;">成员校</div>
+                  </div>
                 </div>
               </div>
+              <button class="expand-btn" id="expandBtn" onclick="toggleIntro()">展开全部内容</button>
             </div>
 
-            <!-- Tab Content: 校共同体活动 -->
-            <div class="content-card tab-content" id="activity" style="display: none;">
-              <div class="news-list">
+            <!-- 校共同体活动 -->
+            <div class="content-card" id="activity" style="margin-bottom: 24px;">
+              <div class="section-title-bar">
+                <h2>校共同体活动</h2>
+              </div>
+              <div class="news-list activity-list" id="activityList">
                 <div class="news-item">
                   <div class="news-date">
                     <div class="news-date-day">12</div>
@@ -249,13 +288,16 @@
               </div>
 
               <div style="text-align: center; margin-top: 20px;">
-                <a href="news.html" class="btn btn-outline">查看更多活动 &gt;</a>
+                <a href="#" class="btn btn-outline" id="activityMoreBtn" onclick="toggleActivity(event)">查看更多活动 &gt;</a>
               </div>
             </div>
 
-            <!-- Tab Content: 校共同体月报 -->
-            <div class="content-card tab-content" id="report" style="display: none;">
-              <div class="resource-list">
+            <!-- 校共同体月报 -->
+            <div class="content-card" id="report">
+              <div class="section-title-bar">
+                <h2>校共同体月报</h2>
+              </div>
+              <div class="resource-list report-list" id="reportList">
                 <div class="resource-item" style="padding: 16px 0;">
                   <div class="resource-icon">PDF</div>
                   <div class="resource-info">
@@ -301,7 +343,7 @@
               </div>
 
               <div style="text-align: center; margin-top: 20px;">
-                <a href="resources.html" class="btn btn-outline">查看更多月报 &gt;</a>
+                <a href="#" class="btn btn-outline" id="reportMoreBtn" onclick="toggleReport(event)">查看更多月报 &gt;</a>
               </div>
             </div>
           </div>
@@ -324,7 +366,6 @@
             <a href="about.html">项目介绍</a>
             <a href="policy.html">政策文件</a>
             <a href="schools.html">示范校共体</a>
-            <a href="news.html">新闻资讯</a>
             <a href="resources.html">资源共享</a>
           </div>
         </div>
@@ -337,57 +378,60 @@
 
   <script src="../js/main.js"></script>
   <script>
-    // Tab切换功能
+    // 展开/收起介绍内容
+    function toggleIntro() {
+      const content = document.getElementById('introContent');
+      const btn = document.getElementById('expandBtn');
+
+      if (content.classList.contains('expanded')) {
+        content.classList.remove('expanded');
+        btn.textContent = '展开全部内容';
+      } else {
+        content.classList.add('expanded');
+        btn.textContent = '收起内容';
+      }
+    }
+
+    // 查看更多活动
+    function toggleActivity(e) {
+      e.preventDefault();
+      const list = document.getElementById('activityList');
+      const btn = document.getElementById('activityMoreBtn');
+
+      if (list.classList.contains('show-all')) {
+        list.classList.remove('show-all');
+        btn.innerHTML = '查看更多活动 &gt;';
+      } else {
+        list.classList.add('show-all');
+        btn.innerHTML = '收起活动列表 &lt;';
+      }
+    }
+
+    // 查看更多月报
+    function toggleReport(e) {
+      e.preventDefault();
+      const list = document.getElementById('reportList');
+      const btn = document.getElementById('reportMoreBtn');
+
+      if (list.classList.contains('show-all')) {
+        list.classList.remove('show-all');
+        btn.innerHTML = '查看更多月报 &gt;';
+      } else {
+        list.classList.add('show-all');
+        btn.innerHTML = '收起月报列表 &lt;';
+      }
+    }
+
+    // 检查介绍内容是否超出一屏，如果没超出则隐藏展开按钮
     document.addEventListener('DOMContentLoaded', function() {
-      const tabs = document.querySelectorAll('.content-tab');
-      const contents = document.querySelectorAll('.tab-content');
+      const content = document.getElementById('introContent');
+      const btn = document.getElementById('expandBtn');
 
-      // 检查URL hash并激活对应tab
-      function activateTabFromHash() {
-        const hash = window.location.hash.slice(1);
-        if (hash) {
-          const targetTab = document.querySelector(`.content-tab[data-tab="${hash}"]`);
-          if (targetTab) {
-            activateTab(targetTab);
-          }
-        }
+      // 如果内容高度小于max-height，隐藏展开按钮
+      if (content.scrollHeight <= 400) {
+        btn.style.display = 'none';
+        content.classList.add('expanded');
       }
-
-      // 激活指定tab
-      function activateTab(tab) {
-        const tabId = tab.getAttribute('data-tab');
-
-        // 移除所有active
-        tabs.forEach(t => t.classList.remove('active'));
-        contents.forEach(c => {
-          c.classList.remove('active');
-          c.style.display = 'none';
-        });
-
-        // 激活当前tab
-        tab.classList.add('active');
-        const targetContent = document.getElementById(tabId);
-        if (targetContent) {
-          targetContent.classList.add('active');
-          targetContent.style.display = 'block';
-        }
-      }
-
-      // 点击事件
-      tabs.forEach(tab => {
-        tab.addEventListener('click', function(e) {
-          e.preventDefault();
-          activateTab(this);
-          // 更新URL hash
-          window.location.hash = this.getAttribute('data-tab');
-        });
-      });
-
-      // 页面加载时检查hash
-      activateTabFromHash();
-
-      // 监听hash变化
-      window.addEventListener('hashchange', activateTabFromHash);
     });
   </script>
 </body>
