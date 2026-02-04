@@ -194,7 +194,7 @@ ul, ol {
 
 .carousel-item {
   min-width: 100%;
-  aspect-ratio: 1200 / 400;
+  aspect-ratio: 1200 / 280;
   background: linear-gradient(135deg, var(--primary-800) 0%, var(--accent-600) 100%);
   display: flex;
   align-items: center;
@@ -221,7 +221,7 @@ ul, ol {
 
 .carousel-indicators {
   position: absolute;
-  bottom: 70px;
+  bottom: 60px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;

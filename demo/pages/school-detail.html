@@ -5,6 +5,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>信阳董家河小学中心校 - 河南城乡学校共同体发展平台</title>
   <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    /* 更多学校按钮样式 */
+    .sidebar-more-btn {
+      background: var(--primary-100) !important;
+      color: var(--primary-800) !important;
+      font-weight: 600;
+      text-align: center;
+      border-left: 3px solid var(--primary-800) !important;
+    }
+    .sidebar-more-btn:hover {
+      background: var(--primary-200) !important;
+    }
+
+    /* Tab导航样式 */
+    .content-tabs {
+      display: flex;
+      background: var(--neutral-50);
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 0;
+    }
+    .content-tab {
+      flex: 1;
+      padding: 16px 24px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--neutral-600);
+      background: var(--neutral-100);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      border-bottom: 3px solid transparent;
+    }
+    .content-tab:hover {
+      color: var(--primary-800);
+      background: var(--neutral-50);
+    }
+    .content-tab.active {
+      color: var(--primary-800);
+      background: var(--neutral-50);
+      border-bottom-color: var(--primary-800);
+    }
+
+    /* Tab内容样式 */
+    .tab-content {
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      margin-top: 0;
+    }
+    .tab-content:not(.active) {
+      display: none;
+    }
+  </style>
 </head>
 <body>
   <div class="page-wrapper">
@@ -53,15 +107,11 @@
                 <a href="school-detail.html" class="sidebar-item">修武县方庄中心小学</a>
                 <a href="school-detail.html" class="sidebar-item">栾川县第四实验小学</a>
                 <a href="school-detail.html" class="sidebar-item">航空港区科技一街小学</a>
-              </div>
-            </nav>
-
-            <nav class="sidebar-nav" style="margin-top: 20px;">
-              <div class="sidebar-title">本校栏目</div>
-              <div class="sidebar-menu">
-                <a href="#intro" class="sidebar-item active">校共体介绍</a>
-                <a href="#progress" class="sidebar-item">项目进展</a>
-                <a href="#resources" class="sidebar-item">资源成果</a>
+                <a href="school-detail.html" class="sidebar-item">郑州市金水区文化路小学</a>
+                <a href="school-detail.html" class="sidebar-item">洛阳市涧西区实验小学</a>
+                <a href="school-detail.html" class="sidebar-item">开封市鼓楼区中心小学</a>
+                <a href="school-detail.html" class="sidebar-item">安阳市文峰区育才小学</a>
+                <a href="schools.html" class="sidebar-item sidebar-more-btn">更多学校 ›</a>
               </div>
             </nav>
           </aside>
@@ -81,11 +131,16 @@
               </div>
             </div>
 
-            <!-- Intro Section -->
-            <div class="content-card" id="intro" style="margin-bottom: 24px;">
-              <h2 style="font-size: 22px; color: var(--primary-800); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--primary-800);">校共体介绍</h2>
+            <!-- Tab Navigation -->
+            <div class="content-tabs">
+              <a href="#intro" class="content-tab active" data-tab="intro">校共同体介绍</a>
+              <a href="#activity" class="content-tab" data-tab="activity">校共同体活动</a>
+              <a href="#report" class="content-tab" data-tab="report">校共同体月报</a>
+            </div>
 
-              <h3 style="font-size: 18px; margin: 20px 0 12px; color: var(--neutral-800);">学校简介</h3>
+            <!-- Tab Content: 校共同体介绍 -->
+            <div class="content-card tab-content active" id="intro">
+              <h3 style="font-size: 18px; margin: 0 0 16px; color: var(--neutral-800);">学校简介</h3>
               <p style="line-height: 1.8; text-indent: 2em; margin-bottom: 16px;">
                 信阳董家河小学中心校位于信阳市浉河区董家河镇，是一所具有悠久办学历史的农村中心小学。学校占地面积XX亩，现有教学班XX个，在校学生XXXX人，教职工XX人。学校坚持"让每一个孩子都能享受优质教育"的办学理念，近年来在教育教学质量方面取得了显著成效。
               </p>
@@ -102,12 +157,34 @@
                 <li style="list-style: disc;">信息化教学设施完备，实现了班班通全覆盖</li>
                 <li style="list-style: disc;">积累了丰富的城乡教育合作经验</li>
               </ul>
+
+              <h3 style="font-size: 18px; margin: 20px 0 12px; color: var(--neutral-800);">成员学校</h3>
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px;">
+                <div style="padding: 16px; background: var(--neutral-100); border-radius: 8px; text-align: center;">
+                  <div style="font-weight: 600; color: var(--neutral-800);">董家河镇第一小学</div>
+                  <div style="font-size: 14px; color: var(--neutral-500); margin-top: 4px;">成员校</div>
+                </div>
+                <div style="padding: 16px; background: var(--neutral-100); border-radius: 8px; text-align: center;">
+                  <div style="font-weight: 600; color: var(--neutral-800);">董家河镇第二小学</div>
+                  <div style="font-size: 14px; color: var(--neutral-500); margin-top: 4px;">成员校</div>
+                </div>
+                <div style="padding: 16px; background: var(--neutral-100); border-radius: 8px; text-align: center;">
+                  <div style="font-weight: 600; color: var(--neutral-800);">董家河镇黄龙寺小学</div>
+                  <div style="font-size: 14px; color: var(--neutral-500); margin-top: 4px;">成员校</div>
+                </div>
+                <div style="padding: 16px; background: var(--neutral-100); border-radius: 8px; text-align: center;">
+                  <div style="font-weight: 600; color: var(--neutral-800);">董家河镇睡仙桥小学</div>
+                  <div style="font-size: 14px; color: var(--neutral-500); margin-top: 4px;">成员校</div>
+                </div>
+                <div style="padding: 16px; background: var(--neutral-100); border-radius: 8px; text-align: center;">
+                  <div style="font-weight: 600; color: var(--neutral-800);">董家河镇绿之风小学</div>
+                  <div style="font-size: 14px; color: var(--neutral-500); margin-top: 4px;">成员校</div>
+                </div>
+              </div>
             </div>
 
-            <!-- Progress Section -->
-            <div class="content-card" id="progress" style="margin-bottom: 24px;">
-              <h2 style="font-size: 22px; color: var(--primary-800); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--primary-800);">项目进展</h2>
-
+            <!-- Tab Content: 校共同体活动 -->
+            <div class="content-card tab-content" id="activity" style="display: none;">
               <div class="news-list">
                 <div class="news-item">
                   <div class="news-date">
@@ -149,50 +226,82 @@
                     <div class="news-source">资源共享 | 打造在线教学资源库</div>
                   </div>
                 </div>
+                <div class="news-item">
+                  <div class="news-date">
+                    <div class="news-date-day">10</div>
+                    <div class="news-date-month">2025-01</div>
+                  </div>
+                  <div class="news-info">
+                    <a href="news-detail.html" class="news-title">共同体期末教学质量分析研讨会</a>
+                    <div class="news-source">教学研讨 | 总结经验查找不足</div>
+                  </div>
+                </div>
+                <div class="news-item">
+                  <div class="news-date">
+                    <div class="news-date-day">25</div>
+                    <div class="news-date-month">2024-12</div>
+                  </div>
+                  <div class="news-info">
+                    <a href="news-detail.html" class="news-title">城乡教师结对帮扶启动仪式举行</a>
+                    <div class="news-source">师资共培 | 12对教师结成帮扶对子</div>
+                  </div>
+                </div>
               </div>
 
               <div style="text-align: center; margin-top: 20px;">
-                <a href="news.html" class="btn btn-outline">查看更多进展 &gt;</a>
+                <a href="news.html" class="btn btn-outline">查看更多活动 &gt;</a>
               </div>
             </div>
 
-            <!-- Resources Section -->
-            <div class="content-card" id="resources">
-              <h2 style="font-size: 22px; color: var(--primary-800); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--primary-800);">资源成果</h2>
-
+            <!-- Tab Content: 校共同体月报 -->
+            <div class="content-card tab-content" id="report" style="display: none;">
               <div class="resource-list">
                 <div class="resource-item" style="padding: 16px 0;">
                   <div class="resource-icon">PDF</div>
                   <div class="resource-info">
-                    <a href="resource-detail.html" class="resource-title">董家河小学城乡共同体建设实践报告</a>
-                    <div class="resource-meta">实践报告 | 1.2MB | 2025-02</div>
-                  </div>
-                </div>
-                <div class="resource-item" style="padding: 16px 0;">
-                  <div class="resource-icon" style="background: var(--secondary-500);">DOC</div>
-                  <div class="resource-info">
-                    <a href="resource-detail.html" class="resource-title">语文学科联合教研活动方案</a>
-                    <div class="resource-meta">教研方案 | 356KB | 2025-01</div>
+                    <a href="resource-detail.html" class="resource-title">2025年3月共同体工作月报</a>
+                    <div class="resource-meta">月报 | 856KB | 2025-03-31</div>
                   </div>
                 </div>
                 <div class="resource-item" style="padding: 16px 0;">
                   <div class="resource-icon">PDF</div>
                   <div class="resource-info">
-                    <a href="resource-detail.html" class="resource-title">2024年度共同体工作总结</a>
-                    <div class="resource-meta">工作总结 | 890KB | 2025-01</div>
+                    <a href="resource-detail.html" class="resource-title">2025年2月共同体工作月报</a>
+                    <div class="resource-meta">月报 | 920KB | 2025-02-28</div>
                   </div>
                 </div>
                 <div class="resource-item" style="padding: 16px 0;">
-                  <div class="resource-icon" style="background: var(--success);">PPT</div>
+                  <div class="resource-icon">PDF</div>
                   <div class="resource-info">
-                    <a href="resource-detail.html" class="resource-title">示范课《春天的故事》教学课件</a>
-                    <div class="resource-meta">教学课件 | 5.6MB | 2024-12</div>
+                    <a href="resource-detail.html" class="resource-title">2025年1月共同体工作月报</a>
+                    <div class="resource-meta">月报 | 1.1MB | 2025-01-31</div>
+                  </div>
+                </div>
+                <div class="resource-item" style="padding: 16px 0;">
+                  <div class="resource-icon">PDF</div>
+                  <div class="resource-info">
+                    <a href="resource-detail.html" class="resource-title">2024年12月共同体工作月报</a>
+                    <div class="resource-meta">月报 | 780KB | 2024-12-31</div>
+                  </div>
+                </div>
+                <div class="resource-item" style="padding: 16px 0;">
+                  <div class="resource-icon">PDF</div>
+                  <div class="resource-info">
+                    <a href="resource-detail.html" class="resource-title">2024年11月共同体工作月报</a>
+                    <div class="resource-meta">月报 | 890KB | 2024-11-30</div>
+                  </div>
+                </div>
+                <div class="resource-item" style="padding: 16px 0;">
+                  <div class="resource-icon">PDF</div>
+                  <div class="resource-info">
+                    <a href="resource-detail.html" class="resource-title">2024年10月共同体工作月报</a>
+                    <div class="resource-meta">月报 | 750KB | 2024-10-31</div>
                   </div>
                 </div>
               </div>
 
               <div style="text-align: center; margin-top: 20px;">
-                <a href="resources.html" class="btn btn-outline">查看更多资源 &gt;</a>
+                <a href="resources.html" class="btn btn-outline">查看更多月报 &gt;</a>
               </div>
             </div>
           </div>
@@ -227,5 +336,59 @@
   </div>
 
   <script src="../js/main.js"></script>
+  <script>
+    // Tab切换功能
+    document.addEventListener('DOMContentLoaded', function() {
+      const tabs = document.querySelectorAll('.content-tab');
+      const contents = document.querySelectorAll('.tab-content');
+
+      // 检查URL hash并激活对应tab
+      function activateTabFromHash() {
+        const hash = window.location.hash.slice(1);
+        if (hash) {
+          const targetTab = document.querySelector(`.content-tab[data-tab="${hash}"]`);
+          if (targetTab) {
+            activateTab(targetTab);
+          }
+        }
+      }
+
+      // 激活指定tab
+      function activateTab(tab) {
+        const tabId = tab.getAttribute('data-tab');
+
+        // 移除所有active
+        tabs.forEach(t => t.classList.remove('active'));
+        contents.forEach(c => {
+          c.classList.remove('active');
+          c.style.display = 'none';
+        });
+
+        // 激活当前tab
+        tab.classList.add('active');
+        const targetContent = document.getElementById(tabId);
+        if (targetContent) {
+          targetContent.classList.add('active');
+          targetContent.style.display = 'block';
+        }
+      }
+
+      // 点击事件
+      tabs.forEach(tab => {
+        tab.addEventListener('click', function(e) {
+          e.preventDefault();
+          activateTab(this);
+          // 更新URL hash
+          window.location.hash = this.getAttribute('data-tab');
+        });
+      });
+
+      // 页面加载时检查hash
+      activateTabFromHash();
+
+      // 监听hash变化
+      window.addEventListener('hashchange', activateTabFromHash);
+    });
+  </script>
 </body>
 </html>
