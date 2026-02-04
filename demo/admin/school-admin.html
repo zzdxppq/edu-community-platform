@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学校管理后台 - 信阳董家河小学中心校</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <div class="admin-wrapper">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar" style="background: linear-gradient(180deg, #1a3d6e 0%, #2C5AA0 100%);">
+      <div class="admin-logo">
+        <div class="admin-logo-icon" style="background: #fff;">豫</div>
+        <div class="admin-logo-text">信阳董家河小学<br>学校管理后台</div>
+      </div>
+
+      <nav class="admin-menu">
+        <div class="admin-menu-group">
+          <a href="school-admin.html" class="admin-menu-item active">
+            <span class="admin-menu-icon">📊</span>
+            工作台
+          </a>
+        </div>
+
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">内容管理</div>
+          <a href="#" class="admin-menu-item" onclick="showSection('intro')">
+            <span class="admin-menu-icon">🏫</span>
+            校共体介绍
+          </a>
+          <a href="#" class="admin-menu-item" onclick="showSection('progress')">
+            <span class="admin-menu-icon">📝</span>
+            项目进展
+          </a>
+          <a href="#" class="admin-menu-item" onclick="showSection('report')">
+            <span class="admin-menu-icon">📄</span>
+            月报管理
+          </a>
+          <a href="#" class="admin-menu-item" onclick="showSection('resource')">
+            <span class="admin-menu-icon">📚</span>
+            资源成果
+          </a>
+        </div>
+
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">个人中心</div>
+          <a href="#" class="admin-menu-item" onclick="showSection('profile')">
+            <span class="admin-menu-icon">👤</span>
+            账号设置
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <header class="admin-header">
+        <div class="admin-breadcrumb">学校管理后台 / 工作台</div>
+        <div class="admin-user">
+          <span style="font-size: 14px; color: var(--neutral-600);">李老师 (学校管理员)</span>
+          <div class="admin-avatar" style="background: var(--accent-600);">李</div>
+          <a href="../pages/admin-login.html" style="font-size: 14px; color: var(--accent-600);">退出</a>
+        </div>
+      </header>
+
+      <div class="admin-content">
+        <div class="admin-page-header">
+          <h1 class="admin-page-title">信阳董家河小学中心校 - 工作台</h1>
+          <p class="admin-page-desc">管理本校共同体建设相关内容</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="admin-stats">
+          <div class="admin-stat-card">
+            <div class="admin-stat-title">项目进展</div>
+            <div class="admin-stat-value">23</div>
+            <div class="admin-stat-change">已发布动态</div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-title">资源成果</div>
+            <div class="admin-stat-value">15</div>
+            <div class="admin-stat-change">已上传资源</div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-title">月报提交</div>
+            <div class="admin-stat-value">12</div>
+            <div class="admin-stat-change">累计提交</div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-title">总浏览量</div>
+            <div class="admin-stat-value">5,678</div>
+            <div class="admin-stat-change">本校内容</div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="admin-card" style="margin-bottom: 24px;">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">快捷操作</h3>
+          </div>
+          <div class="admin-card-body" style="display: flex; gap: 16px; flex-wrap: wrap;">
+            <button class="btn btn-primary" style="padding: 12px 24px;" onclick="alert('演示：发布项目进展')">
+              📝 发布项目进展
+            </button>
+            <button class="btn btn-accent" style="padding: 12px 24px;" onclick="alert('演示：上传资源成果')">
+              📚 上传资源成果
+            </button>
+            <button class="btn btn-outline" style="padding: 12px 24px;" onclick="alert('演示：提交月报')">
+              📄 提交月报
+            </button>
+            <button class="btn btn-outline" style="padding: 12px 24px;" onclick="alert('演示：编辑校共体介绍')">
+              🏫 编辑校共体介绍
+            </button>
+          </div>
+        </div>
+
+        <!-- Recent Progress -->
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">最近发布的项目进展</h3>
+            <button class="btn btn-outline" style="padding: 6px 16px; font-size: 13px;">查看全部</button>
+          </div>
+          <div class="admin-card-body" style="padding: 0;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width: 50%;">标题</th>
+                  <th>发布时间</th>
+                  <th>浏览量</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>信阳董家河小学与乡村学校开展教学研讨活动</td>
+                  <td>2025-03-12</td>
+                  <td>856</td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger">删除</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2025年春季学期共同体工作部署会议召开</td>
+                  <td>2025-02-28</td>
+                  <td>534</td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger">删除</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>教师交流轮岗首批10名教师顺利到岗</td>
+                  <td>2025-02-15</td>
+                  <td>623</td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger">删除</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>共同体信息化平台建设项目启动</td>
+                  <td>2025-01-20</td>
+                  <td>478</td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger">删除</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Monthly Reports -->
+        <div class="admin-card" style="margin-top: 24px;">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">月报提交记录</h3>
+            <button class="btn btn-primary" style="padding: 6px 16px; font-size: 13px;" onclick="alert('演示：提交月报')">+ 提交月报</button>
+          </div>
+          <div class="admin-card-body" style="padding: 0;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>月份</th>
+                  <th>提交时间</th>
+                  <th>文件</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2025年3月</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td><span class="admin-badge admin-badge-warning">待提交</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-primary">提交</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2025年2月</td>
+                  <td>2025-03-05</td>
+                  <td>2025年2月月报.pdf</td>
+                  <td><span class="admin-badge admin-badge-success">已提交</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">查看</button>
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2025年1月</td>
+                  <td>2025-02-03</td>
+                  <td>2025年1月月报.pdf</td>
+                  <td><span class="admin-badge admin-badge-success">已提交</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">查看</button>
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function showSection(section) {
+      alert('演示：跳转到' + section + '页面');
+    }
+  </script>
+</body>
+</html>

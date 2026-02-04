@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>用户管理 - 管理后台</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <div class="admin-wrapper">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-logo">
+        <div class="admin-logo-icon">豫</div>
+        <div class="admin-logo-text">城乡学校共同体<br>管理后台</div>
+      </div>
+      <nav class="admin-menu">
+        <div class="admin-menu-group">
+          <a href="index.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📊</span>
+            工作台
+          </a>
+        </div>
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">用户管理</div>
+          <a href="users.html" class="admin-menu-item active">
+            <span class="admin-menu-icon">👥</span>
+            学校管理员
+          </a>
+        </div>
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">内容管理</div>
+          <a href="news.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📰</span>
+            新闻资讯
+          </a>
+          <a href="policy.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📋</span>
+            政策文件
+          </a>
+          <a href="resources.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📚</span>
+            资源共享
+          </a>
+        </div>
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">示范校管理</div>
+          <a href="schools.html" class="admin-menu-item">
+            <span class="admin-menu-icon">🏫</span>
+            示范校列表
+          </a>
+        </div>
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">系统设置</div>
+          <a href="settings.html" class="admin-menu-item">
+            <span class="admin-menu-icon">⚙️</span>
+            基础配置
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <header class="admin-header">
+        <div class="admin-breadcrumb">用户管理 / 学校管理员</div>
+        <div class="admin-user">
+          <span style="font-size: 14px; color: var(--neutral-600);">欢迎，超级管理员</span>
+          <div class="admin-avatar">管</div>
+          <a href="../pages/admin-login.html" style="font-size: 14px; color: var(--accent-600);">退出</a>
+        </div>
+      </header>
+
+      <div class="admin-content">
+        <div class="admin-page-header">
+          <h1 class="admin-page-title">学校管理员</h1>
+          <p class="admin-page-desc">管理各示范校的管理员账号</p>
+        </div>
+
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">管理员列表</h3>
+            <button class="btn btn-primary" style="padding: 8px 20px; font-size: 14px;" onclick="alert('演示：添加管理员功能')">+ 添加管理员</button>
+          </div>
+          <div class="admin-card-body" style="padding: 0;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>账号</th>
+                  <th>姓名</th>
+                  <th>所属学校</th>
+                  <th>联系电话</th>
+                  <th>最后登录</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>admin_djh</td>
+                  <td>李老师</td>
+                  <td>信阳董家河小学中心校</td>
+                  <td>138****1234</td>
+                  <td>2025-03-15 14:30</td>
+                  <td><span class="admin-badge admin-badge-success">正常</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-outline">重置密码</button>
+                    <button class="admin-btn-sm admin-btn-danger">禁用</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>admin_kd</td>
+                  <td>王老师</td>
+                  <td>濮阳市开德小学</td>
+                  <td>139****5678</td>
+                  <td>2025-03-15 10:15</td>
+                  <td><span class="admin-badge admin-badge-success">正常</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-outline">重置密码</button>
+                    <button class="admin-btn-sm admin-btn-danger">禁用</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>admin_fg</td>
+                  <td>张老师</td>
+                  <td>扶沟县实验小学</td>
+                  <td>137****9012</td>
+                  <td>2025-03-14 16:45</td>
+                  <td><span class="admin-badge admin-badge-success">正常</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-outline">重置密码</button>
+                    <button class="admin-btn-sm admin-btn-danger">禁用</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>admin_fz</td>
+                  <td>刘老师</td>
+                  <td>修武县方庄中心小学</td>
+                  <td>136****3456</td>
+                  <td>2025-03-13 09:20</td>
+                  <td><span class="admin-badge admin-badge-success">正常</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-outline">重置密码</button>
+                    <button class="admin-btn-sm admin-btn-danger">禁用</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>admin_lc</td>
+                  <td>陈老师</td>
+                  <td>栾川县第四实验小学</td>
+                  <td>135****7890</td>
+                  <td>2025-03-15 11:30</td>
+                  <td><span class="admin-badge admin-badge-success">正常</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-outline">重置密码</button>
+                    <button class="admin-btn-sm admin-btn-danger">禁用</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>admin_hkq</td>
+                  <td>赵老师</td>
+                  <td>航空港区科技一街小学</td>
+                  <td>133****2345</td>
+                  <td>2025-03-14 15:00</td>
+                  <td><span class="admin-badge admin-badge-success">正常</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-outline">重置密码</button>
+                    <button class="admin-btn-sm admin-btn-danger">禁用</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

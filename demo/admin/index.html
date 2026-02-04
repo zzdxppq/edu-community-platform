@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理后台 - 河南城乡学校共同体发展平台</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <div class="admin-wrapper">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-logo">
+        <div class="admin-logo-icon">豫</div>
+        <div class="admin-logo-text">城乡学校共同体<br>管理后台</div>
+      </div>
+
+      <nav class="admin-menu">
+        <div class="admin-menu-group">
+          <a href="index.html" class="admin-menu-item active">
+            <span class="admin-menu-icon">📊</span>
+            工作台
+          </a>
+        </div>
+
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">用户管理</div>
+          <a href="users.html" class="admin-menu-item">
+            <span class="admin-menu-icon">👥</span>
+            学校管理员
+          </a>
+        </div>
+
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">内容管理</div>
+          <a href="news.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📰</span>
+            新闻资讯
+          </a>
+          <a href="policy.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📋</span>
+            政策文件
+          </a>
+          <a href="resources.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📚</span>
+            资源共享
+          </a>
+        </div>
+
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">示范校管理</div>
+          <a href="schools.html" class="admin-menu-item">
+            <span class="admin-menu-icon">🏫</span>
+            示范校列表
+          </a>
+        </div>
+
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">系统设置</div>
+          <a href="settings.html" class="admin-menu-item">
+            <span class="admin-menu-icon">⚙️</span>
+            基础配置
+          </a>
+          <a href="sensitive.html" class="admin-menu-item">
+            <span class="admin-menu-icon">🚫</span>
+            敏感词管理
+          </a>
+          <a href="backup.html" class="admin-menu-item">
+            <span class="admin-menu-icon">💾</span>
+            数据备份
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <!-- Header -->
+      <header class="admin-header">
+        <div class="admin-breadcrumb">
+          首页 / 工作台
+        </div>
+        <div class="admin-user">
+          <span style="font-size: 14px; color: var(--neutral-600);">欢迎，超级管理员</span>
+          <div class="admin-avatar">管</div>
+          <a href="../pages/admin-login.html" style="font-size: 14px; color: var(--accent-600);">退出</a>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="admin-content">
+        <div class="admin-page-header">
+          <h1 class="admin-page-title">工作台</h1>
+          <p class="admin-page-desc">欢迎使用河南城乡学校共同体发展平台管理后台</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="admin-stats">
+          <div class="admin-stat-card">
+            <div class="admin-stat-title">示范校数量</div>
+            <div class="admin-stat-value">6</div>
+            <div class="admin-stat-change">首批示范校</div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-title">新闻资讯</div>
+            <div class="admin-stat-value">128</div>
+            <div class="admin-stat-change">+12 本月新增</div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-title">政策文件</div>
+            <div class="admin-stat-value">45</div>
+            <div class="admin-stat-change">+3 本月新增</div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-title">资源下载</div>
+            <div class="admin-stat-value">2,847</div>
+            <div class="admin-stat-change">+234 本周</div>
+          </div>
+        </div>
+
+        <!-- Recent News -->
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">最新发布的新闻资讯</h3>
+            <a href="news.html" class="btn btn-outline" style="padding: 6px 16px; font-size: 13px;">查看全部</a>
+          </div>
+          <div class="admin-card-body" style="padding: 0;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width: 50%;">标题</th>
+                  <th>来源</th>
+                  <th>发布时间</th>
+                  <th>浏览量</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>河南省召开城乡义务教育一体化发展推进会</td>
+                  <td><span class="admin-badge admin-badge-info">平台发布</span></td>
+                  <td>2025-03-15</td>
+                  <td>1,234</td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger">删除</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>信阳董家河小学与乡村学校开展教学研讨活动</td>
+                  <td><span class="admin-badge admin-badge-success">信阳董家河小学</span></td>
+                  <td>2025-03-12</td>
+                  <td>856</td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger">删除</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>濮阳市开德小学共同体建设成果展示会圆满举办</td>
+                  <td><span class="admin-badge admin-badge-success">濮阳市开德小学</span></td>
+                  <td>2025-03-10</td>
+                  <td>723</td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger">删除</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>省教育厅领导调研扶沟县实验小学共同体建设工作</td>
+                  <td><span class="admin-badge admin-badge-info">平台发布</span></td>
+                  <td>2025-03-08</td>
+                  <td>1,567</td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger">删除</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>栾川县第四实验小学开展城乡教师交流培训活动</td>
+                  <td><span class="admin-badge admin-badge-success">栾川县第四实验小学</span></td>
+                  <td>2025-03-05</td>
+                  <td>645</td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger">删除</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Schools Overview -->
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">示范校概览</h3>
+            <a href="schools.html" class="btn btn-outline" style="padding: 6px 16px; font-size: 13px;">管理示范校</a>
+          </div>
+          <div class="admin-card-body" style="padding: 0;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>学校名称</th>
+                  <th>所属区域</th>
+                  <th>管理员</th>
+                  <th>发布内容数</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>信阳董家河小学中心校</td>
+                  <td>河南省信阳市浉河区</td>
+                  <td>李老师</td>
+                  <td>23</td>
+                  <td><span class="admin-badge admin-badge-success">正常</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-primary">查看</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>濮阳市开德小学</td>
+                  <td>河南省濮阳市华龙区</td>
+                  <td>王老师</td>
+                  <td>18</td>
+                  <td><span class="admin-badge admin-badge-success">正常</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-primary">查看</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>扶沟县实验小学</td>
+                  <td>河南省周口市扶沟县</td>
+                  <td>张老师</td>
+                  <td>15</td>
+                  <td><span class="admin-badge admin-badge-success">正常</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-primary">查看</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>修武县方庄中心小学</td>
+                  <td>河南省焦作市修武县</td>
+                  <td>刘老师</td>
+                  <td>12</td>
+                  <td><span class="admin-badge admin-badge-success">正常</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-primary">查看</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>栾川县第四实验小学</td>
+                  <td>河南省洛阳市栾川县</td>
+                  <td>陈老师</td>
+                  <td>20</td>
+                  <td><span class="admin-badge admin-badge-success">正常</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-primary">查看</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>航空港区科技一街小学</td>
+                  <td>河南省郑州市航空港区</td>
+                  <td>赵老师</td>
+                  <td>16</td>
+                  <td><span class="admin-badge admin-badge-success">正常</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-primary">查看</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

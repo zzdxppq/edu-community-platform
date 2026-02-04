@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新闻资讯管理 - 管理后台</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <div class="admin-wrapper">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-logo">
+        <div class="admin-logo-icon">豫</div>
+        <div class="admin-logo-text">城乡学校共同体<br>管理后台</div>
+      </div>
+      <nav class="admin-menu">
+        <div class="admin-menu-group">
+          <a href="index.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📊</span>
+            工作台
+          </a>
+        </div>
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">用户管理</div>
+          <a href="users.html" class="admin-menu-item">
+            <span class="admin-menu-icon">👥</span>
+            学校管理员
+          </a>
+        </div>
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">内容管理</div>
+          <a href="news.html" class="admin-menu-item active">
+            <span class="admin-menu-icon">📰</span>
+            新闻资讯
+          </a>
+          <a href="policy.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📋</span>
+            政策文件
+          </a>
+          <a href="resources.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📚</span>
+            资源共享
+          </a>
+        </div>
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">示范校管理</div>
+          <a href="schools.html" class="admin-menu-item">
+            <span class="admin-menu-icon">🏫</span>
+            示范校列表
+          </a>
+        </div>
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">系统设置</div>
+          <a href="settings.html" class="admin-menu-item">
+            <span class="admin-menu-icon">⚙️</span>
+            基础配置
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <header class="admin-header">
+        <div class="admin-breadcrumb">内容管理 / 新闻资讯</div>
+        <div class="admin-user">
+          <span style="font-size: 14px; color: var(--neutral-600);">欢迎，超级管理员</span>
+          <div class="admin-avatar">管</div>
+          <a href="../pages/admin-login.html" style="font-size: 14px; color: var(--accent-600);">退出</a>
+        </div>
+      </header>
+
+      <div class="admin-content">
+        <div class="admin-page-header">
+          <h1 class="admin-page-title">新闻资讯管理</h1>
+          <p class="admin-page-desc">管理平台发布的新闻资讯内容</p>
+        </div>
+
+        <!-- Filter -->
+        <div class="admin-card" style="margin-bottom: 20px;">
+          <div class="admin-card-body" style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <label style="font-size: 14px; color: var(--neutral-600);">来源：</label>
+              <select class="form-input" style="width: 150px; padding: 8px 12px;">
+                <option>全部</option>
+                <option>平台发布</option>
+                <option>学校发布</option>
+              </select>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <label style="font-size: 14px; color: var(--neutral-600);">关键词：</label>
+              <input type="text" class="form-input" style="width: 200px; padding: 8px 12px;" placeholder="搜索标题...">
+            </div>
+            <button class="btn btn-primary" style="padding: 8px 20px; font-size: 14px;">搜索</button>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">新闻列表 (共128条)</h3>
+            <button class="btn btn-primary" style="padding: 8px 20px; font-size: 14px;" onclick="alert('演示：发布新闻功能')">+ 发布新闻</button>
+          </div>
+          <div class="admin-card-body" style="padding: 0;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width: 40%;">标题</th>
+                  <th>来源</th>
+                  <th>发布时间</th>
+                  <th>浏览量</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>河南省召开城乡义务教育一体化发展推进会</td>
+                  <td><span class="admin-badge admin-badge-info">平台发布</span></td>
+                  <td>2025-03-15</td>
+                  <td>1,234</td>
+                  <td><span class="admin-badge admin-badge-success">已发布</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger">删除</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>信阳董家河小学与乡村学校开展教学研讨活动</td>
+                  <td><span class="admin-badge admin-badge-success">信阳董家河小学</span></td>
+                  <td>2025-03-12</td>
+                  <td>856</td>
+                  <td><span class="admin-badge admin-badge-success">已发布</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger">删除</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>濮阳市开德小学共同体建设成果展示会圆满举办</td>
+                  <td><span class="admin-badge admin-badge-success">濮阳市开德小学</span></td>
+                  <td>2025-03-10</td>
+                  <td>723</td>
+                  <td><span class="admin-badge admin-badge-success">已发布</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger">删除</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>省教育厅领导调研扶沟县实验小学共同体建设工作</td>
+                  <td><span class="admin-badge admin-badge-info">平台发布</span></td>
+                  <td>2025-03-08</td>
+                  <td>1,567</td>
+                  <td><span class="admin-badge admin-badge-success">已发布</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger">删除</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2025年春季学期共同体工作计划发布</td>
+                  <td><span class="admin-badge admin-badge-info">平台发布</span></td>
+                  <td>2025-03-01</td>
+                  <td>2,105</td>
+                  <td><span class="admin-badge admin-badge-success">已发布</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger">删除</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" style="margin-top: 20px;">
+          <span class="page-item disabled">&lt;</span>
+          <span class="page-item active">1</span>
+          <span class="page-item">2</span>
+          <span class="page-item">3</span>
+          <span class="page-item">...</span>
+          <span class="page-item">13</span>
+          <span class="page-item">&gt;</span>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

@@ -171,8 +171,8 @@
 
       <div class="demo-tip">
         <strong>演示说明：</strong><br>
-        这是一个前端Demo页面，登录功能仅作展示。<br>
-        实际系统需要对接后端服务进行身份验证。
+        直接点击登录即可进入对应后台（无需输入账号密码）。<br>
+        选择不同角色将进入不同的管理界面。
       </div>
 
       <div class="login-footer">
@@ -189,17 +189,14 @@
 
     function handleLogin(event) {
       event.preventDefault();
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
       const role = document.querySelector('input[name="role"]:checked').value;
 
-      if (!username || !password) {
-        alert('请输入账号和密码');
-        return;
+      // 直接跳转到对应的后台页面
+      if (role === 'super') {
+        window.location.href = '../admin/index.html';
+      } else {
+        window.location.href = '../admin/school-admin.html';
       }
-
-      const roleName = role === 'super' ? '超级管理员' : '学校管理员';
-      alert(`登录演示成功！\n\n角色：${roleName}\n账号：${username}\n\n注：这是前端Demo，实际需要对接后端服务`);
     }
   </script>
 </body>
