@@ -28,19 +28,15 @@
           <div class="admin-menu-title">内容管理</div>
           <a href="#" class="admin-menu-item" onclick="showSection('intro')">
             <span class="admin-menu-icon">🏫</span>
-            校共体介绍
+            校共同体介绍
           </a>
-          <a href="#" class="admin-menu-item" onclick="showSection('progress')">
+          <a href="#" class="admin-menu-item" onclick="showSection('activity')">
             <span class="admin-menu-icon">📝</span>
-            项目进展
+            校共同体活动
           </a>
           <a href="#" class="admin-menu-item" onclick="showSection('report')">
             <span class="admin-menu-icon">📄</span>
-            月报管理
-          </a>
-          <a href="#" class="admin-menu-item" onclick="showSection('resource')">
-            <span class="admin-menu-icon">📚</span>
-            资源成果
+            校共同体月报
           </a>
         </div>
 
@@ -74,17 +70,12 @@
         <!-- Stats -->
         <div class="admin-stats">
           <div class="admin-stat-card">
-            <div class="admin-stat-title">项目进展</div>
+            <div class="admin-stat-title">校共同体活动</div>
             <div class="admin-stat-value">23</div>
-            <div class="admin-stat-change">已发布动态</div>
+            <div class="admin-stat-change">已发布活动</div>
           </div>
           <div class="admin-stat-card">
-            <div class="admin-stat-title">资源成果</div>
-            <div class="admin-stat-value">15</div>
-            <div class="admin-stat-change">已上传资源</div>
-          </div>
-          <div class="admin-stat-card">
-            <div class="admin-stat-title">月报提交</div>
+            <div class="admin-stat-title">校共同体月报</div>
             <div class="admin-stat-value">12</div>
             <div class="admin-stat-change">累计提交</div>
           </div>
@@ -101,25 +92,22 @@
             <h3 class="admin-card-title">快捷操作</h3>
           </div>
           <div class="admin-card-body" style="display: flex; gap: 16px; flex-wrap: wrap;">
-            <button class="btn btn-primary" style="padding: 12px 24px;" onclick="openProgressModal()">
-              📝 发布项目进展
+            <button class="btn btn-primary" style="padding: 12px 24px;" onclick="openActivityModal()">
+              📝 发布校共同体活动
             </button>
-            <button class="btn btn-accent" style="padding: 12px 24px;" onclick="openResourceModal()">
-              📚 上传资源成果
-            </button>
-            <button class="btn btn-outline" style="padding: 12px 24px;" onclick="openReportModal()">
-              📄 提交月报
+            <button class="btn btn-accent" style="padding: 12px 24px;" onclick="openReportModal()">
+              📄 提交校共同体月报
             </button>
             <button class="btn btn-outline" style="padding: 12px 24px;" onclick="openIntroModal()">
-              🏫 编辑校共体介绍
+              🏫 编辑校共同体介绍
             </button>
           </div>
         </div>
 
-        <!-- Recent Progress -->
+        <!-- Recent Activities -->
         <div class="admin-card">
           <div class="admin-card-header">
-            <h3 class="admin-card-title">最近发布的项目进展</h3>
+            <h3 class="admin-card-title">最近发布的校共同体活动</h3>
             <button class="btn btn-outline" style="padding: 6px 16px; font-size: 13px;">查看全部</button>
           </div>
           <div class="admin-card-body" style="padding: 0;">
@@ -229,108 +217,113 @@
     </main>
   </div>
 
-  <!-- Progress Modal -->
-  <div class="modal-overlay" id="progressModal">
-    <div class="modal" style="max-width: 700px;">
+  <!-- Activity Modal -->
+  <div class="modal-overlay" id="activityModal">
+    <div class="modal" style="max-width: 800px;">
       <div class="modal-header">
-        <h3 class="modal-title">发布项目进展</h3>
-        <button class="modal-close" onclick="closeProgressModal()">&times;</button>
+        <h3 class="modal-title">发布校共同体活动</h3>
+        <button class="modal-close" onclick="closeActivityModal()">&times;</button>
       </div>
       <div class="modal-body">
-        <form id="progressForm">
+        <form id="activityForm">
+          <!-- 发布方式选择 -->
           <div class="form-group">
-            <label class="form-label">进展标题 <span style="color: red;">*</span></label>
-            <input type="text" class="form-input" id="progressTitle" placeholder="请输入进展标题" required>
+            <label class="form-label">发布方式 <span style="color: red;">*</span></label>
+            <div style="display: flex; gap: 16px;">
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="activityPublishType" value="content" checked onchange="toggleActivityType('content')"> 图文编辑
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="activityPublishType" value="link" onchange="toggleActivityType('link')"> 外部链接
+              </label>
+            </div>
           </div>
           <div class="form-group">
-            <label class="form-label">进展内容 <span style="color: red;">*</span></label>
-            <textarea class="form-input" id="progressContent" rows="6" placeholder="请输入详细内容" required></textarea>
+            <label class="form-label">活动标题 <span style="color: red;">*</span></label>
+            <input type="text" class="form-input" id="activityTitle" placeholder="请输入活动标题" required>
           </div>
-          <div class="form-group">
-            <label class="form-label">配图上传</label>
-            <div class="file-upload-area" onclick="document.getElementById('progressImages').click()">
-              <input type="file" id="progressImages" style="display: none;" accept="image/*" multiple>
-              <div class="file-upload-icon">🖼️</div>
-              <div class="file-upload-text">点击上传图片（可多选）</div>
-              <div class="file-upload-hint">建议尺寸：800×600，支持 JPG、PNG 格式，最多5张</div>
+          <!-- 外部链接输入 -->
+          <div class="form-group" id="activityLinkGroup" style="display: none;">
+            <label class="form-label">外部链接 <span style="color: red;">*</span></label>
+            <input type="url" class="form-input" id="activityExternalLink" placeholder="请输入外部链接URL">
+            <p style="font-size: 12px; color: var(--neutral-500); margin-top: 4px;">用户点击后将直接跳转至外部页面</p>
+          </div>
+          <!-- 图文编辑内容 -->
+          <div id="activityContentGroup">
+            <div class="form-group">
+              <label class="form-label">活动内容 <span style="color: red;">*</span></label>
+              <div style="border: 1px solid var(--neutral-300); border-radius: 4px; overflow: hidden;">
+                <!-- 富文本工具栏 -->
+                <div style="background: var(--neutral-100); padding: 8px 12px; border-bottom: 1px solid var(--neutral-300); display: flex; gap: 8px; flex-wrap: wrap;">
+                  <button type="button" class="editor-btn" title="加粗" onclick="formatText('bold')"><b>B</b></button>
+                  <button type="button" class="editor-btn" title="斜体" onclick="formatText('italic')"><i>I</i></button>
+                  <button type="button" class="editor-btn" title="下划线" onclick="formatText('underline')"><u>U</u></button>
+                  <span style="border-left: 1px solid var(--neutral-300); margin: 0 4px;"></span>
+                  <button type="button" class="editor-btn" title="标题" onclick="formatText('h2')">H</button>
+                  <button type="button" class="editor-btn" title="无序列表" onclick="formatText('ul')">•</button>
+                  <button type="button" class="editor-btn" title="有序列表" onclick="formatText('ol')">1.</button>
+                  <span style="border-left: 1px solid var(--neutral-300); margin: 0 4px;"></span>
+                  <button type="button" class="editor-btn" title="插入链接" onclick="insertLink()">🔗</button>
+                  <button type="button" class="editor-btn" title="插入图片" onclick="insertImage()">🖼️</button>
+                </div>
+                <!-- 编辑区域 -->
+                <div id="activityEditor" contenteditable="true" style="min-height: 200px; padding: 16px; outline: none; line-height: 1.8;" placeholder="请输入活动详细内容..."></div>
+              </div>
+              <style>
+                .editor-btn { background: #fff; border: 1px solid var(--neutral-300); border-radius: 4px; padding: 4px 8px; cursor: pointer; font-size: 14px; }
+                .editor-btn:hover { background: var(--primary-100); border-color: var(--primary-800); }
+                [contenteditable]:empty:before { content: attr(placeholder); color: var(--neutral-500); }
+              </style>
+            </div>
+            <div class="form-group">
+              <label class="form-label">封面图片</label>
+              <div class="file-upload-area" onclick="document.getElementById('activityImages').click()">
+                <input type="file" id="activityImages" style="display: none;" accept="image/*">
+                <div class="file-upload-icon">🖼️</div>
+                <div class="file-upload-text">点击上传封面图</div>
+                <div class="file-upload-hint">建议尺寸：800×450，支持 JPG、PNG 格式</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">附件上传（可选）</label>
+              <div class="file-upload-area" onclick="document.getElementById('activityFile').click()">
+                <input type="file" id="activityFile" style="display: none;" accept=".pdf,.doc,.docx,.ppt,.pptx">
+                <div class="file-upload-icon">📁</div>
+                <div class="file-upload-text">点击上传附件</div>
+                <div class="file-upload-hint">支持 PDF、DOC、PPT 格式</div>
+              </div>
             </div>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-outline" onclick="closeProgressModal()">取消</button>
-        <button class="btn btn-primary" onclick="saveProgress()">发布</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Resource Modal -->
-  <div class="modal-overlay" id="resourceModal">
-    <div class="modal" style="max-width: 700px;">
-      <div class="modal-header">
-        <h3 class="modal-title">上传资源成果</h3>
-        <button class="modal-close" onclick="closeResourceModal()">&times;</button>
-      </div>
-      <div class="modal-body">
-        <form id="resourceForm">
-          <div class="form-group">
-            <label class="form-label">资源名称 <span style="color: red;">*</span></label>
-            <input type="text" class="form-input" id="resourceName" placeholder="请输入资源名称" required>
-          </div>
-          <div class="form-row" style="display: flex; gap: 16px;">
-            <div class="form-group" style="flex: 1;">
-              <label class="form-label">资源类型 <span style="color: red;">*</span></label>
-              <select class="form-input" id="resourceType" required>
-                <option value="">请选择类型</option>
-                <option value="教学设计">教学设计</option>
-                <option value="课件资源">课件资源</option>
-                <option value="教学视频">教学视频</option>
-                <option value="研究成果">研究成果</option>
-              </select>
-            </div>
-            <div class="form-group" style="flex: 1;">
-              <label class="form-label">学科 <span style="color: red;">*</span></label>
-              <select class="form-input" id="resourceSubject" required>
-                <option value="">请选择学科</option>
-                <option value="语文">语文</option>
-                <option value="数学">数学</option>
-                <option value="英语">英语</option>
-                <option value="科学">科学</option>
-                <option value="综合">综合</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">资源描述</label>
-            <textarea class="form-input" id="resourceDesc" rows="3" placeholder="请输入资源描述"></textarea>
-          </div>
-          <div class="form-group">
-            <label class="form-label">资源文件 <span style="color: red;">*</span></label>
-            <div class="file-upload-area" onclick="document.getElementById('resourceFile').click()">
-              <input type="file" id="resourceFile" style="display: none;" accept=".pdf,.doc,.docx,.ppt,.pptx,.mp4,.zip">
-              <div class="file-upload-icon">📁</div>
-              <div class="file-upload-text">点击上传文件</div>
-              <div class="file-upload-hint">支持 PDF、DOC、PPT、MP4、ZIP 格式，最大 500MB</div>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-outline" onclick="closeResourceModal()">取消</button>
-        <button class="btn btn-primary" onclick="saveResource()">上传</button>
+        <button class="btn btn-outline" onclick="closeActivityModal()">取消</button>
+        <button class="btn btn-primary" onclick="saveActivity()">发布</button>
       </div>
     </div>
   </div>
 
   <!-- Report Modal -->
   <div class="modal-overlay" id="reportModal">
-    <div class="modal" style="max-width: 600px;">
+    <div class="modal" style="max-width: 800px;">
       <div class="modal-header">
-        <h3 class="modal-title">提交月报</h3>
+        <h3 class="modal-title">提交校共同体月报</h3>
         <button class="modal-close" onclick="closeReportModal()">&times;</button>
       </div>
       <div class="modal-body">
         <form id="reportForm">
+          <!-- 发布方式选择 -->
+          <div class="form-group">
+            <label class="form-label">发布方式 <span style="color: red;">*</span></label>
+            <div style="display: flex; gap: 16px;">
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="reportPublishType" value="content" checked onchange="toggleReportType('content')"> 图文编辑
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="reportPublishType" value="link" onchange="toggleReportType('link')"> 外部链接
+              </label>
+            </div>
+          </div>
           <div class="form-group">
             <label class="form-label">月份 <span style="color: red;">*</span></label>
             <select class="form-input" id="reportMonth" required>
@@ -341,17 +334,46 @@
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label">月报文件 <span style="color: red;">*</span></label>
-            <div class="file-upload-area" onclick="document.getElementById('reportFile').click()">
-              <input type="file" id="reportFile" style="display: none;" accept=".pdf,.doc,.docx">
-              <div class="file-upload-icon">📄</div>
-              <div class="file-upload-text">点击上传月报文件</div>
-              <div class="file-upload-hint">支持 PDF、DOC、DOCX 格式</div>
-            </div>
+            <label class="form-label">月报标题 <span style="color: red;">*</span></label>
+            <input type="text" class="form-input" id="reportTitle" placeholder="如：2025年3月校共同体工作月报" required>
           </div>
-          <div class="form-group">
-            <label class="form-label">备注说明</label>
-            <textarea class="form-input" id="reportNote" rows="3" placeholder="如有特殊情况请说明"></textarea>
+          <!-- 外部链接输入 -->
+          <div class="form-group" id="reportLinkGroup" style="display: none;">
+            <label class="form-label">外部链接 <span style="color: red;">*</span></label>
+            <input type="url" class="form-input" id="reportExternalLink" placeholder="请输入外部链接URL">
+            <p style="font-size: 12px; color: var(--neutral-500); margin-top: 4px;">用户点击后将直接跳转至外部页面</p>
+          </div>
+          <!-- 图文编辑内容 -->
+          <div id="reportContentGroup">
+            <div class="form-group">
+              <label class="form-label">月报内容</label>
+              <div style="border: 1px solid var(--neutral-300); border-radius: 4px; overflow: hidden;">
+                <!-- 富文本工具栏 -->
+                <div style="background: var(--neutral-100); padding: 8px 12px; border-bottom: 1px solid var(--neutral-300); display: flex; gap: 8px; flex-wrap: wrap;">
+                  <button type="button" class="editor-btn" title="加粗"><b>B</b></button>
+                  <button type="button" class="editor-btn" title="斜体"><i>I</i></button>
+                  <button type="button" class="editor-btn" title="下划线"><u>U</u></button>
+                  <span style="border-left: 1px solid var(--neutral-300); margin: 0 4px;"></span>
+                  <button type="button" class="editor-btn" title="标题">H</button>
+                  <button type="button" class="editor-btn" title="无序列表">•</button>
+                  <button type="button" class="editor-btn" title="有序列表">1.</button>
+                  <span style="border-left: 1px solid var(--neutral-300); margin: 0 4px;"></span>
+                  <button type="button" class="editor-btn" title="插入链接">🔗</button>
+                  <button type="button" class="editor-btn" title="插入图片">🖼️</button>
+                </div>
+                <!-- 编辑区域 -->
+                <div id="reportEditor" contenteditable="true" style="min-height: 150px; padding: 16px; outline: none; line-height: 1.8;" placeholder="请输入月报内容..."></div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">月报附件 <span style="color: red;">*</span></label>
+              <div class="file-upload-area" onclick="document.getElementById('reportFile').click()">
+                <input type="file" id="reportFile" style="display: none;" accept=".pdf,.doc,.docx">
+                <div class="file-upload-icon">📄</div>
+                <div class="file-upload-text">点击上传月报文件</div>
+                <div class="file-upload-hint">支持 PDF、DOC、DOCX 格式</div>
+              </div>
+            </div>
           </div>
         </form>
       </div>
@@ -413,61 +435,105 @@
   <script>
     function showSection(section) {
       const sectionNames = {
-        'intro': '校共体介绍',
-        'progress': '项目进展',
-        'report': '月报管理',
-        'resource': '资源成果',
+        'intro': '校共同体介绍',
+        'activity': '校共同体活动',
+        'report': '校共同体月报',
         'profile': '账号设置'
       };
       showToast('正在加载：' + (sectionNames[section] || section));
     }
 
-    // Progress Modal
-    function openProgressModal() {
-      document.getElementById('progressForm').reset();
-      document.getElementById('progressModal').classList.add('active');
+    // 切换活动发布类型
+    function toggleActivityType(type) {
+      const linkGroup = document.getElementById('activityLinkGroup');
+      const contentGroup = document.getElementById('activityContentGroup');
+      if (type === 'link') {
+        linkGroup.style.display = 'block';
+        contentGroup.style.display = 'none';
+      } else {
+        linkGroup.style.display = 'none';
+        contentGroup.style.display = 'block';
+      }
     }
 
-    function closeProgressModal() {
-      document.getElementById('progressModal').classList.remove('active');
+    // 切换月报发布类型
+    function toggleReportType(type) {
+      const linkGroup = document.getElementById('reportLinkGroup');
+      const contentGroup = document.getElementById('reportContentGroup');
+      if (type === 'link') {
+        linkGroup.style.display = 'block';
+        contentGroup.style.display = 'none';
+      } else {
+        linkGroup.style.display = 'none';
+        contentGroup.style.display = 'block';
+      }
     }
 
-    function saveProgress() {
-      const title = document.getElementById('progressTitle').value;
-      const content = document.getElementById('progressContent').value;
-      if (!title || !content) {
-        alert('请填写必填项');
+    // 富文本编辑器功能
+    function formatText(command) {
+      document.execCommand(command, false, null);
+    }
+
+    function insertLink() {
+      const url = prompt('请输入链接地址：', 'https://');
+      if (url) {
+        document.execCommand('createLink', false, url);
+      }
+    }
+
+    function insertImage() {
+      const url = prompt('请输入图片地址：', 'https://');
+      if (url) {
+        document.execCommand('insertImage', false, url);
+      }
+    }
+
+    // Activity Modal
+    function openActivityModal() {
+      document.getElementById('activityForm').reset();
+      document.getElementById('activityEditor').innerHTML = '';
+      toggleActivityType('content');
+      document.getElementById('activityModal').classList.add('active');
+    }
+
+    function closeActivityModal() {
+      document.getElementById('activityModal').classList.remove('active');
+    }
+
+    function saveActivity() {
+      const title = document.getElementById('activityTitle').value;
+      const publishType = document.querySelector('input[name="activityPublishType"]:checked').value;
+
+      if (!title) {
+        alert('请填写活动标题');
         return;
       }
-      showToast('项目进展发布成功！');
-      closeProgressModal();
-    }
 
-    // Resource Modal
-    function openResourceModal() {
-      document.getElementById('resourceForm').reset();
-      document.getElementById('resourceModal').classList.add('active');
-    }
-
-    function closeResourceModal() {
-      document.getElementById('resourceModal').classList.remove('active');
-    }
-
-    function saveResource() {
-      const name = document.getElementById('resourceName').value;
-      const type = document.getElementById('resourceType').value;
-      const subject = document.getElementById('resourceSubject').value;
-      if (!name || !type || !subject) {
-        alert('请填写必填项');
-        return;
+      if (publishType === 'link') {
+        const link = document.getElementById('activityExternalLink').value;
+        if (!link) {
+          alert('请填写外部链接');
+          return;
+        }
+      } else {
+        const content = document.getElementById('activityEditor').innerHTML;
+        if (!content || content === '<br>') {
+          alert('请填写活动内容');
+          return;
+        }
       }
-      showToast('资源上传成功，等待审核！');
-      closeResourceModal();
+
+      showToast('校共同体活动发布成功！');
+      closeActivityModal();
     }
 
     // Report Modal
     function openReportModal() {
       document.getElementById('reportForm').reset();
+      if (document.getElementById('reportEditor')) {
+        document.getElementById('reportEditor').innerHTML = '';
+      }
+      toggleReportType('content');
       document.getElementById('reportModal').classList.add('active');
     }
 
@@ -477,11 +543,12 @@
 
     function submitReport() {
       const month = document.getElementById('reportMonth').value;
-      if (!month) {
-        alert('请选择月份');
+      const title = document.getElementById('reportTitle').value;
+      if (!month || !title) {
+        alert('请填写必填项');
         return;
       }
-      showToast('月报提交成功！');
+      showToast('校共同体月报提交成功！');
       closeReportModal();
     }
 
@@ -500,7 +567,7 @@
         alert('请填写共同体简介');
         return;
       }
-      showToast('校共体介绍更新成功！');
+      showToast('校共同体介绍更新成功！');
       closeIntroModal();
     }
 

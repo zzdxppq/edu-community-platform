@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>导航管理 - 管理后台</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/admin-modal.css">
+  <style>
+    .nav-list {
+      background: white;
+      border-radius: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--neutral-200);
+      gap: 16px;
+    }
+    .nav-item:last-child {
+      border-bottom: none;
+    }
+    .nav-drag {
+      cursor: move;
+      color: var(--neutral-400);
+      font-size: 20px;
+    }
+    .nav-info {
+      flex: 1;
+    }
+    .nav-name {
+      font-weight: 600;
+      color: var(--neutral-800);
+      margin-bottom: 4px;
+    }
+    .nav-url {
+      font-size: 13px;
+      color: var(--neutral-500);
+    }
+    .nav-status {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+    .nav-status.active {
+      background: var(--success-100);
+      color: var(--success-700);
+    }
+    .nav-status.inactive {
+      background: var(--neutral-200);
+      color: var(--neutral-600);
+    }
+    .nav-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .section-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+    }
+    .section-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--neutral-200);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--neutral-800);
+    }
+    .section-body {
+      padding: 0;
+    }
+    .tips-box {
+      background: var(--primary-50);
+      border: 1px solid var(--primary-200);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+    }
+    .tips-box h4 {
+      color: var(--primary-800);
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .tips-box p {
+      color: var(--primary-700);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-wrapper">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-logo">
+        <div class="admin-logo-icon">豫</div>
+        <div class="admin-logo-text">城乡学校共同体<br>管理后台</div>
+      </div>
+
+      <nav class="admin-menu">
+        <div class="admin-menu-group">
+          <a href="index.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📊</span>
+            工作台
+          </a>
+        </div>
+
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">用户管理</div>
+          <a href="users.html" class="admin-menu-item">
+            <span class="admin-menu-icon">👥</span>
+            学校管理员
+          </a>
+        </div>
+
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">内容管理</div>
+          <a href="about.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📖</span>
+            项目介绍
+          </a>
+          <a href="news.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📰</span>
+            新闻资讯
+          </a>
+          <a href="policy.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📋</span>
+            政策文件
+          </a>
+          <a href="resources.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📚</span>
+            资源共享
+          </a>
+        </div>
+
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">示范校管理</div>
+          <a href="schools.html" class="admin-menu-item">
+            <span class="admin-menu-icon">🏫</span>
+            示范校列表
+          </a>
+        </div>
+
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">系统设置</div>
+          <a href="navigation.html" class="admin-menu-item active">
+            <span class="admin-menu-icon">🧭</span>
+            导航管理
+          </a>
+          <a href="settings.html" class="admin-menu-item">
+            <span class="admin-menu-icon">⚙️</span>
+            基础配置
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <!-- Header -->
+      <header class="admin-header">
+        <div class="admin-breadcrumb">
+          首页 / 系统设置 / 导航管理
+        </div>
+        <div class="admin-user">
+          <span style="font-size: 14px; color: var(--neutral-600);">欢迎，超级管理员</span>
+          <div class="admin-avatar">管</div>
+          <a href="../pages/admin-login.html" style="font-size: 14px; color: var(--accent-600);">退出</a>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="admin-content">
+        <div class="admin-page-header">
+          <h1 class="admin-page-title">导航管理</h1>
+          <p class="admin-page-desc">管理官网顶部导航栏和底部快捷链接</p>
+        </div>
+
+        <div class="tips-box">
+          <h4>操作提示</h4>
+          <p>拖拽导航项可以调整显示顺序，点击"编辑"可以修改导航名称和链接地址，点击状态开关可以控制导航的显示/隐藏。</p>
+        </div>
+
+        <!-- Main Navigation -->
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-title">顶部主导航</div>
+            <button class="btn btn-primary" onclick="openAddNavModal('main')">+ 添加导航</button>
+          </div>
+          <div class="section-body">
+            <div class="nav-list" id="mainNavList">
+              <div class="nav-item" data-id="1">
+                <span class="nav-drag">⋮⋮</span>
+                <div class="nav-info">
+                  <div class="nav-name">首页</div>
+                  <div class="nav-url">/index.html</div>
+                </div>
+                <span class="nav-status active">显示中</span>
+                <div class="nav-actions">
+                  <button class="admin-btn-sm admin-btn-outline" onclick="editNav(1)">编辑</button>
+                  <button class="admin-btn-sm admin-btn-danger" disabled title="首页不可删除">删除</button>
+                </div>
+              </div>
+              <div class="nav-item" data-id="2">
+                <span class="nav-drag">⋮⋮</span>
+                <div class="nav-info">
+                  <div class="nav-name">项目介绍</div>
+                  <div class="nav-url">/pages/about.html</div>
+                </div>
+                <span class="nav-status active">显示中</span>
+                <div class="nav-actions">
+                  <button class="admin-btn-sm admin-btn-outline" onclick="editNav(2)">编辑</button>
+                  <button class="admin-btn-sm admin-btn-danger" onclick="confirmDeleteNav(2)">删除</button>
+                </div>
+              </div>
+              <div class="nav-item" data-id="3">
+                <span class="nav-drag">⋮⋮</span>
+                <div class="nav-info">
+                  <div class="nav-name">政策文件</div>
+                  <div class="nav-url">/pages/policy.html</div>
+                </div>
+                <span class="nav-status active">显示中</span>
+                <div class="nav-actions">
+                  <button class="admin-btn-sm admin-btn-outline" onclick="editNav(3)">编辑</button>
+                  <button class="admin-btn-sm admin-btn-danger" onclick="confirmDeleteNav(3)">删除</button>
+                </div>
+              </div>
+              <div class="nav-item" data-id="4">
+                <span class="nav-drag">⋮⋮</span>
+                <div class="nav-info">
+                  <div class="nav-name">示范校共体</div>
+                  <div class="nav-url">/pages/schools.html</div>
+                </div>
+                <span class="nav-status active">显示中</span>
+                <div class="nav-actions">
+                  <button class="admin-btn-sm admin-btn-outline" onclick="editNav(4)">编辑</button>
+                  <button class="admin-btn-sm admin-btn-danger" onclick="confirmDeleteNav(4)">删除</button>
+                </div>
+              </div>
+              <div class="nav-item" data-id="5">
+                <span class="nav-drag">⋮⋮</span>
+                <div class="nav-info">
+                  <div class="nav-name">资源共享</div>
+                  <div class="nav-url">/pages/resources.html</div>
+                </div>
+                <span class="nav-status active">显示中</span>
+                <div class="nav-actions">
+                  <button class="admin-btn-sm admin-btn-outline" onclick="editNav(5)">编辑</button>
+                  <button class="admin-btn-sm admin-btn-danger" onclick="confirmDeleteNav(5)">删除</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Quick Links -->
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-title">底部快捷链接</div>
+            <button class="btn btn-primary" onclick="openAddNavModal('footer')">+ 添加链接</button>
+          </div>
+          <div class="section-body">
+            <div class="nav-list" id="footerNavList">
+              <div class="nav-item" data-id="101">
+                <span class="nav-drag">⋮⋮</span>
+                <div class="nav-info">
+                  <div class="nav-name">项目介绍</div>
+                  <div class="nav-url">/pages/about.html</div>
+                </div>
+                <span class="nav-status active">显示中</span>
+                <div class="nav-actions">
+                  <button class="admin-btn-sm admin-btn-outline" onclick="editNav(101)">编辑</button>
+                  <button class="admin-btn-sm admin-btn-danger" onclick="confirmDeleteNav(101)">删除</button>
+                </div>
+              </div>
+              <div class="nav-item" data-id="102">
+                <span class="nav-drag">⋮⋮</span>
+                <div class="nav-info">
+                  <div class="nav-name">政策文件</div>
+                  <div class="nav-url">/pages/policy.html</div>
+                </div>
+                <span class="nav-status active">显示中</span>
+                <div class="nav-actions">
+                  <button class="admin-btn-sm admin-btn-outline" onclick="editNav(102)">编辑</button>
+                  <button class="admin-btn-sm admin-btn-danger" onclick="confirmDeleteNav(102)">删除</button>
+                </div>
+              </div>
+              <div class="nav-item" data-id="103">
+                <span class="nav-drag">⋮⋮</span>
+                <div class="nav-info">
+                  <div class="nav-name">示范校共体</div>
+                  <div class="nav-url">/pages/schools.html</div>
+                </div>
+                <span class="nav-status active">显示中</span>
+                <div class="nav-actions">
+                  <button class="admin-btn-sm admin-btn-outline" onclick="editNav(103)">编辑</button>
+                  <button class="admin-btn-sm admin-btn-danger" onclick="confirmDeleteNav(103)">删除</button>
+                </div>
+              </div>
+              <div class="nav-item" data-id="104">
+                <span class="nav-drag">⋮⋮</span>
+                <div class="nav-info">
+                  <div class="nav-name">资源共享</div>
+                  <div class="nav-url">/pages/resources.html</div>
+                </div>
+                <span class="nav-status active">显示中</span>
+                <div class="nav-actions">
+                  <button class="admin-btn-sm admin-btn-outline" onclick="editNav(104)">编辑</button>
+                  <button class="admin-btn-sm admin-btn-danger" onclick="confirmDeleteNav(104)">删除</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- External Links -->
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-title">友情链接</div>
+            <button class="btn btn-primary" onclick="openAddNavModal('external')">+ 添加链接</button>
+          </div>
+          <div class="section-body">
+            <div class="nav-list" id="externalNavList">
+              <div class="nav-item" data-id="201">
+                <span class="nav-drag">⋮⋮</span>
+                <div class="nav-info">
+                  <div class="nav-name">河南省教育厅</div>
+                  <div class="nav-url">https://jyt.henan.gov.cn/</div>
+                </div>
+                <span class="nav-status active">显示中</span>
+                <div class="nav-actions">
+                  <button class="admin-btn-sm admin-btn-outline" onclick="editNav(201)">编辑</button>
+                  <button class="admin-btn-sm admin-btn-danger" onclick="confirmDeleteNav(201)">删除</button>
+                </div>
+              </div>
+              <div class="nav-item" data-id="202">
+                <span class="nav-drag">⋮⋮</span>
+                <div class="nav-info">
+                  <div class="nav-name">教育部</div>
+                  <div class="nav-url">https://www.moe.gov.cn/</div>
+                </div>
+                <span class="nav-status active">显示中</span>
+                <div class="nav-actions">
+                  <button class="admin-btn-sm admin-btn-outline" onclick="editNav(202)">编辑</button>
+                  <button class="admin-btn-sm admin-btn-danger" onclick="confirmDeleteNav(202)">删除</button>
+                </div>
+              </div>
+              <div class="nav-item" data-id="203">
+                <span class="nav-drag">⋮⋮</span>
+                <div class="nav-info">
+                  <div class="nav-name">中国教育在线</div>
+                  <div class="nav-url">https://www.eol.cn/</div>
+                </div>
+                <span class="nav-status inactive">已隐藏</span>
+                <div class="nav-actions">
+                  <button class="admin-btn-sm admin-btn-outline" onclick="editNav(203)">编辑</button>
+                  <button class="admin-btn-sm admin-btn-danger" onclick="confirmDeleteNav(203)">删除</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Save Button -->
+        <div style="display: flex; gap: 16px; justify-content: center; margin-top: 32px;">
+          <button class="btn btn-outline" style="padding: 12px 32px;" onclick="resetOrder()">重置排序</button>
+          <button class="btn btn-primary" style="padding: 12px 32px;" onclick="saveOrder()">保存排序</button>
+          <button class="btn btn-accent" style="padding: 12px 32px;" onclick="publishNav()">发布更新</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Add/Edit Navigation Modal -->
+  <div class="modal-overlay" id="navModal">
+    <div class="modal" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="navModalTitle">添加导航</h3>
+        <button class="modal-close" onclick="closeNavModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="navForm">
+          <input type="hidden" id="navId">
+          <input type="hidden" id="navType">
+          <div class="form-group">
+            <label class="form-label">导航名称 <span style="color: red;">*</span></label>
+            <input type="text" class="form-input" id="navName" placeholder="请输入导航名称" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">链接类型 <span style="color: red;">*</span></label>
+            <div style="display: flex; gap: 16px;">
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="navLinkType" value="internal" checked onchange="toggleNavLinkType('internal')"> 站内链接
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="navLinkType" value="external" onchange="toggleNavLinkType('external')"> 外部链接
+              </label>
+            </div>
+          </div>
+          <div class="form-group" id="internalLinkGroup">
+            <label class="form-label">站内页面 <span style="color: red;">*</span></label>
+            <select class="form-input" id="navInternalUrl">
+              <option value="">请选择页面</option>
+              <option value="/index.html">首页</option>
+              <option value="/pages/about.html">项目介绍</option>
+              <option value="/pages/policy.html">政策文件</option>
+              <option value="/pages/schools.html">示范校共体</option>
+              <option value="/pages/resources.html">资源共享</option>
+              <option value="/pages/news.html">新闻资讯</option>
+              <option value="/pages/search.html">搜索页面</option>
+            </select>
+          </div>
+          <div class="form-group" id="externalLinkGroup" style="display: none;">
+            <label class="form-label">外部链接 <span style="color: red;">*</span></label>
+            <input type="url" class="form-input" id="navExternalUrl" placeholder="请输入完整URL，如 https://example.com">
+            <p style="font-size: 12px; color: var(--neutral-500); margin-top: 4px;">外部链接将在新窗口打开</p>
+          </div>
+          <div class="form-group">
+            <label class="form-label">显示状态</label>
+            <div style="display: flex; gap: 16px;">
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="navStatus" value="active" checked> 显示
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="navStatus" value="inactive"> 隐藏
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">打开方式</label>
+            <div style="display: flex; gap: 16px;">
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="navTarget" value="_self" checked> 当前窗口
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="navTarget" value="_blank"> 新窗口
+              </label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeNavModal()">取消</button>
+        <button class="btn btn-primary" onclick="saveNav()">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirm Modal -->
+  <div class="modal-overlay" id="deleteModal">
+    <div class="modal" style="max-width: 400px;">
+      <div class="modal-header">
+        <h3 class="modal-title">确认删除</h3>
+        <button class="modal-close" onclick="closeDeleteModal()">&times;</button>
+      </div>
+      <div class="modal-body" style="text-align: center; padding: 30px 20px;">
+        <div style="font-size: 48px; margin-bottom: 16px;">⚠️</div>
+        <p style="font-size: 16px; color: var(--neutral-700); margin-bottom: 8px;">确定要删除这个导航项吗？</p>
+        <p style="font-size: 14px; color: var(--neutral-500);">删除后将从前台导航中移除</p>
+      </div>
+      <div class="modal-footer" style="justify-content: center;">
+        <button class="btn btn-outline" onclick="closeDeleteModal()">取消</button>
+        <button class="btn btn-danger" onclick="doDeleteNav()">确认删除</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentNavType = 'main';
+    let deleteNavId = null;
+
+    function toggleNavLinkType(type) {
+      const internalGroup = document.getElementById('internalLinkGroup');
+      const externalGroup = document.getElementById('externalLinkGroup');
+      if (type === 'external') {
+        internalGroup.style.display = 'none';
+        externalGroup.style.display = 'block';
+      } else {
+        internalGroup.style.display = 'block';
+        externalGroup.style.display = 'none';
+      }
+    }
+
+    function openAddNavModal(type) {
+      currentNavType = type;
+      document.getElementById('navModalTitle').textContent = '添加导航';
+      document.getElementById('navForm').reset();
+      document.getElementById('navId').value = '';
+      document.getElementById('navType').value = type;
+      toggleNavLinkType('internal');
+      document.getElementById('navModal').classList.add('active');
+    }
+
+    function editNav(id) {
+      document.getElementById('navModalTitle').textContent = '编辑导航';
+      document.getElementById('navId').value = id;
+      // In real app, would load nav data here
+      document.getElementById('navModal').classList.add('active');
+    }
+
+    function closeNavModal() {
+      document.getElementById('navModal').classList.remove('active');
+    }
+
+    function saveNav() {
+      const name = document.getElementById('navName').value;
+      if (!name) {
+        alert('请填写导航名称');
+        return;
+      }
+      showToast('导航保存成功！');
+      closeNavModal();
+    }
+
+    function confirmDeleteNav(id) {
+      deleteNavId = id;
+      document.getElementById('deleteModal').classList.add('active');
+    }
+
+    function closeDeleteModal() {
+      document.getElementById('deleteModal').classList.remove('active');
+      deleteNavId = null;
+    }
+
+    function doDeleteNav() {
+      showToast('导航已删除');
+      closeDeleteModal();
+    }
+
+    function resetOrder() {
+      showToast('排序已重置');
+    }
+
+    function saveOrder() {
+      showToast('排序保存成功！');
+    }
+
+    function publishNav() {
+      if (confirm('确定要发布导航更新吗？发布后将立即在前台生效。')) {
+        showToast('导航已发布更新！');
+      }
+    }
+
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 10);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 2000);
+    }
+
+    // Simple drag and drop simulation
+    document.querySelectorAll('.nav-drag').forEach(handle => {
+      handle.addEventListener('mousedown', function() {
+        this.style.cursor = 'grabbing';
+      });
+      handle.addEventListener('mouseup', function() {
+        this.style.cursor = 'move';
+      });
+    });
+  </script>
+</body>
+</html>

@@ -34,6 +34,10 @@
 
         <div class="admin-menu-group">
           <div class="admin-menu-title">内容管理</div>
+          <a href="about.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📖</span>
+            项目介绍
+          </a>
           <a href="news.html" class="admin-menu-item">
             <span class="admin-menu-icon">📰</span>
             新闻资讯
@@ -58,6 +62,10 @@
 
         <div class="admin-menu-group">
           <div class="admin-menu-title">系统设置</div>
+          <a href="navigation.html" class="admin-menu-item">
+            <span class="admin-menu-icon">🧭</span>
+            导航管理
+          </a>
           <a href="settings.html" class="admin-menu-item">
             <span class="admin-menu-icon">⚙️</span>
             基础配置
@@ -310,17 +318,38 @@
       </div>
       <div class="modal-body">
         <form id="newsForm">
+          <!-- 发布方式选择 -->
+          <div class="form-group">
+            <label class="form-label">发布方式 <span style="color: red;">*</span></label>
+            <div style="display: flex; gap: 16px;">
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="newsPublishType" value="content" checked onchange="toggleNewsType('content')"> 图文编辑
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="newsPublishType" value="link" onchange="toggleNewsType('link')"> 外部链接
+              </label>
+            </div>
+          </div>
           <div class="form-group">
             <label class="form-label">新闻标题 <span style="color: red;">*</span></label>
             <input type="text" class="form-input" id="newsTitle" placeholder="请输入新闻标题" required>
           </div>
-          <div class="form-group">
-            <label class="form-label">新闻摘要</label>
-            <textarea class="form-input" id="newsSummary" rows="3" placeholder="请输入新闻摘要"></textarea>
+          <!-- 外部链接输入 -->
+          <div class="form-group" id="newsLinkGroup" style="display: none;">
+            <label class="form-label">外部链接 <span style="color: red;">*</span></label>
+            <input type="url" class="form-input" id="newsExternalLink" placeholder="请输入外部链接URL，如 https://example.com/news">
+            <p style="font-size: 12px; color: var(--neutral-500); margin-top: 4px;">用户点击后将直接跳转至外部页面</p>
           </div>
-          <div class="form-group">
-            <label class="form-label">新闻内容 <span style="color: red;">*</span></label>
-            <textarea class="form-input" id="newsContent" rows="6" placeholder="请输入新闻正文内容" required></textarea>
+          <!-- 图文编辑内容 -->
+          <div id="newsContentGroup">
+            <div class="form-group">
+              <label class="form-label">新闻摘要</label>
+              <textarea class="form-input" id="newsSummary" rows="3" placeholder="请输入新闻摘要"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">新闻内容 <span style="color: red;">*</span></label>
+              <textarea class="form-input" id="newsContent" rows="6" placeholder="请输入新闻正文内容" required></textarea>
+            </div>
           </div>
           <div class="form-group">
             <label class="form-label">封面图片</label>
@@ -349,33 +378,54 @@
       </div>
       <div class="modal-body">
         <form id="policyForm">
+          <!-- 发布方式选择 -->
+          <div class="form-group">
+            <label class="form-label">发布方式 <span style="color: red;">*</span></label>
+            <div style="display: flex; gap: 16px;">
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="policyPublishType" value="content" checked onchange="togglePolicyType('content')"> 图文/附件
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="radio" name="policyPublishType" value="link" onchange="togglePolicyType('link')"> 外部链接
+              </label>
+            </div>
+          </div>
           <div class="form-group">
             <label class="form-label">政策标题 <span style="color: red;">*</span></label>
             <input type="text" class="form-input" id="policyTitle" placeholder="请输入政策标题" required>
           </div>
-          <div class="form-row">
-            <div class="form-group" style="flex: 1;">
-              <label class="form-label">分类 <span style="color: red;">*</span></label>
-              <select class="form-input" id="policyCategory" required>
-                <option value="">请选择分类</option>
-                <option value="国家政策">国家政策</option>
-                <option value="省级政策">省级政策</option>
-                <option value="实施方案">实施方案</option>
-                <option value="通知公告">通知公告</option>
-              </select>
-            </div>
-            <div class="form-group" style="flex: 1;">
-              <label class="form-label">发布机构 <span style="color: red;">*</span></label>
-              <input type="text" class="form-input" id="policyOrg" placeholder="如：河南省教育厅" required>
-            </div>
+          <!-- 外部链接输入 -->
+          <div class="form-group" id="policyLinkGroup" style="display: none;">
+            <label class="form-label">外部链接 <span style="color: red;">*</span></label>
+            <input type="url" class="form-input" id="policyExternalLink" placeholder="请输入外部链接URL">
+            <p style="font-size: 12px; color: var(--neutral-500); margin-top: 4px;">用户点击后将直接跳转至外部页面</p>
           </div>
-          <div class="form-group">
-            <label class="form-label">附件上传</label>
-            <div class="file-upload-area" onclick="document.getElementById('policyFile').click()">
-              <input type="file" id="policyFile" style="display: none;" accept=".pdf,.doc,.docx">
-              <div class="file-upload-icon">📁</div>
-              <div class="file-upload-text">点击上传政策文件</div>
-              <div class="file-upload-hint">支持 PDF、DOC、DOCX 格式</div>
+          <!-- 图文/附件内容 -->
+          <div id="policyContentGroup">
+            <div class="form-row" style="display: flex; gap: 16px;">
+              <div class="form-group" style="flex: 1;">
+                <label class="form-label">分类 <span style="color: red;">*</span></label>
+                <select class="form-input" id="policyCategory" required>
+                  <option value="">请选择分类</option>
+                  <option value="国家政策">国家政策</option>
+                  <option value="省级政策">省级政策</option>
+                  <option value="实施方案">实施方案</option>
+                  <option value="通知公告">通知公告</option>
+                </select>
+              </div>
+              <div class="form-group" style="flex: 1;">
+                <label class="form-label">发布机构 <span style="color: red;">*</span></label>
+                <input type="text" class="form-input" id="policyOrg" placeholder="如：河南省教育厅" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">附件上传</label>
+              <div class="file-upload-area" onclick="document.getElementById('policyFile').click()">
+                <input type="file" id="policyFile" style="display: none;" accept=".pdf,.doc,.docx">
+                <div class="file-upload-icon">📁</div>
+                <div class="file-upload-text">点击上传政策文件</div>
+                <div class="file-upload-hint">支持 PDF、DOC、DOCX 格式</div>
+              </div>
             </div>
           </div>
         </form>
@@ -447,8 +497,35 @@
   <script>
     let deleteNewsId = null;
 
+    // 切换新闻发布类型
+    function toggleNewsType(type) {
+      const linkGroup = document.getElementById('newsLinkGroup');
+      const contentGroup = document.getElementById('newsContentGroup');
+      if (type === 'link') {
+        linkGroup.style.display = 'block';
+        contentGroup.style.display = 'none';
+      } else {
+        linkGroup.style.display = 'none';
+        contentGroup.style.display = 'block';
+      }
+    }
+
+    // 切换政策发布类型
+    function togglePolicyType(type) {
+      const linkGroup = document.getElementById('policyLinkGroup');
+      const contentGroup = document.getElementById('policyContentGroup');
+      if (type === 'link') {
+        linkGroup.style.display = 'block';
+        contentGroup.style.display = 'none';
+      } else {
+        linkGroup.style.display = 'none';
+        contentGroup.style.display = 'block';
+      }
+    }
+
     function openNewsModal() {
       document.getElementById('newsForm').reset();
+      toggleNewsType('content');
       document.getElementById('newsModal').classList.add('active');
     }
 
