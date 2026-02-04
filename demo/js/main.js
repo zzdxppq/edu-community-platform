@@ -142,7 +142,6 @@ function initNavHighlight() {
  * 搜索功能
  */
 function initSearch() {
-  const searchForm = document.querySelector('.nav-search');
   const searchInput = document.querySelector('.search-input');
   const searchBtn = document.querySelector('.search-btn');
 
@@ -151,14 +150,26 @@ function initSearch() {
   function performSearch() {
     const query = searchInput.value.trim();
     if (query) {
-      // 跳转到搜索结果页（demo中显示提示）
-      alert('搜索功能演示：您搜索了 "' + query + '"');
+      // 获取当前页面路径，计算搜索页面的相对路径
+      const currentPath = window.location.pathname;
+      let searchPageUrl;
+
+      if (currentPath.includes('/pages/')) {
+        searchPageUrl = 'search.html?q=' + encodeURIComponent(query);
+      } else if (currentPath.includes('/admin/')) {
+        searchPageUrl = '../pages/search.html?q=' + encodeURIComponent(query);
+      } else {
+        searchPageUrl = 'pages/search.html?q=' + encodeURIComponent(query);
+      }
+
+      window.location.href = searchPageUrl;
     }
   }
 
   searchBtn.addEventListener('click', performSearch);
   searchInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
+      e.preventDefault();
       performSearch();
     }
   });
