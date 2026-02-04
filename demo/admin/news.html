@@ -6,6 +6,37 @@
   <title>新闻资讯管理 - 管理后台</title>
   <link rel="stylesheet" href="../css/styles.css">
   <link rel="stylesheet" href="../css/admin-modal.css">
+  <!-- WangEditor 5.x 样式 -->
+  <link href="https://unpkg.com/@wangeditor/editor@latest/dist/css/style.css" rel="stylesheet">
+  <style>
+    /* 编辑器容器样式 */
+    .editor-container {
+      border: 1px solid var(--neutral-300);
+      border-radius: 8px;
+      overflow: hidden;
+      z-index: 100;
+    }
+    .editor-toolbar {
+      border-bottom: 1px solid var(--neutral-200);
+      background: var(--neutral-50);
+    }
+    .editor-content {
+      height: 300px;
+      overflow-y: auto;
+      background: white;
+    }
+    /* 覆盖编辑器默认样式 */
+    .w-e-toolbar {
+      background: var(--neutral-50) !important;
+      border-bottom: 1px solid var(--neutral-200) !important;
+    }
+    .w-e-text-container {
+      background: white !important;
+    }
+    .w-e-text-container p {
+      margin: 0 0 1em 0;
+    }
+  </style>
 </head>
 <body>
   <div class="admin-wrapper">
@@ -209,7 +240,10 @@
           </div>
           <div class="form-group">
             <label class="form-label">新闻内容 <span style="color: red;">*</span></label>
-            <textarea class="form-input" id="newsContent" rows="8" placeholder="请输入新闻正文内容" required></textarea>
+            <div class="editor-container">
+              <div id="editorToolbar" class="editor-toolbar"></div>
+              <div id="editorContent" class="editor-content"></div>
+            </div>
           </div>
           <div class="form-group">
             <label class="form-label">封面图片</label>
@@ -260,8 +294,72 @@
     </div>
   </div>
 
+  <!-- WangEditor 5.x JavaScript -->
+  <script src="https://unpkg.com/@wangeditor/editor@latest/dist/index.js"></script>
   <script>
+    const { createEditor, createToolbar } = window.wangEditor;
+
+    let editor = null;
     let deleteId = null;
+
+    // 初始化编辑器
+    function initEditor() {
+      // 如果已存在编辑器，先销毁
+      if (editor) {
+        editor.destroy();
+      }
+
+      // 创建编辑器
+      editor = createEditor({
+        selector: '#editorContent',
+        html: '',
+        config: {
+          placeholder: '请输入新闻内容...',
+          MENU_CONF: {
+            uploadImage: {
+              // 模拟上传
+              customUpload(file, insertFn) {
+                // 创建临时URL用于预览
+                const url = URL.createObjectURL(file);
+                insertFn(url, file.name, url);
+              }
+            }
+          }
+        }
+      });
+
+      // 创建工具栏
+      createToolbar({
+        editor,
+        selector: '#editorToolbar',
+        config: {
+          toolbarKeys: [
+            'headerSelect',
+            'bold',
+            'italic',
+            'underline',
+            'through',
+            'color',
+            'bgColor',
+            '|',
+            'bulletedList',
+            'numberedList',
+            'todo',
+            '|',
+            'justifyLeft',
+            'justifyCenter',
+            'justifyRight',
+            '|',
+            'insertLink',
+            'uploadImage',
+            'insertTable',
+            '|',
+            'undo',
+            'redo'
+          ]
+        }
+      });
+    }
 
     function openAddModal() {
       document.getElementById('modalTitle').textContent = '发布新闻';
@@ -269,6 +367,11 @@
       document.getElementById('newsId').value = '';
       document.getElementById('uploadedCover').style.display = 'none';
       document.getElementById('newsModal').classList.add('active');
+
+      // 初始化编辑器并清空内容
+      setTimeout(() => {
+        initEditor();
+      }, 100);
     }
 
     function openEditModal(id) {
@@ -277,21 +380,33 @@
       // 模拟加载数据
       document.getElementById('newsTitle').value = '河南省召开城乡义务教育一体化发展推进会';
       document.getElementById('newsSummary').value = '3月15日，河南省教育厅召开城乡义务教育一体化发展工作推进会...';
-      document.getElementById('newsContent').value = '3月15日，河南省教育厅在郑州召开全省城乡义务教育一体化发展工作推进会议。会议总结了近年来我省城乡学校共同体建设的成效和经验，分析了当前面临的困难和挑战，部署了下一阶段的重点任务。\n\n会议指出，城乡学校共同体建设是促进城乡义务教育均衡发展的重要举措...';
       document.getElementById('uploadedCover').innerHTML = '🖼️ news_cover_1.jpg <span onclick="removeCover()" style="color: var(--accent-600); cursor: pointer; margin-left: 10px;">删除</span>';
       document.getElementById('uploadedCover').style.display = 'block';
       document.getElementById('newsModal').classList.add('active');
+
+      // 初始化编辑器并加载内容
+      setTimeout(() => {
+        initEditor();
+        // 设置富文本内容
+        editor.setHtml('<p>3月15日，河南省教育厅在郑州召开全省城乡义务教育一体化发展工作推进会议。会议总结了近年来我省城乡学校共同体建设的成效和经验，分析了当前面临的困难和挑战，部署了下一阶段的重点任务。</p><p>会议指出，城乡学校共同体建设是促进城乡义务教育均衡发展的重要举措，要继续深化城乡学校结对帮扶机制，推进优质教育资源共享。</p><p><strong>会议强调：</strong></p><ul><li>加强城乡教师交流轮岗</li><li>推进教育信息化建设</li><li>完善教育资源共享机制</li><li>建立科学的评价体系</li></ul>');
+      }, 100);
     }
 
     function closeModal() {
       document.getElementById('newsModal').classList.remove('active');
+      // 销毁编辑器
+      if (editor) {
+        editor.destroy();
+        editor = null;
+      }
     }
 
     function saveNews() {
       const title = document.getElementById('newsTitle').value;
-      const content = document.getElementById('newsContent').value;
+      const content = editor ? editor.getHtml() : '';
+      const isEmpty = editor ? editor.isEmpty() : true;
 
-      if (!title || !content) {
+      if (!title || isEmpty) {
         alert('请填写必填项');
         return;
       }
