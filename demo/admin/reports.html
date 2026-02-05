@@ -136,15 +136,6 @@
                 <option value="6">航空港区科技一街小学</option>
               </select>
             </div>
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <label style="font-size: 14px; color: var(--neutral-600);">状态：</label>
-              <select class="form-input" style="width: 120px; padding: 8px 12px;" id="statusFilter">
-                <option value="">全部</option>
-                <option value="pending">待审核</option>
-                <option value="approved">已通过</option>
-                <option value="rejected">已退回</option>
-              </select>
-            </div>
             <button class="btn btn-primary" style="padding: 8px 20px; font-size: 14px;" onclick="handleSearch()">搜索</button>
             <button class="btn btn-outline" style="padding: 8px 20px; font-size: 14px;" onclick="resetFilter()">重置</button>
           </div>
@@ -170,7 +161,6 @@
                   <th>学校名称</th>
                   <th>月报标题</th>
                   <th>提交时间</th>
-                  <th>状态</th>
                   <th>操作</th>
                 </tr>
               </thead>
@@ -180,11 +170,9 @@
                   <td>信阳董家河小学中心校</td>
                   <td>2025年3月工作月报</td>
                   <td>2025-03-31 18:30</td>
-                  <td><span class="admin-badge admin-badge-warning">待审核</span></td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="viewReport(1)">查看</button>
-                    <button class="admin-btn-sm admin-btn-primary" onclick="approveReport(1)">通过</button>
-                    <button class="admin-btn-sm admin-btn-danger" onclick="rejectReport(1)">退回</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="deleteReport(1)">删除</button>
                   </td>
                 </tr>
                 <tr>
@@ -192,10 +180,9 @@
                   <td>濮阳市开德小学</td>
                   <td>2025年3月工作月报</td>
                   <td>2025-03-30 16:45</td>
-                  <td><span class="admin-badge admin-badge-success">已通过</span></td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="viewReport(2)">查看</button>
-                    <button class="admin-btn-sm admin-btn-danger" onclick="rejectReport(2)">退回</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="deleteReport(2)">删除</button>
                   </td>
                 </tr>
                 <tr>
@@ -203,10 +190,9 @@
                   <td>扶沟县实验小学</td>
                   <td>2025年3月共同体建设工作总结</td>
                   <td>2025-03-29 14:20</td>
-                  <td><span class="admin-badge admin-badge-success">已通过</span></td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="viewReport(3)">查看</button>
-                    <button class="admin-btn-sm admin-btn-danger" onclick="rejectReport(3)">退回</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="deleteReport(3)">删除</button>
                   </td>
                 </tr>
                 <tr>
@@ -214,10 +200,9 @@
                   <td>修武县方庄中心小学</td>
                   <td>2025年3月工作月报</td>
                   <td>2025-03-28 10:15</td>
-                  <td><span class="admin-badge admin-badge-error">已退回</span></td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="viewReport(4)">查看</button>
-                    <button class="admin-btn-sm admin-btn-primary" onclick="approveReport(4)">通过</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="deleteReport(4)">删除</button>
                   </td>
                 </tr>
                 <tr>
@@ -225,10 +210,9 @@
                   <td>栾川县第四实验小学</td>
                   <td>2025年3月工作月报</td>
                   <td>2025-03-27 17:50</td>
-                  <td><span class="admin-badge admin-badge-success">已通过</span></td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="viewReport(5)">查看</button>
-                    <button class="admin-btn-sm admin-btn-danger" onclick="rejectReport(5)">退回</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="deleteReport(5)">删除</button>
                   </td>
                 </tr>
                 <tr>
@@ -236,11 +220,9 @@
                   <td>航空港区科技一街小学</td>
                   <td>2025年3月教学交流月报</td>
                   <td>2025-03-26 09:30</td>
-                  <td><span class="admin-badge admin-badge-warning">待审核</span></td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="viewReport(6)">查看</button>
-                    <button class="admin-btn-sm admin-btn-primary" onclick="approveReport(6)">通过</button>
-                    <button class="admin-btn-sm admin-btn-danger" onclick="rejectReport(6)">退回</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="deleteReport(6)">删除</button>
                   </td>
                 </tr>
                 <tr>
@@ -248,10 +230,9 @@
                   <td>信阳董家河小学中心校</td>
                   <td>2025年2月工作月报</td>
                   <td>2025-02-28 17:20</td>
-                  <td><span class="admin-badge admin-badge-success">已通过</span></td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="viewReport(7)">查看</button>
-                    <button class="admin-btn-sm admin-btn-danger" onclick="rejectReport(7)">退回</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="deleteReport(7)">删除</button>
                   </td>
                 </tr>
                 <tr>
@@ -259,10 +240,9 @@
                   <td>濮阳市开德小学</td>
                   <td>2025年2月工作月报</td>
                   <td>2025-02-27 15:40</td>
-                  <td><span class="admin-badge admin-badge-success">已通过</span></td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="viewReport(8)">查看</button>
-                    <button class="admin-btn-sm admin-btn-danger" onclick="rejectReport(8)">退回</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="deleteReport(8)">删除</button>
                   </td>
                 </tr>
                 <tr>
@@ -270,10 +250,9 @@
                   <td>扶沟县实验小学</td>
                   <td>2025年2月共同体建设工作总结</td>
                   <td>2025-02-26 11:30</td>
-                  <td><span class="admin-badge admin-badge-success">已通过</span></td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="viewReport(9)">查看</button>
-                    <button class="admin-btn-sm admin-btn-danger" onclick="rejectReport(9)">退回</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="deleteReport(9)">删除</button>
                   </td>
                 </tr>
                 <tr>
@@ -281,10 +260,9 @@
                   <td>修武县方庄中心小学</td>
                   <td>2025年2月工作月报</td>
                   <td>2025-02-25 14:10</td>
-                  <td><span class="admin-badge admin-badge-success">已通过</span></td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="viewReport(10)">查看</button>
-                    <button class="admin-btn-sm admin-btn-danger" onclick="rejectReport(10)">退回</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="deleteReport(10)">删除</button>
                   </td>
                 </tr>
               </tbody>
@@ -323,7 +301,6 @@
               <h4 style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">2025年3月工作月报</h4>
               <p style="font-size: 14px; color: var(--neutral-600);">信阳董家河小学中心校 | 提交时间：2025-03-31 18:30</p>
             </div>
-            <span class="admin-badge admin-badge-warning">待审核</span>
           </div>
         </div>
 
@@ -364,34 +341,33 @@
       </div>
       <div class="modal-footer">
         <button class="btn btn-outline" onclick="closeViewModal()">关闭</button>
-        <button class="btn btn-danger" onclick="rejectFromModal()">退回</button>
-        <button class="btn btn-primary" onclick="approveFromModal()">审核通过</button>
+        <button class="btn btn-danger" onclick="deleteFromModal()">删除</button>
       </div>
     </div>
   </div>
 
-  <!-- Reject Modal -->
-  <div class="modal-overlay" id="rejectModal">
-    <div class="modal" style="max-width: 500px;">
+  <!-- Delete Confirm Modal -->
+  <div class="modal-overlay" id="deleteModal">
+    <div class="modal" style="max-width: 400px;">
       <div class="modal-header">
-        <h3 class="modal-title">退回月报</h3>
-        <button class="modal-close" onclick="closeRejectModal()">&times;</button>
+        <h3 class="modal-title">确认删除</h3>
+        <button class="modal-close" onclick="closeDeleteModal()">&times;</button>
       </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label class="form-label">退回原因 <span style="color: red;">*</span></label>
-          <textarea class="form-input" id="rejectReason" rows="4" placeholder="请输入退回原因，学校管理员将收到通知"></textarea>
-        </div>
+      <div class="modal-body" style="text-align: center; padding: 30px 20px;">
+        <div style="font-size: 48px; margin-bottom: 16px;">⚠️</div>
+        <p style="font-size: 16px; color: var(--neutral-700); margin-bottom: 8px;">确定要删除这份月报吗？</p>
+        <p style="font-size: 14px; color: var(--neutral-500);">删除后将无法恢复</p>
       </div>
-      <div class="modal-footer">
-        <button class="btn btn-outline" onclick="closeRejectModal()">取消</button>
-        <button class="btn btn-danger" onclick="confirmReject()">确认退回</button>
+      <div class="modal-footer" style="justify-content: center;">
+        <button class="btn btn-outline" onclick="closeDeleteModal()">取消</button>
+        <button class="btn btn-danger" onclick="confirmDelete()">确认删除</button>
       </div>
     </div>
   </div>
 
   <script>
     let currentReportId = null;
+    let deleteReportId = null;
 
     function handleSearch() {
       showToast('正在搜索...');
@@ -401,7 +377,6 @@
       document.getElementById('yearFilter').value = '';
       document.getElementById('monthFilter').value = '';
       document.getElementById('schoolFilter').value = '';
-      document.getElementById('statusFilter').value = '';
       showToast('筛选条件已重置');
     }
 
@@ -419,40 +394,24 @@
       currentReportId = null;
     }
 
-    function approveReport(id) {
-      if (confirm('确定要通过这份月报吗？')) {
-        showToast('月报已审核通过');
-      }
+    function deleteReport(id) {
+      deleteReportId = id;
+      document.getElementById('deleteModal').classList.add('active');
     }
 
-    function approveFromModal() {
-      if (confirm('确定要通过这份月报吗？')) {
-        showToast('月报已审核通过');
-        closeViewModal();
-      }
+    function deleteFromModal() {
+      deleteReportId = currentReportId;
+      document.getElementById('deleteModal').classList.add('active');
     }
 
-    function rejectReport(id) {
-      currentReportId = id;
-      document.getElementById('rejectModal').classList.add('active');
+    function closeDeleteModal() {
+      document.getElementById('deleteModal').classList.remove('active');
+      deleteReportId = null;
     }
 
-    function rejectFromModal() {
-      document.getElementById('rejectModal').classList.add('active');
-    }
-
-    function closeRejectModal() {
-      document.getElementById('rejectModal').classList.remove('active');
-    }
-
-    function confirmReject() {
-      const reason = document.getElementById('rejectReason').value;
-      if (!reason.trim()) {
-        alert('请输入退回原因');
-        return;
-      }
-      showToast('月报已退回');
-      closeRejectModal();
+    function confirmDelete() {
+      showToast('月报已删除');
+      closeDeleteModal();
       closeViewModal();
     }
 

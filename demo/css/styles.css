@@ -788,7 +788,7 @@ ul, ol {
 .footer {
   background: var(--primary-900);
   color: rgba(255,255,255,0.8);
-  padding: var(--spacing-10) 0 var(--spacing-6);
+  padding: 0;
   margin-top: auto;
 }
 
@@ -828,8 +828,7 @@ ul, ol {
 
 .footer-bottom {
   text-align: center;
-  padding-top: var(--spacing-6);
-  border-top: 1px solid rgba(255,255,255,0.1);
+  padding: 12px 0;
   font-size: var(--text-sm);
 }
 
