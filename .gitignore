@@ -1,0 +1,22 @@
+# Orchestrix MCP configuration (contains API keys)
+.mcp.json
+
+# Pod configuration
+.youlidao-pod
+
+# OpenCode configuration
+.opencode/
+opencode.jsonc
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node modules (if any)
+node_modules/
