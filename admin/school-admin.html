@@ -41,6 +41,14 @@
         </div>
 
         <div class="admin-menu-group">
+          <div class="admin-menu-title">成员校管理</div>
+          <a href="#" class="admin-menu-item" onclick="showSection('members')">
+            <span class="admin-menu-icon">🏘️</span>
+            成员校列表
+          </a>
+        </div>
+
+        <div class="admin-menu-group">
           <div class="admin-menu-title">个人中心</div>
           <a href="#" class="admin-menu-item" onclick="showSection('profile')">
             <span class="admin-menu-icon">👤</span>
@@ -197,6 +205,7 @@
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline">查看</button>
                     <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="deleteReport(1)">删除</button>
                   </td>
                 </tr>
                 <tr>
@@ -207,6 +216,7 @@
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline">查看</button>
                     <button class="admin-btn-sm admin-btn-outline">编辑</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="deleteReport(2)">删除</button>
                   </td>
                 </tr>
               </tbody>
@@ -438,9 +448,24 @@
         'intro': '校共同体介绍',
         'activity': '校共同体活动',
         'report': '校共同体月报',
+        'members': '成员校列表',
         'profile': '账号设置'
       };
-      showToast('正在加载：' + (sectionNames[section] || section));
+      if (section === 'members') {
+        openMembersModal();
+      } else {
+        showToast('正在加载：' + (sectionNames[section] || section));
+      }
+    }
+
+    function deleteReport(id) {
+      if (confirm('确定要删除这份月报吗？\n\n删除后无法恢复。')) {
+        showToast('月报已删除');
+      }
+    }
+
+    function openMembersModal() {
+      showToast('正在加载成员校列表...');
     }
 
     // 切换活动发布类型
