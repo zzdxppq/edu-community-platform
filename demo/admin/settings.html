@@ -114,6 +114,32 @@
             <div class="admin-card-body">
               <form id="basicForm">
                 <div class="form-group">
+                  <label class="form-label">网站Logo</label>
+                  <div style="display: flex; gap: 20px; align-items: flex-start;">
+                    <div class="logo-preview" style="width: 180px; height: 60px; background: var(--primary-800); border-radius: 8px; display: flex; align-items: center; justify-content: center; padding: 10px;">
+                      <div style="display: flex; align-items: center; gap: 10px; color: #fff;">
+                        <div style="width: 36px; height: 36px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary-800); font-size: 18px; font-weight: bold;">豫</div>
+                        <span style="font-size: 14px; font-weight: 600;">河南城乡学校共同体发展</span>
+                      </div>
+                    </div>
+                    <div style="flex: 1;">
+                      <div class="file-upload-area" style="padding: 16px; cursor: pointer;" onclick="document.getElementById('logoFile').click()">
+                        <input type="file" id="logoFile" style="display: none;" accept="image/*" onchange="previewLogo(this)">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                          <span style="font-size: 24px;">📤</span>
+                          <div>
+                            <div style="font-size: 14px; color: var(--neutral-700);">点击上传新Logo</div>
+                            <div style="font-size: 12px; color: var(--neutral-500);">建议尺寸：180×60px，支持 PNG、SVG 格式</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top: 8px; display: flex; gap: 8px;">
+                        <button type="button" class="btn btn-outline" style="padding: 6px 16px; font-size: 13px;" onclick="resetLogo()">恢复默认</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
                   <label class="form-label">网站名称</label>
                   <input type="text" class="form-input" value="河南城乡学校共同体发展平台" id="siteName">
                 </div>
@@ -587,6 +613,18 @@
       display: flex;
       gap: 16px;
     }
+
+    .file-upload-area {
+      border: 2px dashed var(--neutral-300);
+      border-radius: 8px;
+      background: var(--neutral-50);
+      transition: all 0.2s;
+    }
+
+    .file-upload-area:hover {
+      border-color: var(--primary-600);
+      background: var(--primary-50);
+    }
   </style>
 
   <script>
@@ -604,6 +642,19 @@
       // Show selected panel
       document.getElementById('panel-' + tabName).style.display = 'block';
       document.getElementById('tab-' + tabName).classList.add('active');
+    }
+
+    // Logo Upload
+    function previewLogo(input) {
+      if (input.files && input.files[0]) {
+        showToast('Logo已上传，保存后生效');
+      }
+    }
+
+    function resetLogo() {
+      if (confirm('确定要恢复默认Logo吗？')) {
+        showToast('Logo已恢复默认');
+      }
     }
 
     // Basic Settings
