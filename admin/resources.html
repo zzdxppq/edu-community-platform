@@ -124,17 +124,6 @@
               </select>
             </div>
             <div style="display: flex; align-items: center; gap: 8px;">
-              <label style="font-size: 14px; color: var(--neutral-600);">学科：</label>
-              <select class="form-input" style="width: 100px; padding: 8px 12px;" id="subjectFilter">
-                <option value="">全部</option>
-                <option value="语文">语文</option>
-                <option value="数学">数学</option>
-                <option value="英语">英语</option>
-                <option value="科学">科学</option>
-                <option value="综合">综合</option>
-              </select>
-            </div>
-            <div style="display: flex; align-items: center; gap: 8px;">
               <label style="font-size: 14px; color: var(--neutral-600);">来源：</label>
               <select class="form-input" style="width: 150px; padding: 8px 12px;" id="sourceFilter">
                 <option value="">全部学校</option>
@@ -160,9 +149,8 @@
             <table class="admin-table">
               <thead>
                 <tr>
-                  <th style="width: 30%;">资源名称</th>
+                  <th style="width: 35%;">资源名称</th>
                   <th>类型</th>
-                  <th>学科</th>
                   <th>上传学校</th>
                   <th>上传时间</th>
                   <th>下载量</th>
@@ -179,7 +167,6 @@
                     </div>
                   </td>
                   <td><span class="admin-badge admin-badge-info">教学设计</span></td>
-                  <td>语文</td>
                   <td>信阳董家河小学</td>
                   <td>2025-03-12</td>
                   <td>234</td>
@@ -198,7 +185,6 @@
                     </div>
                   </td>
                   <td><span class="admin-badge admin-badge-success">课件资源</span></td>
-                  <td>数学</td>
                   <td>濮阳市开德小学</td>
                   <td>2025-03-10</td>
                   <td>189</td>
@@ -217,7 +203,6 @@
                     </div>
                   </td>
                   <td><span class="admin-badge admin-badge-warning">教学视频</span></td>
-                  <td>英语</td>
                   <td>扶沟县实验小学</td>
                   <td>2025-03-08</td>
                   <td>567</td>
@@ -236,7 +221,6 @@
                     </div>
                   </td>
                   <td><span class="admin-badge admin-badge-default">研究成果</span></td>
-                  <td>综合</td>
                   <td>平台上传</td>
                   <td>2025-03-01</td>
                   <td>423</td>
@@ -255,14 +239,13 @@
                     </div>
                   </td>
                   <td><span class="admin-badge admin-badge-success">课件资源</span></td>
-                  <td>科学</td>
                   <td>信阳董家河小学</td>
                   <td>2025-02-25</td>
                   <td>156</td>
-                  <td><span class="admin-badge admin-badge-warning">待审核</span></td>
+                  <td><span class="admin-badge admin-badge-success">已发布</span></td>
                   <td class="admin-actions">
-                    <button class="admin-btn-sm admin-btn-primary" onclick="approveResource(5)">审核</button>
                     <button class="admin-btn-sm admin-btn-outline" onclick="previewResource(5)">预览</button>
+                    <button class="admin-btn-sm admin-btn-outline" onclick="openEditModal(5)">编辑</button>
                     <button class="admin-btn-sm admin-btn-danger" onclick="confirmDelete(5)">删除</button>
                   </td>
                 </tr>
@@ -328,32 +311,6 @@
                   <option value="课件资源">课件资源</option>
                   <option value="教学视频">教学视频</option>
                   <option value="研究成果">研究成果</option>
-                </select>
-              </div>
-              <div class="form-group" style="flex: 1;">
-                <label class="form-label">学科 <span style="color: red;">*</span></label>
-                <select class="form-input" id="resourceSubject" required>
-                  <option value="">请选择学科</option>
-                  <option value="语文">语文</option>
-                  <option value="数学">数学</option>
-                  <option value="英语">英语</option>
-                  <option value="科学">科学</option>
-                  <option value="综合">综合</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group" style="flex: 1;">
-                <label class="form-label">年级</label>
-                <select class="form-input" id="resourceGrade">
-                  <option value="">请选择年级</option>
-                  <option value="一年级">一年级</option>
-                  <option value="二年级">二年级</option>
-                  <option value="三年级">三年级</option>
-                  <option value="四年级">四年级</option>
-                  <option value="五年级">五年级</option>
-                  <option value="六年级">六年级</option>
-                  <option value="通用">通用</option>
                 </select>
               </div>
               <div class="form-group" style="flex: 1;">
@@ -495,8 +452,6 @@
       // 模拟加载数据
       document.getElementById('resourceName').value = '小学语文三年级上册《秋天的雨》教学设计';
       document.getElementById('resourceType').value = '教学设计';
-      document.getElementById('resourceSubject').value = '语文';
-      document.getElementById('resourceGrade').value = '三年级';
       document.getElementById('resourceSchool').value = '信阳董家河小学';
       document.getElementById('resourceDesc').value = '本教学设计围绕《秋天的雨》这篇课文展开，通过多种教学方法引导学生感受秋天的美...';
       document.getElementById('uploadedFile').innerHTML = '📄 秋天的雨教学设计.pdf <span onclick="removeFile()" style="color: var(--accent-600); cursor: pointer; margin-left: 10px;">删除</span>';
@@ -511,9 +466,8 @@
     function saveResource() {
       const name = document.getElementById('resourceName').value;
       const type = document.getElementById('resourceType').value;
-      const subject = document.getElementById('resourceSubject').value;
 
-      if (!name || !type || !subject) {
+      if (!name || !type) {
         alert('请填写必填项');
         return;
       }
@@ -576,7 +530,6 @@
     function handleSearch() {
       const keyword = document.getElementById('searchInput').value;
       const type = document.getElementById('typeFilter').value;
-      const subject = document.getElementById('subjectFilter').value;
       const source = document.getElementById('sourceFilter').value;
       showToast('正在搜索...');
     }
@@ -584,7 +537,6 @@
     function resetFilter() {
       document.getElementById('searchInput').value = '';
       document.getElementById('typeFilter').value = '';
-      document.getElementById('subjectFilter').value = '';
       document.getElementById('sourceFilter').value = '';
       showToast('筛选条件已重置');
     }

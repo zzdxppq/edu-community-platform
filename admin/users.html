@@ -98,7 +98,7 @@
               </select>
             </div>
             <div style="display: flex; align-items: center; gap: 8px;">
-              <input type="text" class="form-input" style="width: 200px; padding: 8px 12px;" placeholder="搜索账号/姓名..." id="searchInput">
+              <input type="text" class="form-input" style="width: 200px; padding: 8px 12px;" placeholder="搜索账号/手机号..." id="searchInput">
             </div>
             <button class="btn btn-primary" style="padding: 8px 20px; font-size: 14px;" onclick="handleSearch()">搜索</button>
             <button class="btn btn-outline" style="padding: 8px 20px; font-size: 14px;" onclick="resetFilter()">重置</button>
@@ -115,7 +115,6 @@
               <thead>
                 <tr>
                   <th>账号</th>
-                  <th>姓名</th>
                   <th>所属学校</th>
                   <th>联系电话</th>
                   <th>最后登录</th>
@@ -126,7 +125,6 @@
               <tbody>
                 <tr>
                   <td>admin_djh</td>
-                  <td>李老师</td>
                   <td>信阳董家河小学中心校</td>
                   <td>138****1234</td>
                   <td>2025-03-15 14:30</td>
@@ -139,7 +137,6 @@
                 </tr>
                 <tr>
                   <td>admin_kd</td>
-                  <td>王老师</td>
                   <td>濮阳市开德小学</td>
                   <td>139****5678</td>
                   <td>2025-03-15 10:15</td>
@@ -152,7 +149,6 @@
                 </tr>
                 <tr>
                   <td>admin_fg</td>
-                  <td>张老师</td>
                   <td>扶沟县实验小学</td>
                   <td>137****9012</td>
                   <td>2025-03-14 16:45</td>
@@ -165,7 +161,6 @@
                 </tr>
                 <tr>
                   <td>admin_fz</td>
-                  <td>刘老师</td>
                   <td>修武县方庄中心小学</td>
                   <td>136****3456</td>
                   <td>2025-03-13 09:20</td>
@@ -178,7 +173,6 @@
                 </tr>
                 <tr>
                   <td>admin_lc</td>
-                  <td>陈老师</td>
                   <td>栾川县第四实验小学</td>
                   <td>135****7890</td>
                   <td>2025-03-15 11:30</td>
@@ -191,7 +185,6 @@
                 </tr>
                 <tr>
                   <td>admin_hkq</td>
-                  <td>赵老师</td>
                   <td>航空港区科技一街小学</td>
                   <td>133****2345</td>
                   <td>2025-03-14 15:00</td>
@@ -220,32 +213,29 @@
       <div class="modal-body">
         <form id="userForm">
           <input type="hidden" id="userId">
-          <div class="form-row">
-            <div class="form-group" style="flex: 1;">
-              <label class="form-label">登录账号 <span style="color: red;">*</span></label>
-              <input type="text" class="form-input" id="username" placeholder="请输入登录账号" required>
-            </div>
-            <div class="form-group" style="flex: 1;">
-              <label class="form-label">姓名 <span style="color: red;">*</span></label>
-              <input type="text" class="form-input" id="realname" placeholder="请输入姓名" required>
-            </div>
+          <div class="form-group">
+            <label class="form-label">登录账号 <span style="color: red;">*</span></label>
+            <input type="text" class="form-input" id="username" placeholder="请输入登录账号" required>
           </div>
           <div class="form-group">
             <label class="form-label">所属学校 <span style="color: red;">*</span></label>
-            <select class="form-input" id="school" required>
-              <option value="">请选择学校</option>
-              <option value="信阳董家河小学中心校">信阳董家河小学中心校</option>
-              <option value="濮阳市开德小学">濮阳市开德小学</option>
-              <option value="扶沟县实验小学">扶沟县实验小学</option>
-              <option value="修武县方庄中心小学">修武县方庄中心小学</option>
-              <option value="栾川县第四实验小学">栾川县第四实验小学</option>
-              <option value="航空港区科技一街小学">航空港区科技一街小学</option>
-            </select>
+            <div style="position: relative;">
+              <input type="text" class="form-input" id="schoolSearch" placeholder="输入学校名称搜索..." oninput="filterSchools(this.value)" onfocus="showSchoolDropdown()" autocomplete="off">
+              <div id="schoolDropdown" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid var(--neutral-300); border-top: none; border-radius: 0 0 8px 8px; max-height: 200px; overflow-y: auto; z-index: 100; box-shadow: var(--shadow-md);">
+                <div class="school-option" onclick="selectSchool('信阳董家河小学中心校')" style="padding: 10px 12px; cursor: pointer; border-bottom: 1px solid var(--neutral-200);">信阳董家河小学中心校</div>
+                <div class="school-option" onclick="selectSchool('濮阳市开德小学')" style="padding: 10px 12px; cursor: pointer; border-bottom: 1px solid var(--neutral-200);">濮阳市开德小学</div>
+                <div class="school-option" onclick="selectSchool('扶沟县实验小学')" style="padding: 10px 12px; cursor: pointer; border-bottom: 1px solid var(--neutral-200);">扶沟县实验小学</div>
+                <div class="school-option" onclick="selectSchool('修武县方庄中心小学')" style="padding: 10px 12px; cursor: pointer; border-bottom: 1px solid var(--neutral-200);">修武县方庄中心小学</div>
+                <div class="school-option" onclick="selectSchool('栾川县第四实验小学')" style="padding: 10px 12px; cursor: pointer; border-bottom: 1px solid var(--neutral-200);">栾川县第四实验小学</div>
+                <div class="school-option" onclick="selectSchool('航空港区科技一街小学')" style="padding: 10px 12px; cursor: pointer;">航空港区科技一街小学</div>
+              </div>
+            </div>
+            <input type="hidden" id="school" required>
           </div>
           <div class="form-row">
             <div class="form-group" style="flex: 1;">
-              <label class="form-label">联系电话</label>
-              <input type="tel" class="form-input" id="phone" placeholder="请输入联系电话">
+              <label class="form-label">联系电话 <span style="color: red;">*</span></label>
+              <input type="tel" class="form-input" id="phone" placeholder="请输入联系电话" required>
             </div>
             <div class="form-group" style="flex: 1;">
               <label class="form-label">电子邮箱</label>
@@ -344,7 +334,7 @@
       document.getElementById('username').disabled = true;
       // 模拟加载数据
       document.getElementById('username').value = 'admin_djh';
-      document.getElementById('realname').value = '李老师';
+      document.getElementById('schoolSearch').value = '信阳董家河小学中心校';
       document.getElementById('school').value = '信阳董家河小学中心校';
       document.getElementById('phone').value = '13812341234';
       document.getElementById('email').value = 'liteacher@example.com';
@@ -357,10 +347,10 @@
 
     function saveUser() {
       const username = document.getElementById('username').value;
-      const realname = document.getElementById('realname').value;
       const school = document.getElementById('school').value;
+      const phone = document.getElementById('phone').value;
 
-      if (!username || !realname || !school) {
+      if (!username || !school || !phone) {
         alert('请填写必填项');
         return;
       }
@@ -373,6 +363,39 @@
       }
       closeModal();
     }
+
+    // 学校搜索功能
+    function showSchoolDropdown() {
+      document.getElementById('schoolDropdown').style.display = 'block';
+    }
+
+    function filterSchools(keyword) {
+      const dropdown = document.getElementById('schoolDropdown');
+      const options = dropdown.querySelectorAll('.school-option');
+      options.forEach(option => {
+        if (option.textContent.toLowerCase().includes(keyword.toLowerCase())) {
+          option.style.display = 'block';
+        } else {
+          option.style.display = 'none';
+        }
+      });
+      dropdown.style.display = 'block';
+    }
+
+    function selectSchool(schoolName) {
+      document.getElementById('schoolSearch').value = schoolName;
+      document.getElementById('school').value = schoolName;
+      document.getElementById('schoolDropdown').style.display = 'none';
+    }
+
+    // 点击外部关闭下拉
+    document.addEventListener('click', function(e) {
+      const dropdown = document.getElementById('schoolDropdown');
+      const searchInput = document.getElementById('schoolSearch');
+      if (dropdown && searchInput && !searchInput.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.style.display = 'none';
+      }
+    });
 
     function openResetPasswordModal(id) {
       resetPasswordId = id;

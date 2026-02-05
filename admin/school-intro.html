@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>校共同体介绍 - 学校管理后台</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/admin-modal.css">
+  <!-- WangEditor 5.x 样式 -->
+  <link href="https://unpkg.com/@wangeditor/editor@latest/dist/css/style.css" rel="stylesheet">
+  <style>
+    .editor-container {
+      border: 1px solid var(--neutral-300);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .editor-toolbar {
+      border-bottom: 1px solid var(--neutral-200);
+      background: var(--neutral-50);
+    }
+    .editor-content {
+      height: 400px;
+      overflow-y: auto;
+      background: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-wrapper">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar" style="background: linear-gradient(180deg, #1a3d6e 0%, #2C5AA0 100%);">
+      <div class="admin-logo">
+        <div class="admin-logo-icon" style="background: #fff;">豫</div>
+        <div class="admin-logo-text">信阳董家河小学<br>学校管理后台</div>
+      </div>
+      <nav class="admin-menu">
+        <div class="admin-menu-group">
+          <a href="school-admin.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📊</span>
+            工作台
+          </a>
+        </div>
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">内容管理</div>
+          <a href="school-intro.html" class="admin-menu-item active">
+            <span class="admin-menu-icon">🏫</span>
+            校共同体介绍
+          </a>
+          <a href="school-activity.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📝</span>
+            校共同体活动
+          </a>
+          <a href="school-report.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📄</span>
+            校共同体月报
+          </a>
+        </div>
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">成员校管理</div>
+          <a href="school-members.html" class="admin-menu-item">
+            <span class="admin-menu-icon">🏘️</span>
+            成员校列表
+          </a>
+        </div>
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">个人中心</div>
+          <a href="school-account.html" class="admin-menu-item">
+            <span class="admin-menu-icon">👤</span>
+            账号设置
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <header class="admin-header">
+        <div class="admin-breadcrumb">学校管理后台 / 校共同体介绍</div>
+        <div class="admin-user">
+          <span style="font-size: 14px; color: var(--neutral-600);">李老师 (学校管理员)</span>
+          <div class="admin-avatar" style="background: var(--accent-600);">李</div>
+          <a href="../pages/admin-login.html" style="font-size: 14px; color: var(--accent-600);">退出</a>
+        </div>
+      </header>
+
+      <div class="admin-content">
+        <div class="admin-page-header">
+          <h1 class="admin-page-title">校共同体介绍</h1>
+          <p class="admin-page-desc">编辑和管理本校共同体介绍内容</p>
+        </div>
+
+        <div class="admin-card" style="margin-bottom: 24px;">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">基本信息</h3>
+          </div>
+          <div class="admin-card-body">
+            <div class="form-group">
+              <label class="form-label">共同体名称 <span style="color: red;">*</span></label>
+              <input type="text" class="form-input" id="introName" value="信阳董家河小学中心校城乡学校共同体">
+            </div>
+            <div class="form-group">
+              <label class="form-label">封面图片</label>
+              <div class="file-upload-area" onclick="document.getElementById('introCover').click()" style="height: 150px;">
+                <input type="file" id="introCover" style="display: none;" accept="image/*">
+                <div class="file-upload-icon">🖼️</div>
+                <div class="file-upload-text">点击上传封面图</div>
+                <div class="file-upload-hint">建议尺寸：1200×400，支持 JPG、PNG 格式</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-card" style="margin-bottom: 24px;">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">共同体介绍内容 <span style="color: red;">*</span></h3>
+          </div>
+          <div class="admin-card-body">
+            <div class="editor-container">
+              <div id="editorToolbar" class="editor-toolbar"></div>
+              <div id="editorContent" class="editor-content"></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 16px; justify-content: center; margin-top: 32px;">
+          <button class="btn btn-outline" style="padding: 12px 32px;" onclick="previewIntro()">预览</button>
+          <button class="btn btn-primary" style="padding: 12px 32px;" onclick="saveIntro()">保存</button>
+          <button class="btn btn-accent" style="padding: 12px 32px;" onclick="publishIntro()">发布</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- WangEditor 5.x JavaScript -->
+  <script src="https://unpkg.com/@wangeditor/editor@latest/dist/index.js"></script>
+  <script>
+    const { createEditor, createToolbar } = window.wangEditor;
+    let editor = null;
+
+    // 初始化编辑器
+    function initEditor() {
+      editor = createEditor({
+        selector: '#editorContent',
+        html: '<h2>共同体简介</h2><p>信阳董家河小学中心校城乡学校共同体成立于2024年，是河南省首批城乡学校共同体示范项目之一。共同体以董家河小学为核心校，联合周边5所乡村学校，通过教师交流、资源共享、教研协作等方式，促进城乡教育均衡发展。</p><h2>发展目标</h2><p>共同体围绕"同步课堂、联合教研、教师交流、资源共享"四大核心工作，积极探索城乡教育一体化发展的有效路径，取得了显著成效。</p><h2>工作重点</h2><ul><li>建立城乡同步课堂机制</li><li>开展联合教研活动</li><li>推进教师交流轮岗</li><li>实现优质资源共享</li></ul>',
+        config: {
+          placeholder: '请输入共同体介绍内容...',
+          MENU_CONF: {
+            uploadImage: {
+              customUpload(file, insertFn) {
+                const url = URL.createObjectURL(file);
+                insertFn(url, file.name, url);
+              }
+            }
+          }
+        }
+      });
+
+      createToolbar({
+        editor,
+        selector: '#editorToolbar',
+        config: {
+          toolbarKeys: [
+            'headerSelect', 'bold', 'italic', 'underline', 'through', 'color', 'bgColor', '|',
+            'bulletedList', 'numberedList', 'todo', '|',
+            'justifyLeft', 'justifyCenter', 'justifyRight', '|',
+            'insertLink', 'uploadImage', 'insertTable', '|', 'undo', 'redo'
+          ]
+        }
+      });
+    }
+
+    function previewIntro() {
+      window.open('../pages/school-detail.html', '_blank');
+    }
+
+    function saveIntro() {
+      const name = document.getElementById('introName').value;
+      const content = editor ? editor.getHtml() : '';
+      if (!name || !content) {
+        alert('请填写必填项');
+        return;
+      }
+      showToast('共同体介绍保存成功！');
+    }
+
+    function publishIntro() {
+      if (confirm('确定要发布更新吗？发布后将立即在官网生效。')) {
+        showToast('共同体介绍已发布！');
+      }
+    }
+
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 10);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 2000);
+    }
+
+    // 页面加载后初始化编辑器
+    setTimeout(initEditor, 100);
+  </script>
+</body>
+</html>

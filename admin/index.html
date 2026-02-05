@@ -115,7 +115,7 @@
           <div class="admin-stat-card" onclick="location.href='resources.html'" style="cursor: pointer;">
             <div class="admin-stat-title">资源下载</div>
             <div class="admin-stat-value">2,847</div>
-            <div class="admin-stat-change">+234 本周</div>
+            <div class="admin-stat-change">+234 本月</div>
           </div>
         </div>
 
@@ -343,10 +343,6 @@
           <!-- 图文编辑内容 -->
           <div id="newsContentGroup">
             <div class="form-group">
-              <label class="form-label">新闻摘要</label>
-              <textarea class="form-input" id="newsSummary" rows="3" placeholder="请输入新闻摘要"></textarea>
-            </div>
-            <div class="form-group">
               <label class="form-label">新闻内容 <span style="color: red;">*</span></label>
               <textarea class="form-input" id="newsContent" rows="6" placeholder="请输入新闻正文内容" required></textarea>
             </div>
@@ -414,9 +410,13 @@
                 </select>
               </div>
               <div class="form-group" style="flex: 1;">
-                <label class="form-label">发布机构 <span style="color: red;">*</span></label>
-                <input type="text" class="form-input" id="policyOrg" placeholder="如：河南省教育厅" required>
+                <label class="form-label">发布机构</label>
+                <input type="text" class="form-input" id="policyOrg" placeholder="如：河南省教育厅">
               </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">政策内容 <span style="color: red;">*</span></label>
+              <textarea class="form-input" id="policyContent" rows="6" placeholder="请输入政策正文内容" required></textarea>
             </div>
             <div class="form-group">
               <label class="form-label">附件上传</label>
@@ -576,8 +576,8 @@
     function publishPolicy() {
       const title = document.getElementById('policyTitle').value;
       const category = document.getElementById('policyCategory').value;
-      const org = document.getElementById('policyOrg').value;
-      if (!title || !category || !org) {
+      const content = document.getElementById('policyContent').value;
+      if (!title || !category || !content) {
         alert('请填写必填项');
         return;
       }

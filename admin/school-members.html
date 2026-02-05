@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>成员校列表 - 学校管理后台</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/admin-modal.css">
+</head>
+<body>
+  <div class="admin-wrapper">
+    <aside class="admin-sidebar" style="background: linear-gradient(180deg, #1a3d6e 0%, #2C5AA0 100%);">
+      <div class="admin-logo">
+        <div class="admin-logo-icon" style="background: #fff;">豫</div>
+        <div class="admin-logo-text">信阳董家河小学<br>学校管理后台</div>
+      </div>
+      <nav class="admin-menu">
+        <div class="admin-menu-group">
+          <a href="school-admin.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📊</span>
+            工作台
+          </a>
+        </div>
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">内容管理</div>
+          <a href="school-intro.html" class="admin-menu-item">
+            <span class="admin-menu-icon">🏫</span>
+            校共同体介绍
+          </a>
+          <a href="school-activity.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📝</span>
+            校共同体活动
+          </a>
+          <a href="school-report.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📄</span>
+            校共同体月报
+          </a>
+        </div>
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">成员校管理</div>
+          <a href="school-members.html" class="admin-menu-item active">
+            <span class="admin-menu-icon">🏘️</span>
+            成员校列表
+          </a>
+        </div>
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">个人中心</div>
+          <a href="school-account.html" class="admin-menu-item">
+            <span class="admin-menu-icon">👤</span>
+            账号设置
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-header">
+        <div class="admin-breadcrumb">学校管理后台 / 成员校列表</div>
+        <div class="admin-user">
+          <span style="font-size: 14px; color: var(--neutral-600);">李老师 (学校管理员)</span>
+          <div class="admin-avatar" style="background: var(--accent-600);">李</div>
+          <a href="../pages/admin-login.html" style="font-size: 14px; color: var(--accent-600);">退出</a>
+        </div>
+      </header>
+
+      <div class="admin-content">
+        <div class="admin-page-header">
+          <h1 class="admin-page-title">成员校列表</h1>
+          <p class="admin-page-desc">查看本共同体的成员校信息</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="admin-stats" style="margin-bottom: 24px;">
+          <div class="admin-stat-card">
+            <div class="admin-stat-title">核心校</div>
+            <div class="admin-stat-value">1</div>
+            <div class="admin-stat-change">信阳董家河小学中心校</div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-title">成员校数量</div>
+            <div class="admin-stat-value">5</div>
+            <div class="admin-stat-change">乡村学校</div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-title">共同体总数</div>
+            <div class="admin-stat-value">6</div>
+            <div class="admin-stat-change">含核心校</div>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">成员校列表</h3>
+          </div>
+          <div class="admin-card-body" style="padding: 0;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width: 30%;">学校名称</th>
+                  <th>类型</th>
+                  <th>联系人</th>
+                  <th>联系电话</th>
+                  <th>地址</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background: var(--primary-50);">
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <div style="width: 36px; height: 36px; background: var(--primary-800); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 16px;">核</div>
+                      <div>
+                        <div style="font-weight: 600;">信阳董家河小学中心校</div>
+                        <div style="font-size: 12px; color: var(--neutral-500);">核心校</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="admin-badge admin-badge-info">城镇小学</span></td>
+                  <td>李老师</td>
+                  <td>0376-****1234</td>
+                  <td>信阳市浉河区董家河镇</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <div style="width: 36px; height: 36px; background: var(--success-100); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px;">🏫</div>
+                      <div>
+                        <div style="font-weight: 600;">董家河镇中心小学</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="admin-badge admin-badge-success">城镇小学</span></td>
+                  <td>王老师</td>
+                  <td>0376-****5678</td>
+                  <td>信阳市浉河区董家河镇中心街</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <div style="width: 36px; height: 36px; background: var(--warning-100); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px;">🏫</div>
+                      <div>
+                        <div style="font-weight: 600;">绿之风希望小学</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="admin-badge admin-badge-warning">乡村小学</span></td>
+                  <td>张老师</td>
+                  <td>0376-****9012</td>
+                  <td>信阳市浉河区董家河镇绿之风村</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <div style="width: 36px; height: 36px; background: var(--warning-100); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px;">🏫</div>
+                      <div>
+                        <div style="font-weight: 600;">白雀园镇中心小学</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="admin-badge admin-badge-warning">乡村小学</span></td>
+                  <td>刘老师</td>
+                  <td>0376-****3456</td>
+                  <td>信阳市光山县白雀园镇</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <div style="width: 36px; height: 36px; background: var(--warning-100); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px;">🏫</div>
+                      <div>
+                        <div style="font-weight: 600;">泼陂河镇第一小学</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="admin-badge admin-badge-warning">乡村小学</span></td>
+                  <td>陈老师</td>
+                  <td>0376-****7890</td>
+                  <td>信阳市光山县泼陂河镇</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <div style="width: 36px; height: 36px; background: var(--warning-100); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px;">🏫</div>
+                      <div>
+                        <div style="font-weight: 600;">龙山乡中心小学</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="admin-badge admin-badge-warning">乡村小学</span></td>
+                  <td>赵老师</td>
+                  <td>0376-****2345</td>
+                  <td>信阳市浉河区龙山乡</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="margin-top: 24px; padding: 16px; background: var(--neutral-100); border-radius: 8px;">
+          <p style="font-size: 14px; color: var(--neutral-600);">
+            <strong>提示：</strong>成员校信息由平台管理员维护。如需修改成员校信息，请联系平台管理员。
+          </p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 10);
+      setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 2000);
+    }
+  </script>
+</body>
+</html>

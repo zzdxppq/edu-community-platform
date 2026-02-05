@@ -163,6 +163,20 @@
           <p class="admin-page-desc">编辑和管理官网"项目介绍"页面的内容</p>
         </div>
 
+        <!-- Project Name Section -->
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-title">项目名称</div>
+            <button class="btn btn-primary" onclick="saveProjectName()">保存</button>
+          </div>
+          <div class="section-body">
+            <div class="form-group">
+              <label class="form-label">项目名称 <span style="color: red;">*</span></label>
+              <input type="text" class="form-input" id="projectName" value="河南省城乡学校共同体发展平台" placeholder="请输入项目名称">
+            </div>
+          </div>
+        </div>
+
         <!-- Banner Section -->
         <div class="section-card">
           <div class="section-header">
@@ -327,6 +341,15 @@
       if (url) {
         document.execCommand('insertImage', false, url);
       }
+    }
+
+    function saveProjectName() {
+      const name = document.getElementById('projectName').value;
+      if (!name) {
+        alert('请填写项目名称');
+        return;
+      }
+      showToast('项目名称保存成功！');
     }
 
     function changeBanner() {

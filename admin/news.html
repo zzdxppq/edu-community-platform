@@ -121,18 +121,27 @@
         <div class="admin-card" style="margin-bottom: 20px;">
           <div class="admin-card-body" style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
             <div style="display: flex; align-items: center; gap: 8px;">
+              <label style="font-size: 14px; color: var(--neutral-600);">状态：</label>
+              <select class="form-input" style="width: 120px; padding: 8px 12px;" id="statusFilter">
+                <option value="">全部</option>
+                <option value="已发布">已发布</option>
+                <option value="存草稿">存草稿</option>
+              </select>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
               <label style="font-size: 14px; color: var(--neutral-600);">来源：</label>
-              <select class="form-input" style="width: 150px; padding: 8px 12px;">
-                <option>全部</option>
-                <option>平台发布</option>
-                <option>学校发布</option>
+              <select class="form-input" style="width: 150px; padding: 8px 12px;" id="sourceFilter">
+                <option value="">全部</option>
+                <option value="平台发布">平台发布</option>
+                <option value="学校发布">学校发布</option>
               </select>
             </div>
             <div style="display: flex; align-items: center; gap: 8px;">
               <label style="font-size: 14px; color: var(--neutral-600);">关键词：</label>
-              <input type="text" class="form-input" style="width: 200px; padding: 8px 12px;" placeholder="搜索标题...">
+              <input type="text" class="form-input" style="width: 200px; padding: 8px 12px;" placeholder="搜索标题..." id="searchInput">
             </div>
-            <button class="btn btn-primary" style="padding: 8px 20px; font-size: 14px;">搜索</button>
+            <button class="btn btn-primary" style="padding: 8px 20px; font-size: 14px;" onclick="handleSearch()">搜索</button>
+            <button class="btn btn-outline" style="padding: 8px 20px; font-size: 14px;" onclick="resetFilter()">重置</button>
           </div>
         </div>
 
@@ -262,10 +271,6 @@
           </div>
           <!-- 图文编辑内容 -->
           <div id="newsContentGroup">
-            <div class="form-group">
-              <label class="form-label">新闻摘要</label>
-              <textarea class="form-input" id="newsSummary" rows="3" placeholder="请输入新闻摘要"></textarea>
-            </div>
             <div class="form-group">
               <label class="form-label">新闻内容 <span style="color: red;">*</span></label>
               <div class="editor-container">
@@ -422,7 +427,6 @@
       document.getElementById('newsId').value = id;
       // 模拟加载数据
       document.getElementById('newsTitle').value = '河南省召开城乡义务教育一体化发展推进会';
-      document.getElementById('newsSummary').value = '3月15日，河南省教育厅召开城乡义务教育一体化发展工作推进会...';
       document.getElementById('uploadedCover').innerHTML = '🖼️ news_cover_1.jpg <span onclick="removeCover()" style="color: var(--accent-600); cursor: pointer; margin-left: 10px;">删除</span>';
       document.getElementById('uploadedCover').style.display = 'block';
       document.getElementById('newsModal').classList.add('active');
@@ -433,6 +437,20 @@
         // 设置富文本内容
         editor.setHtml('<p>3月15日，河南省教育厅在郑州召开全省城乡义务教育一体化发展工作推进会议。会议总结了近年来我省城乡学校共同体建设的成效和经验，分析了当前面临的困难和挑战，部署了下一阶段的重点任务。</p><p>会议指出，城乡学校共同体建设是促进城乡义务教育均衡发展的重要举措，要继续深化城乡学校结对帮扶机制，推进优质教育资源共享。</p><p><strong>会议强调：</strong></p><ul><li>加强城乡教师交流轮岗</li><li>推进教育信息化建设</li><li>完善教育资源共享机制</li><li>建立科学的评价体系</li></ul>');
       }, 100);
+    }
+
+    function handleSearch() {
+      const status = document.getElementById('statusFilter').value;
+      const source = document.getElementById('sourceFilter').value;
+      const keyword = document.getElementById('searchInput').value;
+      showToast('正在搜索...');
+    }
+
+    function resetFilter() {
+      document.getElementById('statusFilter').value = '';
+      document.getElementById('sourceFilter').value = '';
+      document.getElementById('searchInput').value = '';
+      showToast('筛选条件已重置');
     }
 
     function closeModal() {

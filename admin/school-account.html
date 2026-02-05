@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>账号设置 - 学校管理后台</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/admin-modal.css">
+</head>
+<body>
+  <div class="admin-wrapper">
+    <aside class="admin-sidebar" style="background: linear-gradient(180deg, #1a3d6e 0%, #2C5AA0 100%);">
+      <div class="admin-logo">
+        <div class="admin-logo-icon" style="background: #fff;">豫</div>
+        <div class="admin-logo-text">信阳董家河小学<br>学校管理后台</div>
+      </div>
+      <nav class="admin-menu">
+        <div class="admin-menu-group">
+          <a href="school-admin.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📊</span>
+            工作台
+          </a>
+        </div>
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">内容管理</div>
+          <a href="school-intro.html" class="admin-menu-item">
+            <span class="admin-menu-icon">🏫</span>
+            校共同体介绍
+          </a>
+          <a href="school-activity.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📝</span>
+            校共同体活动
+          </a>
+          <a href="school-report.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📄</span>
+            校共同体月报
+          </a>
+        </div>
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">成员校管理</div>
+          <a href="school-members.html" class="admin-menu-item">
+            <span class="admin-menu-icon">🏘️</span>
+            成员校列表
+          </a>
+        </div>
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">个人中心</div>
+          <a href="school-account.html" class="admin-menu-item active">
+            <span class="admin-menu-icon">👤</span>
+            账号设置
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-header">
+        <div class="admin-breadcrumb">学校管理后台 / 账号设置</div>
+        <div class="admin-user">
+          <span style="font-size: 14px; color: var(--neutral-600);">李老师 (学校管理员)</span>
+          <div class="admin-avatar" style="background: var(--accent-600);">李</div>
+          <a href="../pages/admin-login.html" style="font-size: 14px; color: var(--accent-600);">退出</a>
+        </div>
+      </header>
+
+      <div class="admin-content">
+        <div class="admin-page-header">
+          <h1 class="admin-page-title">账号设置</h1>
+          <p class="admin-page-desc">管理您的账号信息和安全设置</p>
+        </div>
+
+        <!-- Account Info Card -->
+        <div class="admin-card" style="margin-bottom: 24px;">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">账号信息</h3>
+          </div>
+          <div class="admin-card-body">
+            <div style="display: flex; gap: 24px; align-items: flex-start;">
+              <div style="width: 80px; height: 80px; background: var(--accent-600); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 32px; font-weight: 700;">李</div>
+              <div style="flex: 1;">
+                <div class="form-row" style="display: flex; gap: 16px; margin-bottom: 16px;">
+                  <div class="form-group" style="flex: 1; margin-bottom: 0;">
+                    <label class="form-label">登录账号</label>
+                    <input type="text" class="form-input" value="admin_djh" disabled style="background: var(--neutral-100);">
+                  </div>
+                  <div class="form-group" style="flex: 1; margin-bottom: 0;">
+                    <label class="form-label">所属学校</label>
+                    <input type="text" class="form-input" value="信阳董家河小学中心校" disabled style="background: var(--neutral-100);">
+                  </div>
+                </div>
+                <div class="form-row" style="display: flex; gap: 16px; margin-bottom: 16px;">
+                  <div class="form-group" style="flex: 1; margin-bottom: 0;">
+                    <label class="form-label">联系电话 <span style="color: red;">*</span></label>
+                    <input type="tel" class="form-input" id="phone" value="13812341234" placeholder="请输入联系电话">
+                  </div>
+                  <div class="form-group" style="flex: 1; margin-bottom: 0;">
+                    <label class="form-label">电子邮箱</label>
+                    <input type="email" class="form-input" id="email" value="liteacher@example.com" placeholder="请输入邮箱">
+                  </div>
+                </div>
+                <button class="btn btn-primary" style="padding: 8px 24px;" onclick="saveAccountInfo()">保存信息</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Password Card -->
+        <div class="admin-card" style="margin-bottom: 24px;">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">修改密码</h3>
+          </div>
+          <div class="admin-card-body">
+            <div style="max-width: 400px;">
+              <div class="form-group">
+                <label class="form-label">当前密码 <span style="color: red;">*</span></label>
+                <input type="password" class="form-input" id="currentPassword" placeholder="请输入当前密码">
+              </div>
+              <div class="form-group">
+                <label class="form-label">新密码 <span style="color: red;">*</span></label>
+                <input type="password" class="form-input" id="newPassword" placeholder="请输入新密码">
+                <p style="font-size: 12px; color: var(--neutral-500); margin-top: 4px;">密码至少8位，包含字母和数字</p>
+              </div>
+              <div class="form-group">
+                <label class="form-label">确认新密码 <span style="color: red;">*</span></label>
+                <input type="password" class="form-input" id="confirmPassword" placeholder="请再次输入新密码">
+              </div>
+              <button class="btn btn-primary" style="padding: 8px 24px;" onclick="changePassword()">修改密码</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Login History Card -->
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">登录记录</h3>
+          </div>
+          <div class="admin-card-body" style="padding: 0;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>登录时间</th>
+                  <th>登录IP</th>
+                  <th>登录设备</th>
+                  <th>状态</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2025-03-15 14:30:25</td>
+                  <td>192.168.1.***</td>
+                  <td>Chrome / Windows 10</td>
+                  <td><span class="admin-badge admin-badge-success">成功</span></td>
+                </tr>
+                <tr>
+                  <td>2025-03-14 09:15:42</td>
+                  <td>192.168.1.***</td>
+                  <td>Chrome / Windows 10</td>
+                  <td><span class="admin-badge admin-badge-success">成功</span></td>
+                </tr>
+                <tr>
+                  <td>2025-03-13 16:45:18</td>
+                  <td>192.168.1.***</td>
+                  <td>Safari / iPhone</td>
+                  <td><span class="admin-badge admin-badge-success">成功</span></td>
+                </tr>
+                <tr>
+                  <td>2025-03-12 10:20:33</td>
+                  <td>192.168.1.***</td>
+                  <td>Chrome / Windows 10</td>
+                  <td><span class="admin-badge admin-badge-success">成功</span></td>
+                </tr>
+                <tr>
+                  <td>2025-03-11 08:55:10</td>
+                  <td>10.0.0.***</td>
+                  <td>Firefox / Mac OS</td>
+                  <td><span class="admin-badge admin-badge-danger">失败</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function saveAccountInfo() {
+      const phone = document.getElementById('phone').value;
+      if (!phone) {
+        alert('请填写联系电话');
+        return;
+      }
+      showToast('账号信息保存成功！');
+    }
+
+    function changePassword() {
+      const currentPassword = document.getElementById('currentPassword').value;
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (!currentPassword || !newPassword || !confirmPassword) {
+        alert('请填写所有密码字段');
+        return;
+      }
+
+      if (newPassword !== confirmPassword) {
+        alert('两次输入的新密码不一致');
+        return;
+      }
+
+      if (newPassword.length < 8) {
+        alert('密码至少需要8位');
+        return;
+      }
+
+      showToast('密码修改成功！');
+      document.getElementById('currentPassword').value = '';
+      document.getElementById('newPassword').value = '';
+      document.getElementById('confirmPassword').value = '';
+    }
+
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 10);
+      setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 2000);
+    }
+  </script>
+</body>
+</html>

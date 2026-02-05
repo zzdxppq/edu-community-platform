@@ -86,30 +86,6 @@
           <p class="admin-page-desc">管理城乡学校共同体示范校信息</p>
         </div>
 
-        <!-- Stats -->
-        <div class="admin-stats" style="margin-bottom: 20px;">
-          <div class="admin-stat-card">
-            <div class="admin-stat-title">示范校总数</div>
-            <div class="admin-stat-value">32</div>
-            <div class="admin-stat-change">覆盖全省18个地市</div>
-          </div>
-          <div class="admin-stat-card">
-            <div class="admin-stat-title">城镇学校</div>
-            <div class="admin-stat-value">32</div>
-            <div class="admin-stat-change">中心校</div>
-          </div>
-          <div class="admin-stat-card">
-            <div class="admin-stat-title">乡村学校</div>
-            <div class="admin-stat-value">156</div>
-            <div class="admin-stat-change">成员校</div>
-          </div>
-          <div class="admin-stat-card">
-            <div class="admin-stat-title">教师参与</div>
-            <div class="admin-stat-value">2,450</div>
-            <div class="admin-stat-change">累计人数</div>
-          </div>
-        </div>
-
         <!-- Filter -->
         <div class="admin-card" style="margin-bottom: 20px;">
           <div class="admin-card-body" style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
@@ -123,14 +99,6 @@
                 <option value="周口市">周口市</option>
                 <option value="南阳市">南阳市</option>
                 <option value="洛阳市">洛阳市</option>
-              </select>
-            </div>
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <label style="font-size: 14px; color: var(--neutral-600);">批次：</label>
-              <select class="form-input" style="width: 120px; padding: 8px 12px;" id="batchFilter">
-                <option value="">全部批次</option>
-                <option value="第一批">第一批</option>
-                <option value="第二批">第二批</option>
               </select>
             </div>
             <div style="display: flex; align-items: center; gap: 8px;">
@@ -158,9 +126,8 @@
             <table class="admin-table">
               <thead>
                 <tr>
-                  <th style="width: 20%;">学校名称</th>
+                  <th style="width: 25%;">学校名称</th>
                   <th>地区</th>
-                  <th>批次</th>
                   <th>成员校</th>
                   <th>官网显示</th>
                   <th>状态</th>
@@ -179,7 +146,6 @@
                     </div>
                   </td>
                   <td>信阳市</td>
-                  <td><span class="admin-badge admin-badge-info">第一批</span></td>
                   <td>5所</td>
                   <td><span class="admin-badge admin-badge-success">显示</span></td>
                   <td><span class="admin-badge admin-badge-success">正常</span></td>
@@ -201,7 +167,6 @@
                     </div>
                   </td>
                   <td>濮阳市</td>
-                  <td><span class="admin-badge admin-badge-info">第一批</span></td>
                   <td>4所</td>
                   <td><span class="admin-badge admin-badge-success">显示</span></td>
                   <td><span class="admin-badge admin-badge-success">正常</span></td>
@@ -223,7 +188,6 @@
                     </div>
                   </td>
                   <td>周口市</td>
-                  <td><span class="admin-badge admin-badge-info">第一批</span></td>
                   <td>6所</td>
                   <td><span class="admin-badge admin-badge-success">显示</span></td>
                   <td><span class="admin-badge admin-badge-success">正常</span></td>
@@ -245,7 +209,6 @@
                     </div>
                   </td>
                   <td>南阳市</td>
-                  <td><span class="admin-badge admin-badge-success">第二批</span></td>
                   <td>3所</td>
                   <td><span class="admin-badge admin-badge-warning">隐藏</span></td>
                   <td><span class="admin-badge admin-badge-warning">筹建中</span></td>
@@ -267,7 +230,6 @@
                     </div>
                   </td>
                   <td>洛阳市</td>
-                  <td><span class="admin-badge admin-badge-success">第二批</span></td>
                   <td>4所</td>
                   <td><span class="admin-badge admin-badge-warning">隐藏</span></td>
                   <td><span class="admin-badge admin-badge-warning">筹建中</span></td>
@@ -310,29 +272,19 @@
             <label class="form-label">学校名称 <span style="color: red;">*</span></label>
             <input type="text" class="form-input" id="schoolName" placeholder="请输入学校名称" required>
           </div>
-          <div class="form-row">
-            <div class="form-group" style="flex: 1;">
-              <label class="form-label">所在地区 <span style="color: red;">*</span></label>
-              <select class="form-input" id="schoolRegion" required>
-                <option value="">请选择地区</option>
-                <option value="郑州市">郑州市</option>
-                <option value="信阳市">信阳市</option>
-                <option value="濮阳市">濮阳市</option>
-                <option value="周口市">周口市</option>
-                <option value="南阳市">南阳市</option>
-                <option value="洛阳市">洛阳市</option>
-                <option value="安阳市">安阳市</option>
-                <option value="新乡市">新乡市</option>
-              </select>
-            </div>
-            <div class="form-group" style="flex: 1;">
-              <label class="form-label">入选批次 <span style="color: red;">*</span></label>
-              <select class="form-input" id="schoolBatch" required>
-                <option value="">请选择批次</option>
-                <option value="第一批">第一批</option>
-                <option value="第二批">第二批</option>
-              </select>
-            </div>
+          <div class="form-group">
+            <label class="form-label">所在地区 <span style="color: red;">*</span></label>
+            <select class="form-input" id="schoolRegion" required>
+              <option value="">请选择地区</option>
+              <option value="郑州市">郑州市</option>
+              <option value="信阳市">信阳市</option>
+              <option value="濮阳市">濮阳市</option>
+              <option value="周口市">周口市</option>
+              <option value="南阳市">南阳市</option>
+              <option value="洛阳市">洛阳市</option>
+              <option value="安阳市">安阳市</option>
+              <option value="新乡市">新乡市</option>
+            </select>
           </div>
           <div class="form-group">
             <label class="form-label">详细地址</label>
@@ -416,7 +368,7 @@
           <div style="width: 80px; height: 80px; background: var(--primary-100); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 40px;">🏫</div>
           <div style="flex: 1;">
             <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 8px;">信阳董家河小学中心校</h3>
-            <p style="color: var(--neutral-600); font-size: 14px;">城乡学校共同体 · 第一批示范校</p>
+            <p style="color: var(--neutral-600); font-size: 14px;">城乡学校共同体示范校</p>
             <div style="display: flex; gap: 12px; margin-top: 12px;">
               <span class="admin-badge admin-badge-success">正常运行</span>
               <span class="admin-badge admin-badge-info">信阳市</span>
@@ -424,14 +376,10 @@
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 24px;">
           <div style="background: var(--neutral-100); padding: 16px; border-radius: 8px;">
             <div style="font-size: 14px; color: var(--neutral-600); margin-bottom: 4px;">成员校数量</div>
             <div style="font-size: 24px; font-weight: 700; color: var(--primary-800);">5所</div>
-          </div>
-          <div style="background: var(--neutral-100); padding: 16px; border-radius: 8px;">
-            <div style="font-size: 14px; color: var(--neutral-600); margin-bottom: 4px;">参与教师</div>
-            <div style="font-size: 24px; font-weight: 700; color: var(--accent-600);">126人</div>
           </div>
           <div style="background: var(--neutral-100); padding: 16px; border-radius: 8px;">
             <div style="font-size: 14px; color: var(--neutral-600); margin-bottom: 4px;">发布动态</div>
@@ -530,7 +478,6 @@
       // 模拟加载数据
       document.getElementById('schoolName').value = '信阳董家河小学中心校';
       document.getElementById('schoolRegion').value = '信阳市';
-      document.getElementById('schoolBatch').value = '第一批';
       document.getElementById('schoolAddress').value = '信阳市浉河区董家河镇';
       document.getElementById('schoolPhone').value = '0376-XXXXXXX';
       document.getElementById('schoolAdmin').value = '1';
@@ -575,9 +522,8 @@
     function saveSchool() {
       const name = document.getElementById('schoolName').value;
       const region = document.getElementById('schoolRegion').value;
-      const batch = document.getElementById('schoolBatch').value;
 
-      if (!name || !region || !batch) {
+      if (!name || !region) {
         alert('请填写必填项');
         return;
       }
@@ -621,7 +567,6 @@
     function resetFilter() {
       document.getElementById('searchInput').value = '';
       document.getElementById('regionFilter').value = '';
-      document.getElementById('batchFilter').value = '';
       document.getElementById('statusFilter').value = '';
       showToast('筛选条件已重置');
     }
