@@ -91,54 +91,6 @@
       display: none;
     }
 
-    /* 学校背景横幅 */
-    .school-banner {
-      position: relative;
-      height: 280px;
-      background: linear-gradient(135deg, #1a3d6e 0%, #2C5AA0 50%, #426CC6 100%);
-      background-size: cover;
-      background-position: center;
-      margin-bottom: 0;
-    }
-    .school-banner::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(26, 61, 110, 0.6);
-    }
-    .school-banner-content {
-      position: relative;
-      z-index: 1;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-      text-align: center;
-    }
-    .school-banner-title {
-      font-size: 36px;
-      font-weight: 700;
-      margin-bottom: 12px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    }
-    .school-banner-subtitle {
-      font-size: 18px;
-      opacity: 0.9;
-    }
-    .school-banner-placeholder {
-      position: absolute;
-      bottom: 20px;
-      right: 20px;
-      font-size: 12px;
-      color: rgba(255,255,255,0.5);
-      z-index: 1;
-    }
-
     /* Tab导航样式 */
     .content-tabs {
       display: flex;
@@ -199,16 +151,7 @@
 
     <!-- Main Content -->
     <main class="main-content">
-      <!-- School Banner -->
-      <section class="school-banner">
-        <div class="school-banner-content">
-          <h1 class="school-banner-title">信阳董家河小学中心校</h1>
-          <p class="school-banner-subtitle">河南省城乡学校共同体示范校</p>
-        </div>
-        <span class="school-banner-placeholder">[ 学校实景图片背景 - 建议尺寸 1920×400px ]</span>
-      </section>
-
-      <div class="container">
+        <div class="container">
         <!-- Breadcrumb -->
         <nav class="breadcrumb">
           <span class="breadcrumb-item"><a href="../index.html">首页</a></span>
