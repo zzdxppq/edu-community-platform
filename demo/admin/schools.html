@@ -158,13 +158,13 @@
             <table class="admin-table">
               <thead>
                 <tr>
-                  <th style="width: 25%;">学校名称</th>
+                  <th style="width: 20%;">学校名称</th>
                   <th>地区</th>
                   <th>批次</th>
-                  <th>成员校数</th>
-                  <th>管理员</th>
+                  <th>成员校</th>
+                  <th>官网显示</th>
                   <th>状态</th>
-                  <th>操作</th>
+                  <th style="width: 25%;">操作</th>
                 </tr>
               </thead>
               <tbody id="schoolTableBody">
@@ -174,18 +174,19 @@
                       <div style="width: 40px; height: 40px; background: var(--primary-100); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px;">🏫</div>
                       <div>
                         <div style="font-weight: 600;">信阳董家河小学中心校</div>
-                        <div style="font-size: 12px; color: var(--neutral-500);">城乡学校共同体</div>
+                        <div style="font-size: 12px; color: var(--neutral-500);">排序: 1</div>
                       </div>
                     </div>
                   </td>
                   <td>信阳市</td>
                   <td><span class="admin-badge admin-badge-info">第一批</span></td>
                   <td>5所</td>
-                  <td>李老师</td>
+                  <td><span class="admin-badge admin-badge-success">显示</span></td>
                   <td><span class="admin-badge admin-badge-success">正常</span></td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="viewSchool(1)">详情</button>
                     <button class="admin-btn-sm admin-btn-outline" onclick="openEditModal(1)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-primary" onclick="loginAsSchool(1)">登录后台</button>
                     <button class="admin-btn-sm admin-btn-danger" onclick="confirmDelete(1)">删除</button>
                   </td>
                 </tr>
@@ -195,18 +196,19 @@
                       <div style="width: 40px; height: 40px; background: var(--accent-100); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px;">🏫</div>
                       <div>
                         <div style="font-weight: 600;">濮阳市开德小学</div>
-                        <div style="font-size: 12px; color: var(--neutral-500);">城乡学校共同体</div>
+                        <div style="font-size: 12px; color: var(--neutral-500);">排序: 2</div>
                       </div>
                     </div>
                   </td>
                   <td>濮阳市</td>
                   <td><span class="admin-badge admin-badge-info">第一批</span></td>
                   <td>4所</td>
-                  <td>王老师</td>
+                  <td><span class="admin-badge admin-badge-success">显示</span></td>
                   <td><span class="admin-badge admin-badge-success">正常</span></td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="viewSchool(2)">详情</button>
                     <button class="admin-btn-sm admin-btn-outline" onclick="openEditModal(2)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-primary" onclick="loginAsSchool(2)">登录后台</button>
                     <button class="admin-btn-sm admin-btn-danger" onclick="confirmDelete(2)">删除</button>
                   </td>
                 </tr>
@@ -216,18 +218,19 @@
                       <div style="width: 40px; height: 40px; background: var(--success-100); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px;">🏫</div>
                       <div>
                         <div style="font-weight: 600;">扶沟县实验小学</div>
-                        <div style="font-size: 12px; color: var(--neutral-500);">城乡学校共同体</div>
+                        <div style="font-size: 12px; color: var(--neutral-500);">排序: 3</div>
                       </div>
                     </div>
                   </td>
                   <td>周口市</td>
                   <td><span class="admin-badge admin-badge-info">第一批</span></td>
                   <td>6所</td>
-                  <td>张老师</td>
+                  <td><span class="admin-badge admin-badge-success">显示</span></td>
                   <td><span class="admin-badge admin-badge-success">正常</span></td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="viewSchool(3)">详情</button>
                     <button class="admin-btn-sm admin-btn-outline" onclick="openEditModal(3)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-primary" onclick="loginAsSchool(3)">登录后台</button>
                     <button class="admin-btn-sm admin-btn-danger" onclick="confirmDelete(3)">删除</button>
                   </td>
                 </tr>
@@ -237,18 +240,19 @@
                       <div style="width: 40px; height: 40px; background: var(--warning-100); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px;">🏫</div>
                       <div>
                         <div style="font-weight: 600;">南阳市第一实验小学</div>
-                        <div style="font-size: 12px; color: var(--neutral-500);">城乡学校共同体</div>
+                        <div style="font-size: 12px; color: var(--neutral-500);">排序: 7</div>
                       </div>
                     </div>
                   </td>
                   <td>南阳市</td>
                   <td><span class="admin-badge admin-badge-success">第二批</span></td>
                   <td>3所</td>
-                  <td>赵老师</td>
+                  <td><span class="admin-badge admin-badge-warning">隐藏</span></td>
                   <td><span class="admin-badge admin-badge-warning">筹建中</span></td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="viewSchool(4)">详情</button>
                     <button class="admin-btn-sm admin-btn-outline" onclick="openEditModal(4)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-primary" onclick="loginAsSchool(4)">登录后台</button>
                     <button class="admin-btn-sm admin-btn-danger" onclick="confirmDelete(4)">删除</button>
                   </td>
                 </tr>
@@ -258,18 +262,19 @@
                       <div style="width: 40px; height: 40px; background: var(--primary-100); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px;">🏫</div>
                       <div>
                         <div style="font-weight: 600;">洛阳市涧西区实验小学</div>
-                        <div style="font-size: 12px; color: var(--neutral-500);">城乡学校共同体</div>
+                        <div style="font-size: 12px; color: var(--neutral-500);">排序: 8</div>
                       </div>
                     </div>
                   </td>
                   <td>洛阳市</td>
                   <td><span class="admin-badge admin-badge-success">第二批</span></td>
                   <td>4所</td>
-                  <td>刘老师</td>
+                  <td><span class="admin-badge admin-badge-warning">隐藏</span></td>
                   <td><span class="admin-badge admin-badge-warning">筹建中</span></td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="viewSchool(5)">详情</button>
                     <button class="admin-btn-sm admin-btn-outline" onclick="openEditModal(5)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-primary" onclick="loginAsSchool(5)">登录后台</button>
                     <button class="admin-btn-sm admin-btn-danger" onclick="confirmDelete(5)">删除</button>
                   </td>
                 </tr>
@@ -361,6 +366,23 @@
               </div>
             </div>
             <button type="button" class="btn btn-outline" style="margin-top: 10px; padding: 8px 16px;" onclick="addMemberSchool()">+ 添加成员校</button>
+          </div>
+          <div class="form-row">
+            <div class="form-group" style="flex: 1;">
+              <label class="form-label">官网显示</label>
+              <div style="display: flex; gap: 20px;">
+                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                  <input type="radio" name="schoolVisible" value="1" checked> 显示
+                </label>
+                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                  <input type="radio" name="schoolVisible" value="0"> 隐藏
+                </label>
+              </div>
+            </div>
+            <div class="form-group" style="flex: 1;">
+              <label class="form-label">排序</label>
+              <input type="number" class="form-input" id="schoolSortOrder" placeholder="数值越小越靠前" value="1" min="1">
+            </div>
           </div>
           <div class="form-group">
             <label class="form-label">状态</label>
@@ -606,6 +628,15 @@
 
     function goToPage(page) {
       showToast('跳转到第 ' + page + ' 页');
+    }
+
+    function loginAsSchool(id) {
+      if (confirm('确定要以学校管理员身份登录该校后台吗？\n\n此操作将被记录到系统日志。')) {
+        showToast('正在登录学校管理后台...');
+        setTimeout(() => {
+          window.location.href = 'school-admin.html';
+        }, 1000);
+      }
     }
 
     function showToast(message) {
