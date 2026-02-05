@@ -6,6 +6,37 @@
   <title>资源共享管理 - 管理后台</title>
   <link rel="stylesheet" href="../css/styles.css">
   <link rel="stylesheet" href="../css/admin-modal.css">
+  <!-- WangEditor 5.x 样式 -->
+  <link href="https://unpkg.com/@wangeditor/editor@latest/dist/css/style.css" rel="stylesheet">
+  <style>
+    /* 编辑器容器样式 */
+    .editor-container {
+      border: 1px solid var(--neutral-300);
+      border-radius: 8px;
+      overflow: hidden;
+      z-index: 100;
+    }
+    .editor-toolbar {
+      border-bottom: 1px solid var(--neutral-200);
+      background: var(--neutral-50);
+    }
+    .editor-content {
+      height: 200px;
+      overflow-y: auto;
+      background: white;
+    }
+    /* 覆盖编辑器默认样式 */
+    .w-e-toolbar {
+      background: var(--neutral-50) !important;
+      border-bottom: 1px solid var(--neutral-200) !important;
+    }
+    .w-e-text-container {
+      background: white !important;
+    }
+    .w-e-text-container p {
+      margin: 0 0 1em 0;
+    }
+  </style>
 </head>
 <body>
   <div class="admin-wrapper">
@@ -22,6 +53,7 @@
             工作台
           </a>
         </div>
+
         <div class="admin-menu-group">
           <div class="admin-menu-title">用户管理</div>
           <a href="users.html" class="admin-menu-item">
@@ -29,8 +61,13 @@
             学校管理员
           </a>
         </div>
+
         <div class="admin-menu-group">
           <div class="admin-menu-title">内容管理</div>
+          <a href="carousel.html" class="admin-menu-item">
+            <span class="admin-menu-icon">🖼️</span>
+            轮播图管理
+          </a>
           <a href="about.html" class="admin-menu-item">
             <span class="admin-menu-icon">📖</span>
             项目介绍
@@ -47,7 +84,12 @@
             <span class="admin-menu-icon">📚</span>
             资源共享
           </a>
+          <a href="reports.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📊</span>
+            月报管理
+          </a>
         </div>
+
         <div class="admin-menu-group">
           <div class="admin-menu-title">示范校管理</div>
           <a href="schools.html" class="admin-menu-item">
@@ -55,6 +97,7 @@
             示范校列表
           </a>
         </div>
+
         <div class="admin-menu-group">
           <div class="admin-menu-title">系统设置</div>
           <a href="navigation.html" class="admin-menu-item">
@@ -142,19 +185,28 @@
 
         <div class="admin-card">
           <div class="admin-card-header">
-            <h3 class="admin-card-title">资源列表 (共<span id="totalCount">256</span>条)</h3>
-            <button class="btn btn-primary" style="padding: 8px 20px; font-size: 14px;" onclick="openAddModal()">+ 上传资源</button>
+            <h3 class="admin-card-title">资源列表</h3>
+            <div style="display: flex; align-items: center; gap: 16px;">
+              <span style="font-size: 14px; color: var(--neutral-600);">共 256 条记录</span>
+              <select class="form-input" style="width: 110px; padding: 6px 10px; font-size: 14px;" id="pageSizeSelect" onchange="changePageSize()">
+                <option value="10" selected>10条/页</option>
+                <option value="20">20条/页</option>
+                <option value="50">50条/页</option>
+              </select>
+              <button class="btn btn-primary" style="padding: 8px 20px; font-size: 14px;" onclick="openAddModal()">+ 上传资源</button>
+            </div>
           </div>
           <div class="admin-card-body" style="padding: 0;">
             <table class="admin-table">
               <thead>
                 <tr>
-                  <th style="width: 35%;">资源名称</th>
+                  <th style="width: 28%;">资源名称</th>
                   <th>类型</th>
                   <th>上传学校</th>
                   <th>上传时间</th>
                   <th>下载量</th>
                   <th>状态</th>
+                  <th>置顶</th>
                   <th>操作</th>
                 </tr>
               </thead>
@@ -171,9 +223,11 @@
                   <td>2025-03-12</td>
                   <td>234</td>
                   <td><span class="admin-badge admin-badge-success">已发布</span></td>
+                  <td><span class="admin-badge admin-badge-warning">📌 已置顶</span></td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="previewResource(1)">预览</button>
                     <button class="admin-btn-sm admin-btn-outline" onclick="openEditModal(1)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-outline" onclick="togglePin(1)">取消置顶</button>
                     <button class="admin-btn-sm admin-btn-danger" onclick="confirmDelete(1)">删除</button>
                   </td>
                 </tr>
@@ -189,9 +243,11 @@
                   <td>2025-03-10</td>
                   <td>189</td>
                   <td><span class="admin-badge admin-badge-success">已发布</span></td>
+                  <td>-</td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="previewResource(2)">预览</button>
                     <button class="admin-btn-sm admin-btn-outline" onclick="openEditModal(2)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-outline" onclick="togglePin(2)">置顶</button>
                     <button class="admin-btn-sm admin-btn-danger" onclick="confirmDelete(2)">删除</button>
                   </td>
                 </tr>
@@ -207,9 +263,11 @@
                   <td>2025-03-08</td>
                   <td>567</td>
                   <td><span class="admin-badge admin-badge-success">已发布</span></td>
+                  <td><span class="admin-badge admin-badge-warning">📌 已置顶</span></td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="previewResource(3)">预览</button>
                     <button class="admin-btn-sm admin-btn-outline" onclick="openEditModal(3)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-outline" onclick="togglePin(3)">取消置顶</button>
                     <button class="admin-btn-sm admin-btn-danger" onclick="confirmDelete(3)">删除</button>
                   </td>
                 </tr>
@@ -225,9 +283,11 @@
                   <td>2025-03-01</td>
                   <td>423</td>
                   <td><span class="admin-badge admin-badge-success">已发布</span></td>
+                  <td>-</td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="previewResource(4)">预览</button>
                     <button class="admin-btn-sm admin-btn-outline" onclick="openEditModal(4)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-outline" onclick="togglePin(4)">置顶</button>
                     <button class="admin-btn-sm admin-btn-danger" onclick="confirmDelete(4)">删除</button>
                   </td>
                 </tr>
@@ -243,9 +303,11 @@
                   <td>2025-02-25</td>
                   <td>156</td>
                   <td><span class="admin-badge admin-badge-success">已发布</span></td>
+                  <td>-</td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="previewResource(5)">预览</button>
                     <button class="admin-btn-sm admin-btn-outline" onclick="openEditModal(5)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-outline" onclick="togglePin(5)">置顶</button>
                     <button class="admin-btn-sm admin-btn-danger" onclick="confirmDelete(5)">删除</button>
                   </td>
                 </tr>
@@ -255,14 +317,17 @@
         </div>
 
         <!-- Pagination -->
-        <div class="pagination" style="margin-top: 20px;">
-          <span class="page-item disabled">&lt;</span>
-          <span class="page-item active">1</span>
-          <span class="page-item" onclick="goToPage(2)">2</span>
-          <span class="page-item" onclick="goToPage(3)">3</span>
-          <span class="page-item">...</span>
-          <span class="page-item" onclick="goToPage(26)">26</span>
-          <span class="page-item" onclick="goToPage(2)">&gt;</span>
+        <div class="pagination" style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 14px; color: var(--neutral-600);">显示 1-10 条，共 256 条</span>
+          <div style="display: flex; gap: 4px;">
+            <span class="page-item disabled">&lt;</span>
+            <span class="page-item active">1</span>
+            <span class="page-item" onclick="goToPage(2)">2</span>
+            <span class="page-item" onclick="goToPage(3)">3</span>
+            <span class="page-item">...</span>
+            <span class="page-item" onclick="goToPage(26)">26</span>
+            <span class="page-item" onclick="goToPage(2)">&gt;</span>
+          </div>
         </div>
       </div>
     </main>
@@ -325,7 +390,10 @@
             </div>
             <div class="form-group">
               <label class="form-label">资源描述</label>
-              <textarea class="form-input" id="resourceDesc" rows="3" placeholder="请输入资源描述"></textarea>
+              <div class="editor-container">
+                <div id="editorToolbar" class="editor-toolbar"></div>
+                <div id="editorContent" class="editor-content"></div>
+              </div>
             </div>
             <div class="form-group">
               <label class="form-label">资源文件 <span style="color: red;">*</span></label>
@@ -421,8 +489,70 @@
     </div>
   </div>
 
+  <!-- WangEditor 5.x JavaScript -->
+  <script src="https://unpkg.com/@wangeditor/editor@latest/dist/index.js"></script>
   <script>
+    const { createEditor, createToolbar } = window.wangEditor;
+
+    let editor = null;
     let deleteId = null;
+
+    // 初始化编辑器
+    function initEditor() {
+      // 如果已存在编辑器，先销毁
+      if (editor) {
+        editor.destroy();
+      }
+
+      // 创建编辑器
+      editor = createEditor({
+        selector: '#editorContent',
+        html: '',
+        config: {
+          placeholder: '请输入资源描述...',
+          MENU_CONF: {
+            uploadImage: {
+              // 模拟上传
+              customUpload(file, insertFn) {
+                // 创建临时URL用于预览
+                const url = URL.createObjectURL(file);
+                insertFn(url, file.name, url);
+              }
+            }
+          }
+        }
+      });
+
+      // 创建工具栏
+      createToolbar({
+        editor,
+        selector: '#editorToolbar',
+        config: {
+          toolbarKeys: [
+            'headerSelect',
+            'bold',
+            'italic',
+            'underline',
+            'through',
+            'color',
+            'bgColor',
+            '|',
+            'bulletedList',
+            'numberedList',
+            '|',
+            'justifyLeft',
+            'justifyCenter',
+            'justifyRight',
+            '|',
+            'insertLink',
+            'uploadImage',
+            '|',
+            'undo',
+            'redo'
+          ]
+        }
+      });
+    }
 
     // 切换发布类型
     function toggleResourceType(type) {
@@ -444,6 +574,11 @@
       document.getElementById('uploadedFile').style.display = 'none';
       toggleResourceType('file');
       document.getElementById('resourceModal').classList.add('active');
+
+      // 初始化编辑器并清空内容
+      setTimeout(() => {
+        initEditor();
+      }, 100);
     }
 
     function openEditModal(id) {
@@ -453,14 +588,25 @@
       document.getElementById('resourceName').value = '小学语文三年级上册《秋天的雨》教学设计';
       document.getElementById('resourceType').value = '教学设计';
       document.getElementById('resourceSchool').value = '信阳董家河小学';
-      document.getElementById('resourceDesc').value = '本教学设计围绕《秋天的雨》这篇课文展开，通过多种教学方法引导学生感受秋天的美...';
       document.getElementById('uploadedFile').innerHTML = '📄 秋天的雨教学设计.pdf <span onclick="removeFile()" style="color: var(--accent-600); cursor: pointer; margin-left: 10px;">删除</span>';
       document.getElementById('uploadedFile').style.display = 'block';
       document.getElementById('resourceModal').classList.add('active');
+
+      // 初始化编辑器并加载内容
+      setTimeout(() => {
+        initEditor();
+        // 设置富文本内容
+        editor.setHtml('<p>本教学设计围绕《秋天的雨》这篇课文展开，通过多种教学方法引导学生感受秋天的美...</p><p><strong>教学目标：</strong></p><ul><li>理解课文内容，感受秋天的美丽</li><li>学习作者的写作手法</li><li>培养学生的朗读能力</li></ul>');
+      }, 100);
     }
 
     function closeModal() {
       document.getElementById('resourceModal').classList.remove('active');
+      // 销毁编辑器
+      if (editor) {
+        editor.destroy();
+        editor = null;
+      }
     }
 
     function saveResource() {
@@ -543,6 +689,15 @@
 
     function goToPage(page) {
       showToast('跳转到第 ' + page + ' 页');
+    }
+
+    function togglePin(id) {
+      showToast('置顶状态已更新');
+    }
+
+    function changePageSize() {
+      const pageSize = document.getElementById('pageSizeSelect').value;
+      showToast('每页显示 ' + pageSize + ' 条');
     }
 
     function removeFile() {

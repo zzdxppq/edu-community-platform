@@ -84,7 +84,7 @@ ul, ol {
   display: flex;
   align-items: center;
   color: var(--neutral-50);
-  font-size: var(--text-lg);
+  font-size: 20px;
   font-weight: var(--font-bold);
   flex-shrink: 0;
   white-space: nowrap;
@@ -113,7 +113,7 @@ ul, ol {
 
 .nav-link {
   color: var(--neutral-50);
-  font-size: var(--text-base);
+  font-size: 16px;
   padding: 0 14px;
   line-height: 70px;
   transition: background var(--duration-normal);
@@ -1007,7 +1007,7 @@ ul, ol {
 @media (max-width: 1280px) {
   .nav-link {
     padding: 0 10px;
-    font-size: var(--text-sm);
+    font-size: 15px;
   }
 
   .search-input {
@@ -1015,7 +1015,7 @@ ul, ol {
   }
 
   .logo {
-    font-size: var(--text-base);
+    font-size: 18px;
   }
 }
 

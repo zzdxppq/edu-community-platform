@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>月报管理 - 管理后台</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/admin-modal.css">
+</head>
+<body>
+  <div class="admin-wrapper">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-logo">
+        <div class="admin-logo-icon">豫</div>
+        <div class="admin-logo-text">城乡学校共同体<br>管理后台</div>
+      </div>
+      <nav class="admin-menu">
+        <div class="admin-menu-group">
+          <a href="index.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📊</span>
+            工作台
+          </a>
+        </div>
+
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">用户管理</div>
+          <a href="users.html" class="admin-menu-item">
+            <span class="admin-menu-icon">👥</span>
+            学校管理员
+          </a>
+        </div>
+
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">内容管理</div>
+          <a href="carousel.html" class="admin-menu-item">
+            <span class="admin-menu-icon">🖼️</span>
+            轮播图管理
+          </a>
+          <a href="about.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📖</span>
+            项目介绍
+          </a>
+          <a href="news.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📰</span>
+            新闻资讯
+          </a>
+          <a href="policy.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📋</span>
+            政策文件
+          </a>
+          <a href="resources.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📚</span>
+            资源共享
+          </a>
+          <a href="reports.html" class="admin-menu-item active">
+            <span class="admin-menu-icon">📊</span>
+            月报管理
+          </a>
+        </div>
+
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">示范校管理</div>
+          <a href="schools.html" class="admin-menu-item">
+            <span class="admin-menu-icon">🏫</span>
+            示范校列表
+          </a>
+        </div>
+
+        <div class="admin-menu-group">
+          <div class="admin-menu-title">系统设置</div>
+          <a href="navigation.html" class="admin-menu-item">
+            <span class="admin-menu-icon">🧭</span>
+            导航管理
+          </a>
+          <a href="settings.html" class="admin-menu-item">
+            <span class="admin-menu-icon">⚙️</span>
+            基础配置
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <header class="admin-header">
+        <div class="admin-breadcrumb">内容管理 / 月报管理</div>
+        <div class="admin-user">
+          <span style="font-size: 14px; color: var(--neutral-600);">欢迎，超级管理员</span>
+          <div class="admin-avatar">管</div>
+          <a href="../pages/admin-login.html" style="font-size: 14px; color: var(--accent-600);">退出</a>
+        </div>
+      </header>
+
+      <div class="admin-content">
+        <div class="admin-page-header">
+          <h1 class="admin-page-title">月报管理</h1>
+          <p class="admin-page-desc">管理各示范校提交的月报内容</p>
+        </div>
+
+        <!-- Filter -->
+        <div class="admin-card" style="margin-bottom: 20px;">
+          <div class="admin-card-body" style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <label style="font-size: 14px; color: var(--neutral-600);">年月：</label>
+              <select class="form-input" style="width: 120px; padding: 8px 12px;" id="yearFilter">
+                <option value="">全部年份</option>
+                <option value="2025" selected>2025年</option>
+                <option value="2024">2024年</option>
+              </select>
+              <select class="form-input" style="width: 100px; padding: 8px 12px;" id="monthFilter">
+                <option value="">全部月份</option>
+                <option value="1">1月</option>
+                <option value="2">2月</option>
+                <option value="3" selected>3月</option>
+                <option value="4">4月</option>
+                <option value="5">5月</option>
+                <option value="6">6月</option>
+                <option value="7">7月</option>
+                <option value="8">8月</option>
+                <option value="9">9月</option>
+                <option value="10">10月</option>
+                <option value="11">11月</option>
+                <option value="12">12月</option>
+              </select>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <label style="font-size: 14px; color: var(--neutral-600);">学校：</label>
+              <select class="form-input" style="width: 200px; padding: 8px 12px;" id="schoolFilter">
+                <option value="">全部学校</option>
+                <option value="1">信阳董家河小学中心校</option>
+                <option value="2">濮阳市开德小学</option>
+                <option value="3">扶沟县实验小学</option>
+                <option value="4">修武县方庄中心小学</option>
+                <option value="5">栾川县第四实验小学</option>
+                <option value="6">航空港区科技一街小学</option>
+              </select>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <label style="font-size: 14px; color: var(--neutral-600);">状态：</label>
+              <select class="form-input" style="width: 120px; padding: 8px 12px;" id="statusFilter">
+                <option value="">全部</option>
+                <option value="pending">待审核</option>
+                <option value="approved">已通过</option>
+                <option value="rejected">已退回</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" style="padding: 8px 20px; font-size: 14px;" onclick="handleSearch()">搜索</button>
+            <button class="btn btn-outline" style="padding: 8px 20px; font-size: 14px;" onclick="resetFilter()">重置</button>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">月报列表</h3>
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <span style="font-size: 14px; color: var(--neutral-600);">共 24 条记录</span>
+              <select class="form-input" style="width: 100px; padding: 6px 10px; font-size: 13px;" onchange="changePageSize(this.value)">
+                <option value="10" selected>10条/页</option>
+                <option value="20">20条/页</option>
+                <option value="50">50条/页</option>
+              </select>
+            </div>
+          </div>
+          <div class="admin-card-body" style="padding: 0;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width: 100px;">月份</th>
+                  <th>学校名称</th>
+                  <th>月报标题</th>
+                  <th>提交时间</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>2025年3月</strong></td>
+                  <td>信阳董家河小学中心校</td>
+                  <td>2025年3月工作月报</td>
+                  <td>2025-03-31 18:30</td>
+                  <td><span class="admin-badge admin-badge-warning">待审核</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline" onclick="viewReport(1)">查看</button>
+                    <button class="admin-btn-sm admin-btn-primary" onclick="approveReport(1)">通过</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="rejectReport(1)">退回</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>2025年3月</strong></td>
+                  <td>濮阳市开德小学</td>
+                  <td>2025年3月工作月报</td>
+                  <td>2025-03-30 16:45</td>
+                  <td><span class="admin-badge admin-badge-success">已通过</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline" onclick="viewReport(2)">查看</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="rejectReport(2)">退回</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>2025年3月</strong></td>
+                  <td>扶沟县实验小学</td>
+                  <td>2025年3月共同体建设工作总结</td>
+                  <td>2025-03-29 14:20</td>
+                  <td><span class="admin-badge admin-badge-success">已通过</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline" onclick="viewReport(3)">查看</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="rejectReport(3)">退回</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>2025年3月</strong></td>
+                  <td>修武县方庄中心小学</td>
+                  <td>2025年3月工作月报</td>
+                  <td>2025-03-28 10:15</td>
+                  <td><span class="admin-badge admin-badge-error">已退回</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline" onclick="viewReport(4)">查看</button>
+                    <button class="admin-btn-sm admin-btn-primary" onclick="approveReport(4)">通过</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>2025年3月</strong></td>
+                  <td>栾川县第四实验小学</td>
+                  <td>2025年3月工作月报</td>
+                  <td>2025-03-27 17:50</td>
+                  <td><span class="admin-badge admin-badge-success">已通过</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline" onclick="viewReport(5)">查看</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="rejectReport(5)">退回</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>2025年3月</strong></td>
+                  <td>航空港区科技一街小学</td>
+                  <td>2025年3月教学交流月报</td>
+                  <td>2025-03-26 09:30</td>
+                  <td><span class="admin-badge admin-badge-warning">待审核</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline" onclick="viewReport(6)">查看</button>
+                    <button class="admin-btn-sm admin-btn-primary" onclick="approveReport(6)">通过</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="rejectReport(6)">退回</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>2025年2月</strong></td>
+                  <td>信阳董家河小学中心校</td>
+                  <td>2025年2月工作月报</td>
+                  <td>2025-02-28 17:20</td>
+                  <td><span class="admin-badge admin-badge-success">已通过</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline" onclick="viewReport(7)">查看</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="rejectReport(7)">退回</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>2025年2月</strong></td>
+                  <td>濮阳市开德小学</td>
+                  <td>2025年2月工作月报</td>
+                  <td>2025-02-27 15:40</td>
+                  <td><span class="admin-badge admin-badge-success">已通过</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline" onclick="viewReport(8)">查看</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="rejectReport(8)">退回</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>2025年2月</strong></td>
+                  <td>扶沟县实验小学</td>
+                  <td>2025年2月共同体建设工作总结</td>
+                  <td>2025-02-26 11:30</td>
+                  <td><span class="admin-badge admin-badge-success">已通过</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline" onclick="viewReport(9)">查看</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="rejectReport(9)">退回</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>2025年2月</strong></td>
+                  <td>修武县方庄中心小学</td>
+                  <td>2025年2月工作月报</td>
+                  <td>2025-02-25 14:10</td>
+                  <td><span class="admin-badge admin-badge-success">已通过</span></td>
+                  <td class="admin-actions">
+                    <button class="admin-btn-sm admin-btn-outline" onclick="viewReport(10)">查看</button>
+                    <button class="admin-btn-sm admin-btn-danger" onclick="rejectReport(10)">退回</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
+          <div style="font-size: 14px; color: var(--neutral-600);">
+            显示 1-10 条，共 24 条
+          </div>
+          <div style="display: flex; gap: 4px;">
+            <span class="page-item disabled">&lt;</span>
+            <span class="page-item active">1</span>
+            <span class="page-item">2</span>
+            <span class="page-item">3</span>
+            <span class="page-item">&gt;</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- View Report Modal -->
+  <div class="modal-overlay" id="viewModal">
+    <div class="modal" style="max-width: 800px;">
+      <div class="modal-header">
+        <h3 class="modal-title">月报详情</h3>
+        <button class="modal-close" onclick="closeViewModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="margin-bottom: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+            <div>
+              <h4 style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">2025年3月工作月报</h4>
+              <p style="font-size: 14px; color: var(--neutral-600);">信阳董家河小学中心校 | 提交时间：2025-03-31 18:30</p>
+            </div>
+            <span class="admin-badge admin-badge-warning">待审核</span>
+          </div>
+        </div>
+
+        <div style="background: var(--neutral-50); border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <h5 style="font-size: 15px; font-weight: 600; color: var(--neutral-800); margin-bottom: 12px;">月报内容</h5>
+          <div style="font-size: 14px; color: var(--neutral-700); line-height: 1.8;">
+            <p><strong>一、本月工作概述</strong></p>
+            <p>本月我校积极推进城乡学校共同体建设工作，重点开展了以下活动：</p>
+            <ul style="padding-left: 20px; margin: 12px 0;">
+              <li>组织了2次城乡教师联合教研活动，参与教师共计45人次</li>
+              <li>开展了"同课异构"教学展示活动，涉及语文、数学两个学科</li>
+              <li>完成了对口帮扶学校的月度走访工作</li>
+            </ul>
+            <p><strong>二、取得成效</strong></p>
+            <p>通过本月的工作，帮扶学校教师的教学能力有了明显提升，学生的学习积极性也有所提高。</p>
+            <p><strong>三、存在问题</strong></p>
+            <p>由于交通不便，部分偏远学校的教师参与活动存在困难。</p>
+            <p><strong>四、下月计划</strong></p>
+            <p>计划开展线上教研活动，解决交通问题，扩大参与面。</p>
+          </div>
+        </div>
+
+        <div style="background: var(--neutral-50); border-radius: 8px; padding: 20px;">
+          <h5 style="font-size: 15px; font-weight: 600; color: var(--neutral-800); margin-bottom: 12px;">附件</h5>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: white; border: 1px solid var(--neutral-300); border-radius: 6px;">
+              <span>📄</span>
+              <span style="font-size: 14px;">2025年3月工作月报.pdf</span>
+              <a href="#" style="color: var(--accent-600); font-size: 13px;">下载</a>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: white; border: 1px solid var(--neutral-300); border-radius: 6px;">
+              <span>🖼️</span>
+              <span style="font-size: 14px;">活动照片.zip</span>
+              <a href="#" style="color: var(--accent-600); font-size: 13px;">下载</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeViewModal()">关闭</button>
+        <button class="btn btn-danger" onclick="rejectFromModal()">退回</button>
+        <button class="btn btn-primary" onclick="approveFromModal()">审核通过</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reject Modal -->
+  <div class="modal-overlay" id="rejectModal">
+    <div class="modal" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3 class="modal-title">退回月报</h3>
+        <button class="modal-close" onclick="closeRejectModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">退回原因 <span style="color: red;">*</span></label>
+          <textarea class="form-input" id="rejectReason" rows="4" placeholder="请输入退回原因，学校管理员将收到通知"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeRejectModal()">取消</button>
+        <button class="btn btn-danger" onclick="confirmReject()">确认退回</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentReportId = null;
+
+    function handleSearch() {
+      showToast('正在搜索...');
+    }
+
+    function resetFilter() {
+      document.getElementById('yearFilter').value = '';
+      document.getElementById('monthFilter').value = '';
+      document.getElementById('schoolFilter').value = '';
+      document.getElementById('statusFilter').value = '';
+      showToast('筛选条件已重置');
+    }
+
+    function changePageSize(size) {
+      showToast('每页显示 ' + size + ' 条');
+    }
+
+    function viewReport(id) {
+      currentReportId = id;
+      document.getElementById('viewModal').classList.add('active');
+    }
+
+    function closeViewModal() {
+      document.getElementById('viewModal').classList.remove('active');
+      currentReportId = null;
+    }
+
+    function approveReport(id) {
+      if (confirm('确定要通过这份月报吗？')) {
+        showToast('月报已审核通过');
+      }
+    }
+
+    function approveFromModal() {
+      if (confirm('确定要通过这份月报吗？')) {
+        showToast('月报已审核通过');
+        closeViewModal();
+      }
+    }
+
+    function rejectReport(id) {
+      currentReportId = id;
+      document.getElementById('rejectModal').classList.add('active');
+    }
+
+    function rejectFromModal() {
+      document.getElementById('rejectModal').classList.add('active');
+    }
+
+    function closeRejectModal() {
+      document.getElementById('rejectModal').classList.remove('active');
+    }
+
+    function confirmReject() {
+      const reason = document.getElementById('rejectReason').value;
+      if (!reason.trim()) {
+        alert('请输入退回原因');
+        return;
+      }
+      showToast('月报已退回');
+      closeRejectModal();
+      closeViewModal();
+    }
+
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 10);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 2000);
+    }
+  </script>
+</body>
+</html>

@@ -53,6 +53,7 @@
             工作台
           </a>
         </div>
+
         <div class="admin-menu-group">
           <div class="admin-menu-title">用户管理</div>
           <a href="users.html" class="admin-menu-item">
@@ -60,8 +61,13 @@
             学校管理员
           </a>
         </div>
+
         <div class="admin-menu-group">
           <div class="admin-menu-title">内容管理</div>
+          <a href="carousel.html" class="admin-menu-item">
+            <span class="admin-menu-icon">🖼️</span>
+            轮播图管理
+          </a>
           <a href="about.html" class="admin-menu-item">
             <span class="admin-menu-icon">📖</span>
             项目介绍
@@ -78,7 +84,12 @@
             <span class="admin-menu-icon">📚</span>
             资源共享
           </a>
+          <a href="reports.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📊</span>
+            月报管理
+          </a>
         </div>
+
         <div class="admin-menu-group">
           <div class="admin-menu-title">示范校管理</div>
           <a href="schools.html" class="admin-menu-item">
@@ -86,6 +97,7 @@
             示范校列表
           </a>
         </div>
+
         <div class="admin-menu-group">
           <div class="admin-menu-title">系统设置</div>
           <a href="navigation.html" class="admin-menu-item">
@@ -147,18 +159,27 @@
 
         <div class="admin-card">
           <div class="admin-card-header">
-            <h3 class="admin-card-title">新闻列表 (共128条)</h3>
-            <button class="btn btn-primary" style="padding: 8px 20px; font-size: 14px;" onclick="openAddModal()">+ 发布新闻</button>
+            <h3 class="admin-card-title">新闻列表</h3>
+            <div style="display: flex; align-items: center; gap: 16px;">
+              <span style="font-size: 14px; color: var(--neutral-600);">共 128 条记录</span>
+              <select class="form-input" style="width: 110px; padding: 6px 10px; font-size: 14px;" id="pageSizeSelect" onchange="changePageSize()">
+                <option value="10" selected>10条/页</option>
+                <option value="20">20条/页</option>
+                <option value="50">50条/页</option>
+              </select>
+              <button class="btn btn-primary" style="padding: 8px 20px; font-size: 14px;" onclick="openAddModal()">+ 发布新闻</button>
+            </div>
           </div>
           <div class="admin-card-body" style="padding: 0;">
             <table class="admin-table">
               <thead>
                 <tr>
-                  <th style="width: 40%;">标题</th>
+                  <th style="width: 35%;">标题</th>
                   <th>来源</th>
                   <th>发布时间</th>
                   <th>浏览量</th>
                   <th>状态</th>
+                  <th>置顶</th>
                   <th>操作</th>
                 </tr>
               </thead>
@@ -169,8 +190,10 @@
                   <td>2025-03-15</td>
                   <td>1,234</td>
                   <td><span class="admin-badge admin-badge-success">已发布</span></td>
+                  <td><span class="admin-badge admin-badge-warning">📌 已置顶</span></td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="openEditModal(1)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-outline" onclick="togglePin(1)">取消置顶</button>
                     <button class="admin-btn-sm admin-btn-danger" onclick="confirmDelete(1)">删除</button>
                   </td>
                 </tr>
@@ -180,8 +203,10 @@
                   <td>2025-03-12</td>
                   <td>856</td>
                   <td><span class="admin-badge admin-badge-success">已发布</span></td>
+                  <td>-</td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="openEditModal(2)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-outline" onclick="togglePin(2)">置顶</button>
                     <button class="admin-btn-sm admin-btn-danger" onclick="confirmDelete(2)">删除</button>
                   </td>
                 </tr>
@@ -191,8 +216,10 @@
                   <td>2025-03-10</td>
                   <td>723</td>
                   <td><span class="admin-badge admin-badge-success">已发布</span></td>
+                  <td>-</td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="openEditModal(3)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-outline" onclick="togglePin(3)">置顶</button>
                     <button class="admin-btn-sm admin-btn-danger" onclick="confirmDelete(3)">删除</button>
                   </td>
                 </tr>
@@ -202,8 +229,10 @@
                   <td>2025-03-08</td>
                   <td>1,567</td>
                   <td><span class="admin-badge admin-badge-success">已发布</span></td>
+                  <td><span class="admin-badge admin-badge-warning">📌 已置顶</span></td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="openEditModal(4)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-outline" onclick="togglePin(4)">取消置顶</button>
                     <button class="admin-btn-sm admin-btn-danger" onclick="confirmDelete(4)">删除</button>
                   </td>
                 </tr>
@@ -213,8 +242,10 @@
                   <td>2025-03-01</td>
                   <td>2,105</td>
                   <td><span class="admin-badge admin-badge-success">已发布</span></td>
+                  <td>-</td>
                   <td class="admin-actions">
                     <button class="admin-btn-sm admin-btn-outline" onclick="openEditModal(5)">编辑</button>
+                    <button class="admin-btn-sm admin-btn-outline" onclick="togglePin(5)">置顶</button>
                     <button class="admin-btn-sm admin-btn-danger" onclick="confirmDelete(5)">删除</button>
                   </td>
                 </tr>
@@ -224,14 +255,17 @@
         </div>
 
         <!-- Pagination -->
-        <div class="pagination" style="margin-top: 20px;">
-          <span class="page-item disabled">&lt;</span>
-          <span class="page-item active">1</span>
-          <span class="page-item">2</span>
-          <span class="page-item">3</span>
-          <span class="page-item">...</span>
-          <span class="page-item">13</span>
-          <span class="page-item">&gt;</span>
+        <div class="pagination" style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 14px; color: var(--neutral-600);">显示 1-10 条，共 128 条</span>
+          <div style="display: flex; gap: 4px;">
+            <span class="page-item disabled">&lt;</span>
+            <span class="page-item active">1</span>
+            <span class="page-item">2</span>
+            <span class="page-item">3</span>
+            <span class="page-item">...</span>
+            <span class="page-item">13</span>
+            <span class="page-item">&gt;</span>
+          </div>
         </div>
       </div>
     </main>
@@ -508,6 +542,15 @@
         document.getElementById('uploadedCover').style.display = 'block';
       }
     });
+
+    function togglePin(id) {
+      showToast('置顶状态已更新');
+    }
+
+    function changePageSize() {
+      const pageSize = document.getElementById('pageSizeSelect').value;
+      showToast('每页显示 ' + pageSize + ' 条');
+    }
 
     function showToast(message) {
       const toast = document.createElement('div');

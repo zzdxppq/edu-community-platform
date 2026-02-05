@@ -22,6 +22,7 @@
             工作台
           </a>
         </div>
+
         <div class="admin-menu-group">
           <div class="admin-menu-title">用户管理</div>
           <a href="users.html" class="admin-menu-item">
@@ -29,8 +30,13 @@
             学校管理员
           </a>
         </div>
+
         <div class="admin-menu-group">
           <div class="admin-menu-title">内容管理</div>
+          <a href="carousel.html" class="admin-menu-item">
+            <span class="admin-menu-icon">🖼️</span>
+            轮播图管理
+          </a>
           <a href="about.html" class="admin-menu-item">
             <span class="admin-menu-icon">📖</span>
             项目介绍
@@ -47,7 +53,12 @@
             <span class="admin-menu-icon">📚</span>
             资源共享
           </a>
+          <a href="reports.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📊</span>
+            月报管理
+          </a>
         </div>
+
         <div class="admin-menu-group">
           <div class="admin-menu-title">示范校管理</div>
           <a href="schools.html" class="admin-menu-item">
@@ -55,6 +66,7 @@
             示范校列表
           </a>
         </div>
+
         <div class="admin-menu-group">
           <div class="admin-menu-title">系统设置</div>
           <a href="navigation.html" class="admin-menu-item">
@@ -89,7 +101,6 @@
         <!-- Settings Tabs -->
         <div class="settings-tabs" style="display: flex; gap: 0; margin-bottom: 24px; border-bottom: 2px solid var(--neutral-200);">
           <button class="settings-tab active" onclick="switchTab('basic')" id="tab-basic">基础设置</button>
-          <button class="settings-tab" onclick="switchTab('carousel')" id="tab-carousel">轮播图管理</button>
           <button class="settings-tab" onclick="switchTab('sensitive')" id="tab-sensitive">敏感词管理</button>
           <button class="settings-tab" onclick="switchTab('backup')" id="tab-backup">数据备份</button>
         </div>
@@ -193,86 +204,6 @@
           <div style="display: flex; gap: 12px;">
             <button class="btn btn-primary" style="padding: 12px 32px;" onclick="saveBasicSettings()">保存设置</button>
             <button class="btn btn-outline" style="padding: 12px 32px;" onclick="resetBasicSettings()">重置</button>
-          </div>
-        </div>
-
-        <!-- Carousel Settings -->
-        <div class="settings-panel" id="panel-carousel" style="display: none;">
-          <div class="admin-card">
-            <div class="admin-card-header">
-              <h3 class="admin-card-title">首页轮播图 (最多5张)</h3>
-              <button class="btn btn-primary" style="padding: 8px 20px; font-size: 14px;" onclick="openCarouselModal()">+ 添加轮播图</button>
-            </div>
-            <div class="admin-card-body" style="padding: 0;">
-              <table class="admin-table">
-                <thead>
-                  <tr>
-                    <th style="width: 80px;">排序</th>
-                    <th style="width: 150px;">图片预览</th>
-                    <th>标题</th>
-                    <th>链接</th>
-                    <th>状态</th>
-                    <th>操作</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <div style="display: flex; gap: 4px;">
-                        <button class="admin-btn-sm admin-btn-outline" onclick="moveCarousel(1, 'up')" disabled>↑</button>
-                        <button class="admin-btn-sm admin-btn-outline" onclick="moveCarousel(1, 'down')">↓</button>
-                      </div>
-                    </td>
-                    <td>
-                      <div style="width: 120px; height: 60px; background: linear-gradient(135deg, var(--primary-600), var(--accent-600)); border-radius: 4px;"></div>
-                    </td>
-                    <td>河南城乡学校共同体建设成果展示</td>
-                    <td style="color: var(--accent-600);">/pages/news.html</td>
-                    <td><span class="admin-badge admin-badge-success">显示中</span></td>
-                    <td class="admin-actions">
-                      <button class="admin-btn-sm admin-btn-outline" onclick="editCarousel(1)">编辑</button>
-                      <button class="admin-btn-sm admin-btn-danger" onclick="deleteCarousel(1)">删除</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div style="display: flex; gap: 4px;">
-                        <button class="admin-btn-sm admin-btn-outline" onclick="moveCarousel(2, 'up')">↑</button>
-                        <button class="admin-btn-sm admin-btn-outline" onclick="moveCarousel(2, 'down')">↓</button>
-                      </div>
-                    </td>
-                    <td>
-                      <div style="width: 120px; height: 60px; background: linear-gradient(135deg, var(--accent-600), var(--success-600)); border-radius: 4px;"></div>
-                    </td>
-                    <td>2025年春季学期工作计划发布</td>
-                    <td style="color: var(--accent-600);">/pages/policy.html</td>
-                    <td><span class="admin-badge admin-badge-success">显示中</span></td>
-                    <td class="admin-actions">
-                      <button class="admin-btn-sm admin-btn-outline" onclick="editCarousel(2)">编辑</button>
-                      <button class="admin-btn-sm admin-btn-danger" onclick="deleteCarousel(2)">删除</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div style="display: flex; gap: 4px;">
-                        <button class="admin-btn-sm admin-btn-outline" onclick="moveCarousel(3, 'up')">↑</button>
-                        <button class="admin-btn-sm admin-btn-outline" onclick="moveCarousel(3, 'down')" disabled>↓</button>
-                      </div>
-                    </td>
-                    <td>
-                      <div style="width: 120px; height: 60px; background: linear-gradient(135deg, var(--success-600), var(--primary-600)); border-radius: 4px;"></div>
-                    </td>
-                    <td>示范校风采展示</td>
-                    <td style="color: var(--accent-600);">/pages/schools.html</td>
-                    <td><span class="admin-badge admin-badge-warning">已隐藏</span></td>
-                    <td class="admin-actions">
-                      <button class="admin-btn-sm admin-btn-outline" onclick="editCarousel(3)">编辑</button>
-                      <button class="admin-btn-sm admin-btn-danger" onclick="deleteCarousel(3)">删除</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
           </div>
         </div>
 
@@ -492,55 +423,6 @@
     </main>
   </div>
 
-  <!-- Carousel Modal -->
-  <div class="modal-overlay" id="carouselModal">
-    <div class="modal" style="max-width: 600px;">
-      <div class="modal-header">
-        <h3 class="modal-title" id="carouselModalTitle">添加轮播图</h3>
-        <button class="modal-close" onclick="closeCarouselModal()">&times;</button>
-      </div>
-      <div class="modal-body">
-        <form id="carouselForm">
-          <div class="form-group">
-            <label class="form-label">轮播图标题</label>
-            <input type="text" class="form-input" id="carouselTitle" placeholder="请输入标题">
-          </div>
-          <div class="form-group">
-            <label class="form-label">跳转链接</label>
-            <input type="text" class="form-input" id="carouselLink" placeholder="如：/pages/news.html">
-          </div>
-          <div class="form-group">
-            <label class="form-label">轮播图图片</label>
-            <div class="file-upload-area" onclick="document.getElementById('carouselImage').click()">
-              <input type="file" id="carouselImage" style="display: none;" accept="image/*">
-              <div class="file-upload-icon">🖼️</div>
-              <div class="file-upload-text">点击上传图片</div>
-              <div class="file-upload-hint">建议尺寸：1920×600，支持 JPG、PNG 格式</div>
-            </div>
-            <div id="carouselImagePreview" style="margin-top: 12px; display: none;">
-              <div style="width: 100%; height: 120px; background: linear-gradient(135deg, var(--primary-600), var(--accent-600)); border-radius: 8px;"></div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">状态</label>
-            <div style="display: flex; gap: 20px;">
-              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                <input type="radio" name="carouselStatus" value="show" checked> 显示
-              </label>
-              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                <input type="radio" name="carouselStatus" value="hide"> 隐藏
-              </label>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-outline" onclick="closeCarouselModal()">取消</button>
-        <button class="btn btn-primary" onclick="saveCarousel()">保存</button>
-      </div>
-    </div>
-  </div>
-
   <!-- Add Sensitive Word Modal -->
   <div class="modal-overlay" id="sensitiveModal">
     <div class="modal" style="max-width: 500px;">
@@ -732,41 +614,6 @@
     function resetBasicSettings() {
       if (confirm('确定要重置所有设置吗？')) {
         showToast('设置已重置');
-      }
-    }
-
-    // Carousel
-    function openCarouselModal() {
-      document.getElementById('carouselModalTitle').textContent = '添加轮播图';
-      document.getElementById('carouselForm').reset();
-      document.getElementById('carouselImagePreview').style.display = 'none';
-      document.getElementById('carouselModal').classList.add('active');
-    }
-
-    function editCarousel(id) {
-      document.getElementById('carouselModalTitle').textContent = '编辑轮播图';
-      document.getElementById('carouselTitle').value = '河南城乡学校共同体建设成果展示';
-      document.getElementById('carouselLink').value = '/pages/news.html';
-      document.getElementById('carouselImagePreview').style.display = 'block';
-      document.getElementById('carouselModal').classList.add('active');
-    }
-
-    function closeCarouselModal() {
-      document.getElementById('carouselModal').classList.remove('active');
-    }
-
-    function saveCarousel() {
-      showToast('轮播图保存成功！');
-      closeCarouselModal();
-    }
-
-    function moveCarousel(id, direction) {
-      showToast('轮播图顺序已调整');
-    }
-
-    function deleteCarousel(id) {
-      if (confirm('确定要删除这个轮播图吗？')) {
-        showToast('轮播图已删除');
       }
     }
 

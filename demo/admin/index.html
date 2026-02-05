@@ -6,6 +6,37 @@
   <title>管理后台 - 河南城乡学校共同体发展平台</title>
   <link rel="stylesheet" href="../css/styles.css">
   <link rel="stylesheet" href="../css/admin-modal.css">
+  <!-- WangEditor 5.x 样式 -->
+  <link href="https://unpkg.com/@wangeditor/editor@latest/dist/css/style.css" rel="stylesheet">
+  <style>
+    /* 编辑器容器样式 */
+    .editor-container {
+      border: 1px solid var(--neutral-300);
+      border-radius: 8px;
+      overflow: hidden;
+      z-index: 100;
+    }
+    .editor-toolbar {
+      border-bottom: 1px solid var(--neutral-200);
+      background: var(--neutral-50);
+    }
+    .editor-content {
+      height: 250px;
+      overflow-y: auto;
+      background: white;
+    }
+    /* 覆盖编辑器默认样式 */
+    .w-e-toolbar {
+      background: var(--neutral-50) !important;
+      border-bottom: 1px solid var(--neutral-200) !important;
+    }
+    .w-e-text-container {
+      background: white !important;
+    }
+    .w-e-text-container p {
+      margin: 0 0 1em 0;
+    }
+  </style>
 </head>
 <body>
   <div class="admin-wrapper">
@@ -34,6 +65,10 @@
 
         <div class="admin-menu-group">
           <div class="admin-menu-title">内容管理</div>
+          <a href="carousel.html" class="admin-menu-item">
+            <span class="admin-menu-icon">🖼️</span>
+            轮播图管理
+          </a>
           <a href="about.html" class="admin-menu-item">
             <span class="admin-menu-icon">📖</span>
             项目介绍
@@ -49,6 +84,10 @@
           <a href="resources.html" class="admin-menu-item">
             <span class="admin-menu-icon">📚</span>
             资源共享
+          </a>
+          <a href="reports.html" class="admin-menu-item">
+            <span class="admin-menu-icon">📊</span>
+            月报管理
           </a>
         </div>
 
@@ -344,7 +383,10 @@
           <div id="newsContentGroup">
             <div class="form-group">
               <label class="form-label">新闻内容 <span style="color: red;">*</span></label>
-              <textarea class="form-input" id="newsContent" rows="6" placeholder="请输入新闻正文内容" required></textarea>
+              <div class="editor-container">
+                <div id="newsEditorToolbar" class="editor-toolbar"></div>
+                <div id="newsEditorContent" class="editor-content"></div>
+              </div>
             </div>
           </div>
           <div class="form-group">
@@ -416,7 +458,10 @@
             </div>
             <div class="form-group">
               <label class="form-label">政策内容 <span style="color: red;">*</span></label>
-              <textarea class="form-input" id="policyContent" rows="6" placeholder="请输入政策正文内容" required></textarea>
+              <div class="editor-container">
+                <div id="policyEditorToolbar" class="editor-toolbar"></div>
+                <div id="policyEditorContent" class="editor-content"></div>
+              </div>
             </div>
             <div class="form-group">
               <label class="form-label">附件上传</label>
@@ -494,8 +539,91 @@
     </div>
   </div>
 
+  <!-- WangEditor 5.x JavaScript -->
+  <script src="https://unpkg.com/@wangeditor/editor@latest/dist/index.js"></script>
   <script>
+    const { createEditor, createToolbar } = window.wangEditor;
+
+    let newsEditor = null;
+    let policyEditor = null;
     let deleteNewsId = null;
+
+    // 编辑器工具栏配置
+    const toolbarConfig = {
+      toolbarKeys: [
+        'headerSelect',
+        'bold',
+        'italic',
+        'underline',
+        'through',
+        'color',
+        'bgColor',
+        '|',
+        'bulletedList',
+        'numberedList',
+        '|',
+        'justifyLeft',
+        'justifyCenter',
+        'justifyRight',
+        '|',
+        'insertLink',
+        'uploadImage',
+        '|',
+        'undo',
+        'redo'
+      ]
+    };
+
+    // 编辑器配置
+    const editorConfig = {
+      placeholder: '请输入内容...',
+      MENU_CONF: {
+        uploadImage: {
+          customUpload(file, insertFn) {
+            const url = URL.createObjectURL(file);
+            insertFn(url, file.name, url);
+          }
+        }
+      }
+    };
+
+    // 初始化新闻编辑器
+    function initNewsEditor() {
+      if (newsEditor) {
+        newsEditor.destroy();
+      }
+
+      newsEditor = createEditor({
+        selector: '#newsEditorContent',
+        html: '',
+        config: { ...editorConfig, placeholder: '请输入新闻内容...' }
+      });
+
+      createToolbar({
+        editor: newsEditor,
+        selector: '#newsEditorToolbar',
+        config: toolbarConfig
+      });
+    }
+
+    // 初始化政策编辑器
+    function initPolicyEditor() {
+      if (policyEditor) {
+        policyEditor.destroy();
+      }
+
+      policyEditor = createEditor({
+        selector: '#policyEditorContent',
+        html: '',
+        config: { ...editorConfig, placeholder: '请输入政策内容...' }
+      });
+
+      createToolbar({
+        editor: policyEditor,
+        selector: '#policyEditorToolbar',
+        config: toolbarConfig
+      });
+    }
 
     // 切换新闻发布类型
     function toggleNewsType(type) {
@@ -527,19 +655,40 @@
       document.getElementById('newsForm').reset();
       toggleNewsType('content');
       document.getElementById('newsModal').classList.add('active');
+      setTimeout(() => initNewsEditor(), 100);
     }
 
     function closeNewsModal() {
       document.getElementById('newsModal').classList.remove('active');
+      if (newsEditor) {
+        newsEditor.destroy();
+        newsEditor = null;
+      }
     }
 
     function publishNews() {
       const title = document.getElementById('newsTitle').value;
-      const content = document.getElementById('newsContent').value;
-      if (!title || !content) {
-        alert('请填写必填项');
+      const publishType = document.querySelector('input[name="newsPublishType"]:checked').value;
+
+      if (!title) {
+        alert('请填写新闻标题');
         return;
       }
+
+      if (publishType === 'link') {
+        const link = document.getElementById('newsExternalLink').value;
+        if (!link) {
+          alert('请填写外部链接');
+          return;
+        }
+      } else {
+        const isEmpty = newsEditor ? newsEditor.isEmpty() : true;
+        if (isEmpty) {
+          alert('请填写新闻内容');
+          return;
+        }
+      }
+
       showToast('新闻发布成功！');
       closeNewsModal();
     }
@@ -566,21 +715,47 @@
 
     function openPolicyModal() {
       document.getElementById('policyForm').reset();
+      togglePolicyType('content');
       document.getElementById('policyModal').classList.add('active');
+      setTimeout(() => initPolicyEditor(), 100);
     }
 
     function closePolicyModal() {
       document.getElementById('policyModal').classList.remove('active');
+      if (policyEditor) {
+        policyEditor.destroy();
+        policyEditor = null;
+      }
     }
 
     function publishPolicy() {
       const title = document.getElementById('policyTitle').value;
-      const category = document.getElementById('policyCategory').value;
-      const content = document.getElementById('policyContent').value;
-      if (!title || !category || !content) {
-        alert('请填写必填项');
+      const publishType = document.querySelector('input[name="policyPublishType"]:checked').value;
+
+      if (!title) {
+        alert('请填写政策标题');
         return;
       }
+
+      if (publishType === 'link') {
+        const link = document.getElementById('policyExternalLink').value;
+        if (!link) {
+          alert('请填写外部链接');
+          return;
+        }
+      } else {
+        const category = document.getElementById('policyCategory').value;
+        const isEmpty = policyEditor ? policyEditor.isEmpty() : true;
+        if (!category) {
+          alert('请选择分类');
+          return;
+        }
+        if (isEmpty) {
+          alert('请填写政策内容');
+          return;
+        }
+      }
+
       showToast('政策发布成功！');
       closePolicyModal();
     }

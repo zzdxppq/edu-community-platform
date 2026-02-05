@@ -62,11 +62,17 @@
                 <h2 class="section-title">示范校共体</h2>
               </div>
 
-              <p style="color: var(--neutral-600); margin-bottom: 30px; line-height: 1.8;">
+              <p style="color: var(--neutral-600); margin-bottom: 20px; line-height: 1.8;">
                 首批遴选的6所示范校是河南省城乡学校共同体建设的先行者和探索者。各示范校积极发挥辐射带动作用，与区域内农村学校建立紧密合作关系，在管理共进、教学共研、资源共享、师资共培等方面开展深入合作，积累了宝贵的建设经验。
               </p>
 
-              <div class="school-grid">
+              <!-- Search Box -->
+              <div style="margin-bottom: 24px; display: flex; gap: 12px; align-items: center;">
+                <input type="text" class="form-input" id="schoolSearchInput" placeholder="搜索学校名称..." style="flex: 1; max-width: 300px; padding: 10px 16px; border: 1px solid var(--neutral-300); border-radius: 8px;" oninput="filterSchools()">
+                <button class="btn btn-primary" style="padding: 10px 24px;" onclick="filterSchools()">搜索</button>
+              </div>
+
+              <div class="school-grid" id="schoolGrid">
                 <a href="school-detail.html" class="school-card">
                   <div class="school-image">董家河</div>
                   <div class="school-body">
@@ -110,6 +116,11 @@
                   </div>
                 </a>
               </div>
+
+              <!-- Load More Button (shown when schools > 10) -->
+              <div id="loadMoreContainer" style="display: none; text-align: center; margin-top: 24px;">
+                <button class="btn btn-outline" style="padding: 12px 32px;" onclick="loadMoreSchools()">显示更多学校</button>
+              </div>
             </div>
           </div>
         </div>
@@ -119,27 +130,55 @@
     <!-- Footer -->
     <footer class="footer">
       <div class="container">
-        <div class="footer-content">
-          <div class="footer-info">
-            <h3>河南城乡学校共同体发展平台</h3>
-            <p>地址：河南省郑州市金水区XX路XX号</p>
-            <p>邮箱：contact@example.edu.cn</p>
-          </div>
-          <div class="footer-links">
-            <h4>快速导航</h4>
-            <a href="about.html">项目介绍</a>
-            <a href="policy.html">政策文件</a>
-            <a href="schools.html">示范校共体</a>
-            <a href="resources.html">资源共享</a>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <p>&copy; 2025 河南城乡学校共同体发展平台 版权所有</p>
+        <div class="footer-bottom" style="padding: 20px 0; text-align: center;">
+          <p style="display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap; margin: 0; font-size: 14px; color: rgba(255,255,255,0.9);">
+            <span>河南城乡学校共同体发展平台</span>
+            <span style="color: rgba(255,255,255,0.5);">|</span>
+            <span>地址：河南省郑州市金水区XX路XX号</span>
+            <span style="color: rgba(255,255,255,0.5);">|</span>
+            <span>邮箱：contact@example.edu.cn</span>
+            <span style="color: rgba(255,255,255,0.5);">|</span>
+            <span>&copy; 2025 河南城乡学校共同体发展平台 版权所有</span>
+          </p>
         </div>
       </div>
     </footer>
   </div>
 
   <script src="../js/main.js"></script>
+  <script>
+    // School search functionality
+    function filterSchools() {
+      const keyword = document.getElementById('schoolSearchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('#schoolGrid .school-card');
+      cards.forEach(card => {
+        const name = card.querySelector('.school-name').textContent.toLowerCase();
+        const meta = card.querySelector('.school-meta').textContent.toLowerCase();
+        if (name.includes(keyword) || meta.includes(keyword)) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Load more schools (demo simulation)
+    function loadMoreSchools() {
+      const container = document.getElementById('loadMoreContainer');
+      container.innerHTML = '<p style="color: var(--neutral-500);">已加载全部学校</p>';
+    }
+
+    // Check if need to show "Load More" button (when schools > 10)
+    function checkLoadMore() {
+      const totalSchools = document.querySelectorAll('#schoolGrid .school-card').length;
+      const loadMoreContainer = document.getElementById('loadMoreContainer');
+      if (totalSchools > 10) {
+        loadMoreContainer.style.display = 'block';
+      }
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', checkLoadMore);
+  </script>
 </body>
 </html>
