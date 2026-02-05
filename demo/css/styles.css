@@ -786,7 +786,7 @@ ul, ol {
 
 /* ===== Footer ===== */
 .footer {
-  background: var(--primary-900);
+  background: var(--primary-800);
   color: rgba(255,255,255,0.8);
   padding: 0;
   margin-top: auto;
@@ -828,7 +828,10 @@ ul, ol {
 
 .footer-bottom {
   text-align: center;
-  padding: 12px 0;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: var(--text-sm);
 }
 
