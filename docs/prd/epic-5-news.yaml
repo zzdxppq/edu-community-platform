@@ -1,0 +1,53 @@
+epic_id: 5
+title: 新闻资讯模块
+description: >
+  实现新闻资讯全流程：后台发布管理、前端列表/详情展示、
+  首页入口集成
+target_platform: fullstack
+stories:
+
+  - story_id: "5.1"
+    title: 新闻资讯数据模型与后端 API
+    description: >
+      实现新闻资讯表 CRUD API（参见 7.1.7），
+      支持状态筛选、置顶、分页查询、三种发布方式
+    acceptance_criteria:
+      - CRUD 接口完整（新增/查询/更新/删除）
+      - 支持按发布状态筛选（已发布/草稿/全部）
+      - 支持置顶设置（置顶内容优先，多个置顶按时间倒序）
+      - 支持三种发布方式字段（content/attachments/external_link）
+      - 无摘要字段（summary）
+      - 前端公开接口仅返回已发布状态数据
+    estimated_complexity: S
+    priority: 高
+
+  - story_id: "5.2"
+    title: 新闻资讯后台管理页面
+    description: >
+      超级管理员发布/编辑/删除新闻资讯；支持状态筛选、
+      置顶设置、三种发布方式切换
+    acceptance_criteria:
+      - 新闻列表分页展示（标题/状态/置顶/发布时间）
+      - 支持按发布状态下拉筛选
+      - 发布/编辑表单使用统一内容发布组件（三种模式）
+      - 置顶开关操作
+      - 删除需二次确认
+      - 外部链接类型在列表显示"外链"标识
+    estimated_complexity: M
+    priority: 高
+
+  - story_id: "5.3"
+    title: 新闻资讯前端展示
+    description: >
+      前端首页新闻入口（最新5条 + 查看更多）、
+      新闻列表页（分页+置顶优先）、新闻详情页（富文本渲染）
+    acceptance_criteria:
+      - 首页新闻入口显示最新5条（标题+发布时间），置顶优先
+      - '"查看更多"跳转新闻列表页'
+      - 列表页按发布时间倒序、置顶优先、支持分页
+      - 详情页正确渲染富文本内容
+      - 外部链接类型点击后直接跳转外部页面（不进入详情页）
+      - 外部链接跳转前弹出"您即将离开本平台"提示
+      - 导航栏不显示新闻资讯入口
+    estimated_complexity: M
+    priority: 中

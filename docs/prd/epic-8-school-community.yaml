@@ -1,0 +1,152 @@
+epic_id: 8
+title: 示范校共体模块
+description: >
+  实现示范校全流程：超管学校管理、前端学校展示（左侧导航+Tab+独立列表/详情页）、
+  学校管理后台（工作台/个人中心/内容管理/成员校管理）、超管月报管理
+target_platform: fullstack
+stories:
+
+  - story_id: "8.1"
+    title: 示范校与成员校数据模型与 API
+    description: >
+      实现示范校信息表（7.1.1）、成员校信息表（7.1.2）、
+      校共同体活动表（7.1.3）、校共同体月报表（7.1.4）的 CRUD API
+    acceptance_criteria:
+      - 四张表 CRUD 接口完整
+      - 示范校 API 支持按 is_visible 和 sort_order 排序查询
+      - 活动/月报 API 支持按 school_id 隔离查询
+      - 成员校 API 支持按 school_id 查询和排序
+      - 月报 API 支持按年月筛选
+      - 前端公开接口仅返回已发布且可见的数据
+    estimated_complexity: M
+    priority: 高
+
+  - story_id: "8.2"
+    title: 超管示范校管理
+    description: >
+      超级管理员管理示范校列表：新增/编辑/删除示范校，
+      设置是否在官网显示、排序；列表不显示统计信息、不提供批量操作
+    acceptance_criteria:
+      - 列表展示学校名称、学段、区域、状态、排序、是否显示
+      - 不显示统计信息（活动数、月报数等）
+      - 不提供批量操作按钮
+      - 新增/编辑：学校名称、学校代码、学段、省市县、联系电话、显示控制、排序
+      - 提供"登录后台"按钮（关联 Epic 2 越权登录）
+      - 提供"查看前端"快速跳转链接
+    estimated_complexity: M
+    priority: 高
+
+  - story_id: "8.3"
+    title: 前端示范校导航与 Tab 框架
+    description: >
+      前端示范校共体页面：左侧导航栏（默认6个+查看全部+固定定位），
+      右侧 Tab 切换（校共同体介绍/活动/月报），支持 URL 定位到指定 Tab
+    acceptance_criteria:
+      - 左侧导航默认显示前6个示范校（按 sort_order 和 is_visible）
+      - '"查看全部"展开显示所有学校'
+      - 左侧导航栏固定定位，不随页面滚动
+      - 右侧 Tab 切换正常（介绍/活动/月报）
+      - URL 支持 Tab 定位（如 /schools/:id?tab=activity）
+      - 点击左侧学校切换右侧内容
+    estimated_complexity: L
+    priority: 高
+
+  - story_id: "8.4"
+    title: 校共同体介绍（编辑与展示）
+    description: >
+      学校管理员使用富文本编辑器维护校共同体介绍（组建模式/核心优势/详细介绍），
+      前端展示介绍内容及成员校列表
+    acceptance_criteria:
+      - 学校管理员点击菜单进入编辑页面（非列表）
+      - 使用富文本编辑器编辑介绍内容
+      - 不可修改基础信息（学校名称、学段、区域等）
+      - 前端介绍 Tab 展示富文本内容
+      - 前端展示成员校列表（数量统计 + 名称列表）
+    estimated_complexity: M
+    priority: 中
+
+  - story_id: "8.5"
+    title: 校共同体活动（管理与展示）
+    description: >
+      学校管理员发布/编辑/删除活动（列表视图+分页+富文本+三种发布方式），
+      前端活动 Tab 内展示最新5条、独立列表页和详情页
+    acceptance_criteria:
+      - 学校后台活动列表视图，支持分页、编辑、删除、发布按钮
+      - 发布使用富文本编辑器 + 三种发布方式
+      - 发布后自动同步至首页动态区块，标注学校名称
+      - 前端活动 Tab 显示最新5条，"查看更多"跳转独立列表页
+      - 独立列表页 URL：/schools/:id/activities，支持分页
+      - 独立详情页 URL：/schools/:id/activities/:activityId
+    estimated_complexity: L
+    priority: 中
+
+  - story_id: "8.6"
+    title: 校共同体月报（管理与展示）
+    description: >
+      学校管理员提交/编辑/删除月报（列表视图+分页+富文本+按月筛选），
+      前端月报 Tab 内展示最新5条、独立列表页和详情页
+    acceptance_criteria:
+      - 学校后台月报列表视图，支持分页、编辑、删除、提交按钮
+      - 使用富文本编辑器，含年份和月份选择
+      - 前端月报 Tab 显示最新5条，"查看更多"跳转独立列表页
+      - 独立列表页 URL：/schools/:id/reports，支持按年月筛选、分页
+      - 独立详情页 URL：/schools/:id/reports/:reportId
+      - 月报详情支持附件下载
+    estimated_complexity: L
+    priority: 中
+
+  - story_id: "8.7"
+    title: 成员校管理
+    description: >
+      学校管理员添加/编辑/删除/排序成员校，
+      成员校信息展示到前端校共同体介绍页面
+    acceptance_criteria:
+      - 成员校列表展示名称、学校代码、排序
+      - 支持添加（学校名称必填+学校代码可选）、编辑、删除
+      - 支持拖拽排序（前端按此顺序展示）
+      - 前端校共同体介绍 Tab 显示成员校数量统计和名称列表
+      - 添加/删除成员校后前端实时更新
+    estimated_complexity: M
+    priority: 中
+
+  - story_id: "8.8"
+    title: 示范校页面背景图
+    description: >
+      学校管理员上传学校背景图（替代纯色背景），
+      前端展示背景图并添加遮罩层保证文字可读性
+    acceptance_criteria:
+      - 学校管理员可上传背景图（建议 1920×400px，jpg/png，≤2MB）
+      - 前端使用学校背景图作为页面头部背景
+      - 未上传背景图的学校使用平台默认图片
+      - 背景图添加适度遮罩层保证文字可读性
+      - 每所学校可配置专属背景图
+    estimated_complexity: S
+    priority: 低
+
+  - story_id: "8.9"
+    title: 学校管理后台工作台与个人中心
+    description: >
+      学校管理后台工作台（最近活动列表+月报记录+分页+快捷操作按钮），
+      个人中心（账号设置+修改密码），栏目查看（只读）
+    acceptance_criteria:
+      - 工作台显示最近发布的活动列表，支持分页、编辑、删除，提供"发布活动"按钮
+      - 工作台显示月报提交记录列表，支持分页、编辑、删除，提供"提交月报"按钮
+      - 个人中心可修改密码和联系方式
+      - 栏目管理页面为只读查看（不可修改）
+      - 密码修改需满足复杂度要求（8-20位，大写+小写+数字）
+    estimated_complexity: M
+    priority: 中
+
+  - story_id: "8.10"
+    title: 超管月报管理
+    description: >
+      超级管理员查看所有学校月报，支持按学校和时间筛选，
+      可删除不合规月报并保留删除记录
+    acceptance_criteria:
+      - 月报列表展示标题、所属学校、年月、状态
+      - 支持按学校下拉筛选
+      - 支持按时间范围筛选
+      - 删除需二次确认，保留删除记录（删除人、时间、原内容摘要）
+      - 删除后前端立即不可见
+    estimated_complexity: M
+    priority: 低
