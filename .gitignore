@@ -1,22 +1,42 @@
-# Orchestrix MCP configuration (contains API keys)
-.mcp.json
+# === Java / Maven ===
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.log
+hs_err_pid*
 
-# Pod configuration
-.youlidao-pod
+# === Node.js ===
+node_modules/
+dist/
+.nuxt/
+.output/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
-# OpenCode configuration
-.opencode/
-opencode.jsonc
-
-# IDE
+# === IDE ===
 .idea/
+*.iml
 .vscode/
 *.swp
 *.swo
+*~
 
-# OS
+# === OS ===
 .DS_Store
 Thumbs.db
+ehthumbs.db
 
-# Node modules (if any)
-node_modules/
+# === Environment ===
+.env
+.env.local
+.env.*.local
+
+# === Orchestrix / Tool Config ===
+.mcp.json
+.youlidao-pod
+.opencode/
+opencode.jsonc

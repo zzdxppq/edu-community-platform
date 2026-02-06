@@ -1,0 +1,85 @@
+version: "3.8"
+
+services:
+  # ===== 基础设施 =====
+  mysql:
+    image: mysql:8.0
+    container_name: educp-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root123}
+      MYSQL_DATABASE: educp
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  redis:
+    image: redis:7
+    container_name: educp-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
+  nacos:
+    image: nacos/nacos-server:v2.3.2
+    container_name: educp-nacos
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+    environment:
+      MODE: standalone
+
+  # ===== 后端服务 =====
+  gateway:
+    build: ./backend/gateway
+    container_name: educp-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - nacos
+
+  core-service:
+    build: ./backend/core-service
+    container_name: educp-core-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql
+      - redis
+      - nacos
+
+  content-service:
+    build: ./backend/content-service
+    container_name: educp-content-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mysql
+      - redis
+      - nacos
+
+  file-service:
+    build: ./backend/file-service
+    container_name: educp-file-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - nacos
+
+  # ===== 前端服务 =====
+  portal:
+    build: ./frontend/portal
+    container_name: educp-portal
+    ports:
+      - "3000:3000"
+
+  admin:
+    build: ./frontend/admin
+    container_name: educp-admin
+    ports:
+      - "3001:3001"
+
+volumes:
+  mysql-data:
+  redis-data:
