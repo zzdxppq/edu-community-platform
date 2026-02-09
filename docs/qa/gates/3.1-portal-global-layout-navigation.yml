@@ -1,0 +1,159 @@
+story_id: "3.1"
+story_title: "官网全局布局与导航栏"
+review_date: "2026-02-09"
+reviewer: "JW (QA Engineer)"
+review_round: 1
+
+gate_result: PASS
+next_status: Done
+
+risk_assessment:
+  risk_level: LOW
+  review_mode: standard_code_review
+  complexity_indicators: 2
+  security_sensitive: false
+  notes: "standard tier; pure frontend portal (Nuxt 3) component — extract AppHeader from default.vue, CSS :hover dropdowns, active state highlighting, responsive 1280px+. 1 new + 1 modified file"
+
+project_type:
+  type: web_frontend
+  subtype: portal_navigation_component
+  test_runner: code_review
+
+automated_tests:
+  verification_method: file_validation_plus_code_review
+  total_checks: 38
+  passed: 38
+  failed: 0
+  pass_rate: 100%
+  categories:
+    file_existence: 2/2
+    deliverable_bindings: 1/1
+    task_checkboxes: 0/38
+  notes: "Task checkboxes all unchecked (0/38) despite Review status — dev process gap; all deliverable files exist and code verified correct"
+
+deep_file_review:
+  new_files_reviewed: 1
+  modified_files_reviewed: 1
+  total: 2
+  categories:
+    frontend_app_header: 1/1
+    frontend_default_layout: 1/1
+
+code_review:
+  app_header_component:
+    nav_item_interface: "PASS — label, path, external?, target?, children? all correctly typed"
+    nav_items_data: "PASS — 5 internal items (首页, 项目介绍, 政策文件, 示范校共体, 资源共享) + 管理员登录 external = 6 total"
+    admin_login_link: "PASS — <a> tag with :href from runtimeConfig, target='_blank'"
+    fixed_header: "PASS — position: fixed, top: 0, z-index: 1000, height: var(--header-height) = 80px"
+    background_color: "PASS — var(--primary-800) = #2C5AA0"
+    text_color: "PASS — var(--neutral-50) = #ffffff, font-size: var(--text-lg) = 16px"
+    logo_link: "PASS — NuxtLink to '/' with platform name"
+    box_shadow: "PASS — var(--shadow-header)"
+
+  dropdown_menus:
+    policy_children: "PASS — 国家政策(/policy?category=national), 省级政策(/policy?category=provincial)"
+    resources_children: "PASS — 省外经验(/resources?category=outside), 省内经验(/resources?category=inside), 研究文献(/resources?category=research)"
+    hover_trigger: "PASS — CSS :hover pseudo-class, no JavaScript click handlers"
+    arrow_indicator: "PASS — ::after content '▼' on .nav-link-arrow, only for items with children"
+    arrow_rotation: "PASS — transform: rotate(180deg) on hover, transition: var(--transition-normal) = 0.3s"
+    dropdown_positioning: "PASS — position: absolute, top: 100%, z-index: 1001"
+    dropdown_background: "PASS — var(--neutral-50) = white"
+    dropdown_shadow: "INFO — hardcoded 0 4px 12px rgba(0,0,0,0.15) instead of CSS var (value correct per UI spec, exact value not in variables.css)"
+    hover_style: "PASS — background var(--neutral-100) = #f8f8f8, color var(--primary-800) = #2C5AA0"
+    separator_lines: "PASS — 1px solid var(--neutral-300), last-child none"
+
+  no_dropdown_items:
+    schools: "PASS — 示范校共体 has no children field"
+    conditional_rendering: "PASS — v-if item.children → dropdown; v-else → plain NuxtLink"
+    no_arrow: "PASS — .nav-link-arrow class only in dropdown branch"
+
+  active_state:
+    use_route: "PASS — useRoute() composable"
+    is_active_function: "PASS — exact match for '/' (route.path === '/'), startsWith for others"
+    class_binding: "PASS — :class='{ active: isActive(item) }' on both dropdown and plain items"
+    active_style: "PASS — background var(--primary-900) = #1a3d6e"
+    admin_excluded: "PASS — external link not in navItems, no :class binding"
+
+  no_news: "PASS — navItems array does not contain 新闻资讯 or /news"
+
+  responsive:
+    media_query: "PASS — @media (max-width: 1280px) reduces nav-link padding"
+    padding_reduction: "PASS — var(--spacing-5) 20px → var(--spacing-3) 12px"
+    container_width: "PASS — max-width: var(--container-max-width) = 1200px, margin: 0 auto"
+    flex_layout: "PASS — display: flex prevents wrapping"
+
+  ssr_compatibility: "PASS — no window/document/localStorage usage; useRoute + useRuntimeConfig are SSR-safe Nuxt composables"
+
+  css_variables_compliance:
+    total_var_references: 27
+    unique_variables_used: 12
+    hardcoded_values: 1
+    variables_verified: "--primary-800, --primary-900, --neutral-50, --neutral-100, --neutral-300, --neutral-800, --header-height, --container-max-width, --spacing-*, --text-lg, --text-base, --text-xl, --font-bold, --transition-normal, --shadow-header"
+    note: "All CSS variables verified defined in variables.css. 1 hardcoded dropdown shadow (UI spec value, not in variable system)"
+
+layout_integration:
+  app_header_usage: "PASS — default.vue line 3: <AppHeader />"
+  old_header_removed: "PASS — no inline <header> with nav links"
+  margin_compensation: "PASS — .main-content margin-top: var(--header-height)"
+  footer_preserved: "PASS — copyright footer with dynamic year"
+  layout_structure: "PASS — flex column: AppHeader + main slot + footer"
+  nuxt_auto_import: "PASS — components/common/ auto-registered by Nuxt 3 default"
+
+ac_coverage:
+  total_acs: 6
+  fully_verified: 6
+  partially_verified: 0
+  not_verified: 0
+  coverage_rate: 100%
+  details:
+    - ac_id: AC1
+      status: VERIFIED
+      method: code_review
+      evidence: "navItems 5 items + admin login external <a> = 6 total. Header position:fixed z-index:1000 height:80px background var(--primary-800). Logo NuxtLink to '/'. default.vue <AppHeader /> + margin-top compensation."
+
+    - ac_id: AC2
+      status: VERIFIED
+      method: code_review
+      evidence: "政策文件 2 children (national, provincial) + 资源共享 3 children (outside, inside, research). CSS :hover trigger. Arrow ▼ with 180° rotation. Dropdown white bg, shadow, z-index:1001. Hover #f8f8f8 + #2C5AA0. 1px separators, last-child none."
+
+    - ac_id: AC3
+      status: VERIFIED
+      method: code_review
+      evidence: "示范校共体 has no children in navItems. v-if/v-else conditional: no children → plain NuxtLink, no arrow, no dropdown."
+
+    - ac_id: AC4
+      status: VERIFIED
+      method: code_review
+      evidence: "useRoute() + isActive(): exact match for '/' (route.path === '/'), startsWith for others. :class='{ active: isActive(item) }'. Active background var(--primary-900) = #1a3d6e. Admin login excluded (not in navItems, no class binding)."
+
+    - ac_id: AC5
+      status: VERIFIED
+      method: code_review
+      evidence: "navItems contains only 首页, 项目介绍, 政策文件, 示范校共体, 资源共享. No 新闻资讯 or /news entry."
+
+    - ac_id: AC6
+      status: VERIFIED
+      method: code_review
+      evidence: "@media (max-width: 1280px) reduces nav padding 20px→12px. Container max-width 1200px centered. Flex layout prevents wrapping."
+
+issues:
+  critical: 0
+  high: 0
+  medium: 0
+  low: 0
+  info_notes:
+    - "Task checkboxes all unchecked (0/38 [x]) despite Review status — dev process gap, all deliverables exist and verified correct"
+    - "0 unit tests for Story 3.1 — pure frontend component, manual/visual verification appropriate for standard tier"
+    - "Dropdown shadow hardcoded (0 4px 12px rgba(0,0,0,0.15)) instead of CSS variable — value correct per UI spec, exact value not defined in variables.css system. Non-blocking"
+    - "Dropdown min-width 160px vs UI spec 140px — negligible difference, improves readability"
+    - "Pre-existing nuxt.config.ts typecheck errors (Story 1.3 legacy, not introduced by Story 3.1)"
+
+incremental_context:
+  cached_risk_level: LOW
+  cached_review_mode: standard_code_review
+  cached_project_type: portal_navigation_component
+  failed_acs: []
+  failed_e2e_scenarios: []
+  missing_blind_spots: []
+  checkbox_issues:
+    - "All 38 task checkboxes unchecked — cosmetic process gap"
