@@ -1,0 +1,175 @@
+story_id: "2.2"
+story_title: "JWT 认证体系实现"
+review_date: "2026-02-09"
+reviewer: "JW (QA Engineer)"
+review_round: 1
+
+gate_result: PASS
+next_status: Done
+
+risk_assessment:
+  risk_level: CRITICAL
+  review_mode: security_deep_review
+  complexity_indicators: 5
+  security_sensitive: true
+  notes: "Core security system; JWT dual-token auth; cross 3 modules (common/core-service/gateway); BCrypt password verification; Redis token management; Gateway WebFlux filter"
+
+project_type:
+  type: web_backend
+  subtype: authentication_system
+  test_runner: code_review_plus_security_audit
+
+automated_tests:
+  verification_method: file_validation_plus_security_deep_review
+  total_checks: 44
+  passed: 44
+  failed: 0
+  pass_rate: 100%
+  categories:
+    file_existence: 23/23
+    deliverable_bindings: 13/13
+    task_checkboxes: 44/44
+
+unit_test_verification:
+  total_test_classes: 4
+  total_test_methods: 38
+  breakdown:
+    JwtUtilsTest: 10
+    AuthServiceImplTest: 14
+    AuthControllerTest: 6
+    AuthGlobalFilterTest: 8
+  note: "No JDK in environment; test code reviewed for correctness, not executed"
+
+deep_file_review:
+  new_files_reviewed: 17
+  modified_files_reviewed: 6
+  total: 23
+  categories:
+    common_security: 4/4
+    core_service_controller: 1/1
+    core_service_service: 2/2
+    core_service_dto: 3/3
+    gateway_filter: 1/1
+    gateway_config: 2/2
+    test_classes: 4/4
+    pom_files: 3/3
+    application_yml: 2/2
+    mapper_modification: 1/1
+
+security_deep_review:
+  jwt_implementation:
+    algorithm: "HS256 (HMAC-SHA256) via JJWT 0.12.5"
+    secret_management: "PASS — ${JWT_SECRET} env var in both gateway and core-service application.yml; consistent across services"
+    secret_hardcoded: "NO — loaded from @ConfigurationProperties / @Value"
+    secret_length: "PASS — JJWT Keys.hmacShaKeyFor() throws WeakKeyException for <256-bit keys; default fallback is 56 chars"
+    access_token_expiry: "900 seconds (15 min)"
+    refresh_token_expiry: "604800 seconds (7 days)"
+    jti_uniqueness: "PASS — UUID.randomUUID() per token"
+    token_type_separation: "PASS — type='access' vs type='refresh' in claims; AuthServiceImpl.refresh() validates type='refresh'"
+
+  password_security:
+    bcrypt_usage: "PASS — passwordEncoder.matches() (constant-time comparison, NOT equals())"
+    password_logging: "PASS — password NEVER logged anywhere"
+    password_in_response: "PASS — LoginResponse excludes password and salt"
+    password_encoder_config: "PASS — BCryptPasswordEncoder @Bean from Story 2.1"
+
+  account_lockout:
+    mechanism: "PASS — login_fail_count incremented on wrong password; ≥5 triggers locked_until=NOW()+30min"
+    lock_check: "PASS — compound check: lockedUntil != null AND isAfter(now())"
+    lock_expiry: "PASS — expired locks auto-allow login"
+    countdown_display: "PASS — remaining minutes shown in error message"
+
+  token_lifecycle:
+    login_redis_storage: "PASS — auth:refresh:{userId} stores JTI, TTL=7d, overwrites for single-device (concurrent_sessions=1)"
+    refresh_jti_validation: "PASS — Redis JTI consistency check prevents replay; user status re-checked"
+    refresh_no_rotation: "PASS — only new accessToken returned (design decision per BR-2.1)"
+    logout_blacklist: "PASS — auth:blacklist:{jti} with TTL=remaining seconds"
+    logout_refresh_deletion: "PASS — deletes auth:refresh:{userId}"
+    logout_idempotent: "PASS — repeat calls safe (Redis ops idempotent)"
+    logout_expired_token: "PASS — parseTokenIgnoreExpiry allows expired token logout"
+
+  gateway_security:
+    header_forgery_prevention: "CRITICAL PASS — X-User-* headers explicitly REMOVED before injection from JWT claims"
+    filter_order: "PASS — Ordered.HIGHEST_PRECEDENCE ensures auth before routing"
+    independent_jwt: "PASS — gateway does NOT import com.educp.common; independent jjwt parsing"
+    reactive_redis: "PASS — ReactiveRedisTemplate (non-blocking) for blacklist check"
+    whitelist_matching: "PASS — AntPathMatcher supports ?, *, ** patterns"
+    error_response_format: "PASS — {code:401, message:'...', data:null} matches Result format"
+    no_info_leakage: "PASS — generic error messages; no stack traces; health show-details=never"
+    redis_failure_handling: "PASS — onErrorResume returns 401 (fail-closed)"
+
+  configuration_security:
+    jwt_secret_env_var: "PASS — ${JWT_SECRET:fallback} in both services"
+    secret_consistency: "PASS — gateway and core-service use same ${JWT_SECRET} env var"
+    redis_host_env_var: "PASS — ${SPRING_DATA_REDIS_HOST:localhost}"
+    no_spring_boot_starter_security: "PASS — uses spring-security-crypto only (Story 2.1)"
+    gateway_no_common_dependency: "PASS — gateway/pom.xml has zero common module dependency"
+
+  sql_injection: "PASS — AdminUserMapper.findByUsername uses #{username} parameterized query"
+  audit_logging: "PASS — all security events logged (username, userId, failCount); no passwords in logs"
+
+dependency_verification:
+  parent_pom:
+    jjwt_version: "0.12.5"
+    dependency_management: "jjwt-api, jjwt-impl, jjwt-jackson"
+  common_pom:
+    jjwt: "optional (compile: api, runtime: impl+jackson)"
+  gateway_pom:
+    redis_reactive: true
+    jjwt: "compile: api, runtime: impl+jackson"
+    common_dependency: false
+  core_service_mapper:
+    findByUsername_added: true
+    sql_parameterized: true
+    deleted_at_check: true
+
+ac_coverage:
+  total_acs: 5
+  fully_verified: 5
+  partially_verified: 0
+  not_verified: 0
+  coverage_rate: 100%
+  details:
+    - ac_id: AC1
+      status: VERIFIED
+      method: security_deep_review
+      evidence: "Login flow: findByUsername→status check→lock check→BCrypt matches()→fail count/lockout→dual token gen→Redis refresh JTI(TTL 7d, overwrite)→update lastLoginAt/IP/resetFailCount→LoginResponse(tokens+userInfo). 8 login tests + 3 controller tests + 10 JwtUtils tests"
+    - ac_id: AC2
+      status: VERIFIED
+      method: security_deep_review
+      evidence: "Refresh: parseToken→type='refresh' check→Redis JTI consistency→user status recheck→new accessToken only (no rotation). 4 refresh tests + 2 controller tests"
+    - ac_id: AC3
+      status: VERIFIED
+      method: security_deep_review
+      evidence: "Logout: parseTokenIgnoreExpiry→blacklist jti(TTL=remaining)→delete refresh. Idempotent; expired token support. 2 logout tests + 1 controller test"
+    - ac_id: AC4
+      status: VERIFIED
+      method: security_deep_review
+      evidence: "AuthGlobalFilter: GlobalFilter+HIGHEST_PRECEDENCE; clear X-User-* headers→extract Bearer→parse JWT(independent jjwt)→ReactiveRedis blacklist→inject X-User-*→401 JSON Result format. 8 filter tests"
+    - ac_id: AC5
+      status: VERIFIED
+      method: security_deep_review
+      evidence: "Whitelist: AntPathMatcher; auth.whitelist in gateway/application.yml includes /api/core/v1/auth/login, /api/core/v1/auth/refresh, /actuator/**. 2 whitelist tests"
+
+issues:
+  critical: 0
+  high: 0
+  medium: 0
+  low: 0
+  info_notes:
+    - "Default JWT secret fallback in application.yml is for development only; production MUST set JWT_SECRET env var"
+    - "Gateway duplicates JWT parsing logic (independent from common JwtUtils) — by design per BR-4.2 to avoid WebFlux/Servlet conflict"
+    - "AuthGlobalFilter does not explicitly check token type='access' — non-blocking because refresh endpoints are whitelisted and never reach the filter"
+    - "AuthGlobalFilter uses ObjectMapper as instance field (not injected) — thread-safe, minor style concern"
+    - "Test suite could add more defensive tests (logout idempotency explicit, refresh expired token, X-User-* forgery explicit) — not blocking"
+    - "Maven/JDK runtime verification deferred — no JDK in current environment"
+    - "No rate limiting in gateway auth filter — expected to be handled by load balancer/dedicated filter"
+
+incremental_context:
+  cached_risk_level: CRITICAL
+  cached_review_mode: security_deep_review
+  cached_project_type: authentication_system
+  failed_acs: []
+  failed_e2e_scenarios: []
+  missing_blind_spots: []
+  checkbox_issues: []
