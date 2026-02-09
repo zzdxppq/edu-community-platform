@@ -1,0 +1,162 @@
+story_id: "1.5"
+story_title: "数据库与缓存基础环境"
+review_date: "2026-02-09"
+reviewer: "JW (QA Engineer)"
+review_round: 1
+
+gate_result: PASS
+next_status: Done
+
+risk_assessment:
+  risk_level: HIGH
+  review_mode: deep_code_review
+  complexity_indicators: 3
+  security_sensitive: true
+  notes: "Database schema is foundational; wrong DDL cascades to all future stories"
+
+project_type:
+  type: web_backend
+  subtype: database_infrastructure
+  test_runner: code_review_plus_sql_validation
+
+automated_tests:
+  verification_method: file_validation_plus_sql_analysis
+  total_checks: 56
+  passed: 56
+  failed: 0
+  pass_rate: 100%
+  categories:
+    file_existence: 20/20
+    deliverable_bindings: 10/10
+    task_checkboxes: 56/56
+
+sql_validation:
+  flyway_naming_convention: PASS
+  version_ordering: PASS
+  ddl_syntax: PASS
+  seed_data_syntax: PASS
+  engine_innodb: 14/14
+  charset_utf8mb4: 14/14
+  collation_unicode_ci: 14/14
+  primary_key_bigint_ai: 14/14
+
+ddl_compliance:
+  method: "column-by-column comparison vs docs/architecture/database-schema.md"
+  tables_spot_checked: 3
+  tables_spot_checked_list:
+    - admin_users
+    - schools
+    - news
+  result: "PERFECT MATCH - all columns, indexes, constraints, comments identical"
+  total_tables: 14
+  table_breakdown:
+    edu_core: 7
+    edu_content: 6
+    edu_file: 1
+
+deep_file_review:
+  new_files_reviewed: 20
+  modified_files_reviewed: 6
+  total: 26
+  categories:
+    ddl_migrations: 14/14
+    seed_migrations: 3/3
+    redis_config: 2/2
+    docker_init_sql: 1/1
+    docker_compose: 1/1
+    parent_pom: 1/1
+    service_pom: 3/3
+    application_yml: 3/3
+
+seed_data_verification:
+  schools:
+    count: 6
+    names_verified: true
+    province_all_henan: true
+    level_all_xiaoxue: true
+    status_all_1: true
+    is_visible_all_1: true
+    sort_order_sequential: true
+  site_settings:
+    count: 4
+    keys: [site_logo, site_name, copyright, friend_links]
+    site_name_value: "河南城乡学校共同体发展平台"
+    friend_links_value: "[]"
+  pages:
+    count: 1
+    page_code: "about"
+    title: "项目介绍"
+
+config_verification:
+  docker_compose:
+    mysql_init_volume: true
+    mysql_healthcheck: true
+    redis_healthcheck: true
+    service_depends_on_healthy: true
+  flyway:
+    version: "10.10.0"
+    enabled_in_all_services: true
+    migration_paths_correct: true
+  datasource:
+    core_service_db: edu_core
+    content_service_db: edu_content
+    file_service_db: edu_file
+    hikaricp_configured: true
+  redis:
+    core_service: true
+    content_service: true
+    file_service: false
+    serializer_key: StringRedisSerializer
+    serializer_value: GenericJackson2JsonRedisSerializer
+  mybatis_plus:
+    all_services_configured: true
+    logic_delete_field: deletedAt
+
+ac_coverage:
+  total_acs: 4
+  fully_verified: 4
+  partially_verified: 0
+  not_verified: 0
+  coverage_rate: 100%
+  details:
+    - ac_id: AC1
+      status: VERIFIED
+      method: deep_code_review
+      evidence: "14 tables DDL match architecture doc exactly; 3 logical databases; docker init creates schemas; HikariCP configured in all 3 services"
+    - ac_id: AC2
+      status: VERIFIED
+      method: code_review
+      evidence: "RedisConfig.java in core/content services; StringRedisSerializer keys + GenericJackson2Json values; Lettuce pool configured; Redis healthcheck in docker-compose"
+    - ac_id: AC3
+      status: VERIFIED
+      method: code_review_plus_validation
+      evidence: "Flyway 10.10.0; V{n}__{desc}.sql naming; sequential versions (core V1-V9, content V1-V7, file V1); enabled in all application.yml; flyway-core + flyway-mysql deps"
+    - ac_id: AC4
+      status: VERIFIED
+      method: data_review
+      evidence: "6 schools (河南省 小学 status=1 is_visible=1 sort_order 1-6); 4 site_settings (logo/name/copyright/friend_links); 1 page (about/项目介绍); seed versions after DDL versions"
+
+blind_spot_verification:
+  total_scenarios: 0
+  note: "No test design created (standard tier, infrastructure-only story)"
+
+issues:
+  critical: 0
+  high: 0
+  medium: 0
+  low: 0
+  info_notes:
+    - "No CREATE TABLE IF NOT EXISTS — standard for Flyway (tracked by schema_history)"
+    - "school_members lacks deleted_at — by design (CASCADE delete from parent school)"
+    - "admin_users.school_id has no FK — intentional loose coupling for superadmin"
+    - "operation_logs.user_id has no FK — standard for audit logs (persist after user deletion)"
+    - "Maven/Docker runtime verification deferred — no JDK/Docker in current environment"
+
+incremental_context:
+  cached_risk_level: HIGH
+  cached_review_mode: deep_code_review
+  cached_project_type: database_infrastructure
+  failed_acs: []
+  failed_e2e_scenarios: []
+  missing_blind_spots: []
+  checkbox_issues: []
