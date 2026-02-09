@@ -1,0 +1,196 @@
+story_id: "2.3"
+story_title: "管理后台登录页面与登录流程"
+review_date: "2026-02-09"
+reviewer: "JW (QA Engineer)"
+review_round: 1
+
+gate_result: PASS
+next_status: Done
+
+risk_assessment:
+  risk_level: HIGH
+  review_mode: deep_code_review_plus_security
+  complexity_indicators: 4
+  security_sensitive: true
+  notes: "security_complex tier; credential submission; token localStorage; Axios 401 auto-refresh interceptor with concurrency handling; cross 2 frontend projects (admin Vue 3 + portal Nuxt 3); consumes Story 2.2 JWT API"
+
+project_type:
+  type: web_frontend
+  subtype: authentication_flow
+  test_runner: code_review_plus_typescript_check
+
+automated_tests:
+  verification_method: file_validation_plus_deep_code_review
+  total_checks: 22
+  passed: 22
+  failed: 0
+  pass_rate: 100%
+  categories:
+    file_existence: 9/9
+    deliverable_bindings: 7/7
+    task_checkboxes: 22/22
+
+deep_file_review:
+  new_files_reviewed: 1
+  modified_files_reviewed: 8
+  total: 9
+  categories:
+    api_module: 1/1
+    stores: 1/1
+    utils_auth: 1/1
+    utils_request: 1/1
+    types: 1/1
+    env_config: 1/1
+    login_page: 1/1
+    portal_layout: 1/1
+    portal_config: 1/1
+
+security_review:
+  token_storage:
+    access_token_location: "localStorage (key: access_token)"
+    refresh_token_location: "localStorage (key: refresh_token)"
+    user_info_location: "localStorage (key: user_info) — JSON serialized"
+    assessment: "PASS — standard SPA token storage pattern; no httpOnly cookie option for SPA architecture"
+
+  credential_handling:
+    password_in_memory: "PASS — reactive form object, not persisted beyond component lifecycle"
+    password_logging: "PASS — no console.log or debug output of credentials"
+    password_cleared_on_unmount: "PASS — Vue reactive scope cleanup"
+    form_not_cleared_on_failure: "PASS — user can retry without re-entering"
+
+  token_refresh_interceptor:
+    independent_axios_instance: "PASS — refreshClient = axios.create() with separate baseURL, no interceptors"
+    no_interceptor_recursion: "PASS — refresh calls bypass service interceptors entirely"
+    retry_flag: "PASS — originalRequest._retry = true prevents infinite retry loop"
+    concurrent_handling: "PASS — isRefreshing flag + failedQueue array + processQueue()"
+    queue_cleanup: "PASS — failedQueue = [] after processQueue execution"
+    refresh_failure_cleanup: "PASS — authStore.logout() clears all tokens + router.push('/login')"
+
+  authorization_header:
+    bearer_token_pattern: "PASS — Authorization: Bearer {token} in request interceptor"
+    no_tokens_in_url: "PASS — tokens never appended to URL parameters"
+    no_tokens_logged: "PASS — no console.log/debug statements in request.ts"
+    refresh_token_in_body: "PASS — sent as POST body { refreshToken }, not in Authorization header"
+
+  error_handling:
+    status_422: "PASS — ElMessage.error(data?.message || '操作失败')"
+    status_401_non_refresh: "PASS — logout + redirect to /login"
+    network_error: "PASS — graceful handling via error.response destructuring"
+    no_stack_trace_exposure: "PASS — generic error messages to user"
+
+  type_safety:
+    login_response_camelcase: "PASS — accessToken (not access_token) matches backend Jackson camelCase"
+    role_integer_comparison: "PASS — isSuperAdmin: role === 1, isSchoolAdmin: role === 2 (not string)"
+    schoolid_nullable: "PASS — schoolId: number | null"
+
+login_page_review:
+  identity_selector:
+    component: "el-radio-group with el-radio-button"
+    options: "超级管理员 (value=1), 学校管理员 (value=2)"
+    default: "value=1 (超级管理员)"
+    sent_to_api: "NO — pure UI, selectedRole not in loginForm"
+  form_validation:
+    username_rule: "required, message: '请输入手机号', trigger: 'change'"
+    password_rule: "required, message: '请输入密码', trigger: 'change'"
+    phone_format_check: "NO — correct per BR-2.4"
+  icons:
+    username_icon: "Phone (from @element-plus/icons-vue)"
+    password_icon: "Lock (from @element-plus/icons-vue)"
+  placeholders:
+    username: "请输入手机号"
+    password: "请输入密码"
+  enter_key: "PASS — @keyup.enter on form element"
+  loading_state: "PASS — :loading on el-button, set in try/finally"
+  style:
+    background: "linear-gradient(135deg, #1a3d6e 0%, #2C5AA0 100%)"
+    card: "background: #ffffff, border-radius, box-shadow"
+
+portal_review:
+  admin_login_link:
+    tag: "<a> (not NuxtLink)"
+    target: "_blank"
+    href: "${adminUrl}/login"
+    class: "nav-link"
+    position: "rightmost in nav bar"
+  runtime_config:
+    key: "runtimeConfig.public.adminUrl"
+    default: "http://localhost:3001"
+    env_override: "NUXT_PUBLIC_ADMIN_URL"
+
+env_config_review:
+  vite_api_base_url: "http://localhost:8080/api"
+  api_suffix_present: true
+  path_concatenation: "/api + /core/v1/auth/login = /api/core/v1/auth/login ✓"
+
+dependency_verification:
+  api_auth_ts:
+    loginApi: "POST /core/v1/auth/login → Promise<LoginResponse>"
+    refreshTokenApi: "POST /core/v1/auth/refresh → Promise<string>"
+    logoutApi: "POST /core/v1/auth/logout → Promise<void>"
+    uses_service_instance: true
+  stores_auth_ts:
+    token_ref: true
+    refresh_token_ref: true
+    user_ref: true
+    set_methods: "setToken, setRefreshToken, setUser"
+    logout_clears_all: true
+    role_integer_comparison: true
+  utils_auth_ts:
+    access_token_key: "access_token"
+    refresh_token_key: "refresh_token"
+    user_info_key: "user_info"
+    json_parse_error_handling: true
+
+ac_coverage:
+  total_acs: 5
+  fully_verified: 5
+  partially_verified: 0
+  not_verified: 0
+  coverage_rate: 100%
+  details:
+    - ac_id: AC1
+      status: VERIFIED
+      method: deep_code_review
+      evidence: "el-radio-group with 超级管理员(1)/学校管理员(2), default=1, pure UI (selectedRole not in loginForm API call), visual styling via el-radio-button"
+
+    - ac_id: AC2
+      status: VERIFIED
+      method: deep_code_review
+      evidence: "Phone icon (not User), placeholder '请输入手机号'/'请输入密码', Lock icon + show-password, el-form :rules required validation, @keyup.enter triggers handleLogin, trigger:'change' auto-clears"
+
+    - ac_id: AC3
+      status: VERIFIED
+      method: deep_code_review_plus_security
+      evidence: "handleLogin: validate→loginApi→setToken+setRefreshToken+setUser→push(redirect||/dashboard). Loading state via try/finally. Token refresh: independent refreshClient, isRefreshing+failedQueue concurrency, _retry prevents infinite loop. localStorage persistence: access_token, refresh_token, user_info keys"
+
+    - ac_id: AC4
+      status: VERIFIED
+      method: deep_code_review
+      evidence: "422 handler: ElMessage.error(data?.message||'操作失败') in request.ts interceptor. Login catch block only restores loading (no form clear). All backend error messages (账号不存在/密码错误/禁用/锁定) pass through to ElMessage"
+
+    - ac_id: AC5
+      status: VERIFIED
+      method: deep_code_review
+      evidence: "<a> tag with target='_blank', class='nav-link', href=${adminUrl}/login, rightmost nav position. nuxt.config.ts runtimeConfig.public.adminUrl default http://localhost:3001, NUXT_PUBLIC_ADMIN_URL env override"
+
+issues:
+  critical: 0
+  high: 0
+  medium: 0
+  low: 0
+  info_notes:
+    - "Binding 2 design deviation: request.ts uses independent refreshClient instead of importing refreshTokenApi from api/auth.ts — intentional to avoid interceptor recursion loop. Documented in story Open Issues"
+    - "stores/auth.ts request.ts reads refreshToken via getRefreshToken() utility instead of authStore.refreshToken — both valid, utility function is more explicit"
+    - "Token stored in localStorage (not httpOnly cookie) — standard SPA pattern, acceptable for admin panel"
+    - "No automated unit tests for frontend — verification via vue-tsc type checking and code review"
+    - "ESLint not configured — noted in T6 checkbox as skipped"
+    - "isFirstLogin stored in Pinia but forced-redirect guard deferred to Story 2.4"
+
+incremental_context:
+  cached_risk_level: HIGH
+  cached_review_mode: deep_code_review_plus_security
+  cached_project_type: authentication_flow
+  failed_acs: []
+  failed_e2e_scenarios: []
+  missing_blind_spots: []
+  checkbox_issues: []
