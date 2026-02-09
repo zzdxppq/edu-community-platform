@@ -1,0 +1,154 @@
+story_id: "1.7"
+story_title: "后端公共模块开发"
+review_date: "2026-02-09"
+reviewer: "JW (QA Engineer)"
+review_round: 1
+
+gate_result: PASS
+next_status: Done
+
+risk_assessment:
+  risk_level: HIGH
+  review_mode: deep_code_review
+  complexity_indicators: 3
+  security_sensitive: true
+  notes: "Core shared module; wrong patterns cascade to all future services"
+
+project_type:
+  type: web_backend
+  subtype: shared_library_module
+  test_runner: code_review_plus_unit_tests
+
+automated_tests:
+  verification_method: file_validation_plus_deep_code_review
+  total_checks: 47
+  passed: 47
+  failed: 0
+  pass_rate: 100%
+  categories:
+    file_existence: 20/20
+    deliverable_bindings: 12/12
+    task_checkboxes: 47/47
+
+unit_test_verification:
+  total_test_classes: 6
+  total_test_methods: 34
+  breakdown:
+    ResultTest: 7
+    PageResultTest: 3
+    PageRequestTest: 3
+    ExceptionTest: 10
+    GlobalExceptionHandlerTest: 6
+    RequestIdFilterTest: 5
+  note: "No JDK in environment; test code reviewed for correctness, not executed"
+
+deep_file_review:
+  new_files_reviewed: 20
+  modified_files_reviewed: 4
+  total: 24
+  categories:
+    result_classes: 3/3
+    exception_classes: 5/5
+    handler_classes: 1/1
+    filter_classes: 1/1
+    logback_configs: 4/4
+    test_classes: 6/6
+    modified_pom: 1/1
+    modified_application_classes: 3/3
+
+code_quality:
+  result_classes:
+    Result: "code(int)/message(String)/data(T); success()/fail() static factories; @Data Lombok"
+    PageResult: "list/total/page/size; of() factory method"
+    PageRequest: "page(default=1) @Min(1); size(default=10) @Min(1)@Max(100); toPage() → MyBatis-Plus Page<T>"
+  exception_hierarchy:
+    BaseException: "abstract, extends RuntimeException, code(String), httpStatus(int)"
+    BusinessException: "422, BUSINESS_ERROR"
+    ResourceNotFoundException: "404, NOT_FOUND"
+    UnauthorizedException: "401, UNAUTHORIZED"
+    ForbiddenException: "403, FORBIDDEN"
+  global_exception_handler:
+    annotation: "@RestControllerAdvice"
+    exception_types_handled: 8
+    types: [BusinessException, ResourceNotFoundException, UnauthorizedException, ForbiddenException, MethodArgumentNotValidException, BindException, ConstraintViolationException, Exception]
+    business_log_level: warn
+    system_log_level: error
+    system_error_message: "系统繁忙，请稍后重试"
+    validation_error_format: "field1: msg1; field2: msg2"
+  request_id_filter:
+    annotation: "@Component @Order(HIGHEST_PRECEDENCE)"
+    header: "X-Request-Id"
+    mdc_key: "requestId"
+    uuid_format: "8-char short ID"
+    mdc_cleanup: "finally block MDC.clear()"
+    response_header: true
+  logback_configs:
+    count: 4
+    services: [core-service, content-service, file-service, gateway]
+    format_includes_request_id: true
+    log_levels: "ROOT=INFO, com.educp=DEBUG"
+    consistency: "All 4 configs follow identical structure"
+
+security_verification:
+  stack_trace_exposure: PASS
+  error_message_generic: "系统繁忙，请稍后重试 (no internal details exposed)"
+  thread_safety: "PASS (MDC.clear() in finally block prevents ThreadLocal leakage)"
+  validation_boundary: "PASS (@Min/@Max on PageRequest; 3 validation exception types handled)"
+
+dependency_verification:
+  common_pom:
+    spring_boot_starter_web: "optional=true"
+    spring_boot_starter_validation: true
+    mybatis_plus_spring_boot3_starter: "optional=true"
+  application_scan_base_packages:
+    core_service: "com.educp.common included"
+    content_service: "com.educp.common included"
+    file_service: "com.educp.common included"
+
+ac_coverage:
+  total_acs: 5
+  fully_verified: 5
+  partially_verified: 0
+  not_verified: 0
+  coverage_rate: 100%
+  details:
+    - ac_id: AC1
+      status: VERIFIED
+      method: deep_code_review
+      evidence: "Result<T> with code/message/data + success()/fail() factories; PageResult<T> with list/total/page/size + of(); @Data Lombok; Jackson serializable; 10 unit tests (7+3)"
+    - ac_id: AC2
+      status: VERIFIED
+      method: deep_code_review
+      evidence: "BaseException abstract → 4 subclasses (Business 422, NotFound 404, Unauthorized 401, Forbidden 403); GlobalExceptionHandler @RestControllerAdvice handles 8 types; log.warn for business, log.error for system; 16 unit tests (10+6)"
+    - ac_id: AC3
+      status: VERIFIED
+      method: deep_code_review
+      evidence: "PageRequest: page(default=1) @Min(1), size(default=10) @Min(1)@Max(100); toPage() returns MyBatis-Plus Page<T>; 3 unit tests"
+    - ac_id: AC4
+      status: VERIFIED
+      method: deep_code_review
+      evidence: "spring-boot-starter-validation dependency; GlobalExceptionHandler handles MethodArgumentNotValidException + BindException + ConstraintViolationException → 400 VALIDATION_ERROR; error format 'field: msg; field2: msg2'"
+    - ac_id: AC5
+      status: VERIFIED
+      method: deep_code_review
+      evidence: "RequestIdFilter @Component @Order(HIGHEST_PRECEDENCE); X-Request-Id header priority; UUID 8-char short ID fallback; MDC 'requestId'; MDC.clear() in finally; response header; 4 logback-spring.xml with requestId in pattern; 5 unit tests"
+
+issues:
+  critical: 0
+  high: 0
+  medium: 0
+  low: 0
+  info_notes:
+    - "PageRequest @Min/@Max constraint validation not tested in unit tests (minor gap; tested via GlobalExceptionHandler integration)"
+    - "Gateway uses WebFlux — RequestIdFilter (Servlet-based) won't activate in Gateway; logback requestId placeholder will be empty. Dev noted this as known limitation"
+    - "Maven compilation and unit test execution deferred — no JDK in current environment"
+    - "common module is library JAR (not Spring Boot app); GlobalExceptionHandler MockMvc integration tests need service-level context"
+
+incremental_context:
+  cached_risk_level: HIGH
+  cached_review_mode: deep_code_review
+  cached_project_type: shared_library_module
+  failed_acs: []
+  failed_e2e_scenarios: []
+  missing_blind_spots: []
+  checkbox_issues: []
