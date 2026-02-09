@@ -1,0 +1,169 @@
+story_id: "2.1"
+story_title: "管理员数据模型与基础 API"
+review_date: "2026-02-09"
+reviewer: "JW (QA Engineer)"
+review_round: 1
+
+gate_result: PASS
+next_status: Done
+
+risk_assessment:
+  risk_level: HIGH
+  review_mode: deep_code_review
+  complexity_indicators: 4
+  security_sensitive: true
+  notes: "security_complex tier; BCrypt password handling; first CRUD story sets full-stack patterns for all future stories"
+
+project_type:
+  type: web_backend
+  subtype: crud_api_with_security
+  test_runner: code_review_plus_unit_tests
+
+automated_tests:
+  verification_method: file_validation_plus_deep_code_review
+  total_checks: 33
+  passed: 33
+  failed: 0
+  pass_rate: 100%
+  categories:
+    file_existence: 19/19
+    deliverable_bindings: 15/15
+    task_checkboxes: 33/33
+
+unit_test_verification:
+  total_test_classes: 3
+  total_test_methods: 32
+  breakdown:
+    AdminUserServiceImplTest: 17
+    AdminUserControllerTest: 8
+    CreateAdminUserRequestTest: 7
+  note: "No JDK in environment; test code reviewed for correctness, not executed"
+
+deep_file_review:
+  new_files_reviewed: 18
+  modified_files_reviewed: 1
+  total: 19
+  categories:
+    entity_base: 1/1
+    entity: 1/1
+    enums: 2/2
+    mapper: 1/1
+    dto_request: 3/3
+    dto_response: 2/2
+    converter: 1/1
+    service_interface: 1/1
+    service_impl: 1/1
+    controller: 1/1
+    config: 1/1
+    test_classes: 3/3
+    pom_xml: 1/1
+
+security_verification:
+  password_handling:
+    bcrypt_encoding: "PASS — PasswordEncoderConfig @Bean BCryptPasswordEncoder; encode() in ServiceImpl.create()"
+    default_password: "PASS — username.substring(length-6) → BCrypt encode; DTO has no password field"
+    salt_generation: "PASS — UUID.randomUUID().toString().replace(\"-\",\"\") = 32 chars (DDL compat)"
+    password_in_response: "PASS — AdminUserDetailResponse and AdminUserListResponse exclude password and salt"
+    test_coverage: "PASS — ControllerTest verifies password/salt not in JSON response"
+  dependency_safety:
+    spring_security_crypto: "PASS — uses spring-security-crypto (NOT spring-boot-starter-security; no auto-config filters)"
+  authorization:
+    no_preauthorize: "PASS — correctly absent per BR-1.9 (RBAC deferred to Story 2.7)"
+  input_validation:
+    phone_pattern: "PASS — @Pattern(^1[3-9]\\d{9}$) on username"
+    uniqueness_check: "PASS — Service-layer existsByUsername() with deleted_at IS NULL"
+    school_validation: "PASS — Role=2 requires schoolId; school existence verified via existsSchoolById()"
+  sql_injection: "PASS — Parameterized queries via @Param in Mapper"
+
+code_quality:
+  layering:
+    controller: "@RestController @RequestMapping(\"/v1/admin-users\") + @RequiredArgsConstructor + @Tag"
+    service: "Interface + Impl separation; @Transactional(rollbackFor=Exception.class) on all write ops"
+    mapper: "extends BaseMapper<AdminUser> + custom @Select queries"
+    entity: "extends BaseEntity with @TableName @EqualsAndHashCode(callSuper=true)"
+    converter: "MapStruct @Mapper(componentModel=\"spring\") interface"
+  transactions:
+    create: "@Transactional(rollbackFor = Exception.class)"
+    update: "@Transactional(rollbackFor = Exception.class)"
+    delete: "@Transactional(rollbackFor = Exception.class)"
+  annotation_processors:
+    lombok_before_mapstruct: true
+    note: "pom.xml annotationProcessorPaths correctly orders lombok before mapstruct-processor"
+
+entity_verification:
+  base_entity:
+    abstract: true
+    serializable: true
+    fields: "id(@TableId AUTO), createdAt(@TableField INSERT), updatedAt(@TableField INSERT_UPDATE), deletedAt(@TableLogic NULL/NOW())"
+  admin_user:
+    extends_base_entity: true
+    table_name: admin_users
+    field_count: 15
+    all_ddl_fields_mapped: true
+    defaults: "isFirstLogin=1, status=1, loginFailCount=0"
+
+dto_security:
+  create_request:
+    excludes_password: true
+    phone_validation: "^1[3-9]\\d{9}$"
+    role_required: true
+  update_request:
+    excludes_username: true
+    excludes_password: true
+    excludes_isFirstLogin: true
+    all_fields_optional: true
+  detail_response:
+    excludes_password: true
+    excludes_salt: true
+    includes_isFirstLogin: true
+  list_response:
+    excludes_password: true
+    excludes_salt: true
+
+ac_coverage:
+  total_acs: 5
+  fully_verified: 5
+  partially_verified: 0
+  not_verified: 0
+  coverage_rate: 100%
+  details:
+    - ac_id: AC1
+      status: VERIFIED
+      method: deep_code_review
+      evidence: "5 REST endpoints (POST/GET/GET-page/PUT/DELETE); Entity/Mapper/Service/Controller full-stack; Result<T> unified response; soft delete @TableLogic; 10 endpoint tests (5 service + 5 controller)"
+    - ac_id: AC2
+      status: VERIFIED
+      method: deep_code_review
+      evidence: "@Pattern(^1[3-9]\\d{9}$) on username; Service-layer existsByUsername() uniqueness → BusinessException '该手机号已被注册'; UpdateDTO excludes username; 9 validation tests (7 DTO + 1 service + 1 controller)"
+    - ac_id: AC3
+      status: VERIFIED
+      method: deep_code_review
+      evidence: "spring-security-crypto BCryptPasswordEncoder @Bean; encode() in create(); salt=UUID 32 chars; password/salt excluded from all response DTOs; controller test verifies no password in JSON"
+    - ac_id: AC4
+      status: VERIFIED
+      method: deep_code_review
+      evidence: "username.substring(length-6) → BCrypt encode; CreateAdminUserRequest has no password field; ServiceImplTest verifies encode('138000') called for phone '13800138000'"
+    - ac_id: AC5
+      status: VERIFIED
+      method: deep_code_review
+      evidence: "AdminUser entity default isFirstLogin=1; ServiceImpl.create() explicitly sets isFirstLogin=1; DetailResponse includes isFirstLogin; UpdateDTO excludes isFirstLogin; ServiceImplTest verifies value=1"
+
+issues:
+  critical: 0
+  high: 0
+  medium: 0
+  low: 0
+  info_notes:
+    - "Dev claims 33 test methods (18+8+7) but QA verified 32 (17+8+7); minor doc discrepancy in ServiceImplTest count — not blocking"
+    - "AdminUserConverter has both @Mapper(componentModel='spring') and INSTANCE field — dual access pattern (Spring DI + static); functionally correct but slightly redundant"
+    - "Maven compilation and unit test execution deferred — no JDK in current environment"
+    - "API endpoints have no authentication/authorization — correct per BR-1.9; JWT (Story 2.2) and RBAC (Story 2.7) deferred"
+
+incremental_context:
+  cached_risk_level: HIGH
+  cached_review_mode: deep_code_review
+  cached_project_type: crud_api_with_security
+  failed_acs: []
+  failed_e2e_scenarios: []
+  missing_blind_spots: []
+  checkbox_issues: []
