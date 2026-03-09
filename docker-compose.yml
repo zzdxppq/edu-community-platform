@@ -6,80 +6,139 @@ services:
     image: mysql:8.0
     container_name: educp-mysql
     ports:
-      - "3306:3306"
+      - "${MYSQL_PORT:-3306}:3306"
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root123}
-      MYSQL_DATABASE: educp
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=caching_sha2_password
     volumes:
       - mysql-data:/var/lib/mysql
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${MYSQL_ROOT_PASSWORD:-root123}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   redis:
     image: redis:7
     container_name: educp-redis
     ports:
-      - "6379:6379"
+      - "${REDIS_PORT:-6379}:6379"
     volumes:
       - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   nacos:
     image: nacos/nacos-server:v2.3.2
     container_name: educp-nacos
     ports:
-      - "8848:8848"
+      - "${NACOS_PORT:-8848}:8848"
       - "9848:9848"
     environment:
       MODE: standalone
+    volumes:
+      - nacos-data:/home/nacos/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8848/nacos/actuator/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
 
   # ===== 后端服务 =====
   gateway:
-    build: ./backend/gateway
+    build:
+      context: ./backend
+      dockerfile: gateway/Dockerfile
     container_name: educp-gateway
     ports:
-      - "8080:8080"
+      - "${GATEWAY_PORT:-8080}:8080"
+    environment:
+      NACOS_ADDR: nacos:8848
     depends_on:
-      - nacos
+      nacos:
+        condition: service_healthy
 
   core-service:
-    build: ./backend/core-service
+    build:
+      context: ./backend
+      dockerfile: core-service/Dockerfile
     container_name: educp-core-service
     ports:
-      - "8081:8081"
+      - "${CORE_SERVICE_PORT:-8081}:8081"
+    environment:
+      NACOS_ADDR: nacos:8848
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/edu_core?useUnicode=true&characterEncoding=utf8mb4&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATA_REDIS_HOST: redis
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root123}
     depends_on:
-      - mysql
-      - redis
-      - nacos
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
 
   content-service:
-    build: ./backend/content-service
+    build:
+      context: ./backend
+      dockerfile: content-service/Dockerfile
     container_name: educp-content-service
     ports:
-      - "8082:8082"
+      - "${CONTENT_SERVICE_PORT:-8082}:8082"
+    environment:
+      NACOS_ADDR: nacos:8848
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/edu_content?useUnicode=true&characterEncoding=utf8mb4&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATA_REDIS_HOST: redis
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root123}
     depends_on:
-      - mysql
-      - redis
-      - nacos
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
 
   file-service:
-    build: ./backend/file-service
+    build:
+      context: ./backend
+      dockerfile: file-service/Dockerfile
     container_name: educp-file-service
     ports:
-      - "8083:8083"
+      - "${FILE_SERVICE_PORT:-8083}:8083"
+    environment:
+      NACOS_ADDR: nacos:8848
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/edu_file?useUnicode=true&characterEncoding=utf8mb4&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root123}
     depends_on:
-      - nacos
+      mysql:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
 
   # ===== 前端服务 =====
   portal:
     build: ./frontend/portal
     container_name: educp-portal
     ports:
-      - "3000:3000"
+      - "${PORTAL_PORT:-3000}:3000"
+    depends_on:
+      - gateway
 
   admin:
     build: ./frontend/admin
     container_name: educp-admin
     ports:
-      - "3001:3001"
+      - "${ADMIN_PORT:-3001}:3001"
+    depends_on:
+      - gateway
 
 volumes:
   mysql-data:
   redis-data:
+  nacos-data:

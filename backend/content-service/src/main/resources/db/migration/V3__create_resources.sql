@@ -1,0 +1,26 @@
+CREATE TABLE resources (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '主键ID',
+    title VARCHAR(200) NOT NULL COMMENT '标题',
+    category TINYINT NOT NULL COMMENT '分类: 1-省外经验, 2-省内经验, 3-研究文献',
+    description TEXT NULL COMMENT '资源描述(富文本)',
+    source VARCHAR(200) NULL COMMENT '来源(手动输入)',
+    file_id BIGINT NULL COMMENT '文件ID',
+    file_url VARCHAR(500) NULL COMMENT '文件地址',
+    external_link VARCHAR(500) NULL COMMENT '外部链接',
+    file_size BIGINT NULL COMMENT '文件大小(字节)',
+    file_type VARCHAR(20) NULL COMMENT '文件类型',
+    download_count INT NOT NULL DEFAULT 0 COMMENT '下载次数',
+    is_top TINYINT NOT NULL DEFAULT 0 COMMENT '是否置顶: 0-否, 1-是',
+    status TINYINT NOT NULL DEFAULT 1 COMMENT '状态: 0-草稿, 1-已发布',
+    school_id BIGINT NULL COMMENT '上传学校ID(用于学校管理员删除权限判断)',
+    created_by BIGINT NOT NULL COMMENT '创建人ID',
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    deleted_at DATETIME NULL COMMENT '删除时间(软删除)',
+
+    INDEX idx_category (category),
+    INDEX idx_status (status),
+    INDEX idx_is_top (is_top),
+    INDEX idx_school_id (school_id),
+    FULLTEXT INDEX ft_title (title) WITH PARSER ngram
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='资源共享表';

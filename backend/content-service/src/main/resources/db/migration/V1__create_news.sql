@@ -1,0 +1,27 @@
+CREATE TABLE news (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '主键ID',
+    title VARCHAR(200) NOT NULL COMMENT '标题',
+    content LONGTEXT NOT NULL COMMENT '内容(富文本)',
+    cover_image VARCHAR(255) NULL COMMENT '封面图',
+    source_type TINYINT NOT NULL DEFAULT 1 COMMENT '来源类型: 1-平台, 2-学校',
+    source_school_id BIGINT NULL COMMENT '来源学校ID',
+    attachments JSON NULL COMMENT '附件列表',
+    external_link VARCHAR(500) NULL COMMENT '外部链接',
+    view_count INT NOT NULL DEFAULT 0 COMMENT '浏览次数',
+    status TINYINT NOT NULL DEFAULT 0 COMMENT '状态: 0-草稿, 1-已发布, 2-已删除',
+    is_top TINYINT NOT NULL DEFAULT 0 COMMENT '是否置顶: 0-否, 1-是',
+    publish_time DATETIME NULL COMMENT '发布时间',
+    created_by BIGINT NOT NULL COMMENT '创建人ID',
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    deleted_at DATETIME NULL COMMENT '删除时间(软删除)',
+    deleted_by BIGINT NULL COMMENT '删除人ID',
+    delete_reason VARCHAR(255) NULL COMMENT '删除原因',
+
+    INDEX idx_source_type (source_type),
+    INDEX idx_source_school_id (source_school_id),
+    INDEX idx_status (status),
+    INDEX idx_publish_time (publish_time),
+    INDEX idx_is_top (is_top),
+    FULLTEXT INDEX ft_title_content (title, content) WITH PARSER ngram
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='新闻资讯表(导航不显示,首页入口访问)';

@@ -1,0 +1,33 @@
+epic_id: 6
+title: 项目介绍模块
+description: >
+  实现项目介绍的后台编辑和前端展示（单页内容形式）
+target_platform: fullstack
+stories:
+
+  - story_id: "6.1"
+    title: 项目介绍后台编辑页面
+    description: >
+      超级管理员编辑项目介绍：项目名称（可编辑）+ 项目内容（富文本编辑器），
+      单页形式，非列表
+    acceptance_criteria:
+      - 页面包含项目名称输入框和富文本编辑器
+      - 项目名称可编辑维护
+      - 内容使用统一富文本编辑器
+      - 保存后前端立即可见更新
+      - 支持 SEO 字段设置（标题/关键词/描述）
+    estimated_complexity: S
+    priority: 高
+
+  - story_id: "6.2"
+    title: 项目介绍前端展示页
+    description: >
+      前端展示项目名称和项目内容（富文本渲染），
+      页面路由 /about
+    acceptance_criteria:
+      - 页面正确显示项目名称
+      - 富文本内容（图文结合）渲染正常
+      - SEO meta 信息正确设置
+      - 页面加载时间 ≤ 3秒
+    estimated_complexity: S
+    priority: 中

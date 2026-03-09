@@ -1,0 +1,36 @@
+epic_id: 10
+title: 全站搜索
+description: >
+  实现全站跨模块搜索功能，包括搜索后端服务和前端搜索结果页面
+target_platform: fullstack
+stories:
+
+  - story_id: "10.1"
+    title: 搜索后端服务
+    description: >
+      实现跨模块搜索 API：搜索范围包括政策文件标题、示范校名称、
+      校共同体活动标题、资源标题；支持按模块筛选和分页
+    acceptance_criteria:
+      - 搜索接口支持关键词查询
+      - 搜索范围：政策文件标题、示范校名称、活动标题、资源标题
+      - 搜索结果按相关度排序
+      - 支持按模块筛选（政策文件/示范校/活动/资源）
+      - 支持分页
+      - 搜索性能 ≤ 500ms
+    estimated_complexity: M
+    priority: 高
+
+  - story_id: "10.2"
+    title: 搜索前端页面
+    description: >
+      首页导航栏搜索框集成，搜索结果页分类展示
+      （标题/所属模块/发布时间），支持模块筛选和空结果处理
+    acceptance_criteria:
+      - 导航栏右侧搜索框输入关键词后跳转搜索结果页
+      - 搜索结果分类展示（标题、所属模块、发布时间）
+      - 点击结果跳转对应详情页
+      - 支持按模块下拉筛选
+      - 支持分页
+      - 无结果时显示"未找到相关内容，请尝试其他关键词"
+    estimated_complexity: M
+    priority: 中

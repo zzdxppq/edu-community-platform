@@ -1,0 +1,26 @@
+CREATE TABLE admin_users (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '主键ID',
+    username VARCHAR(50) NOT NULL UNIQUE COMMENT '账号(必须为11位手机号)',
+    password VARCHAR(255) NOT NULL COMMENT '密码(BCrypt加密)',
+    salt VARCHAR(32) NOT NULL COMMENT '密码盐值',
+    role TINYINT NOT NULL DEFAULT 2 COMMENT '角色: 1-超级管理员, 2-学校管理员',
+    school_id BIGINT NULL COMMENT '关联学校ID(学校管理员必填)',
+    phone VARCHAR(20) NULL COMMENT '联系电话',
+    email VARCHAR(100) NULL COMMENT '邮箱',
+    avatar VARCHAR(255) NULL COMMENT '头像URL',
+    is_first_login TINYINT NOT NULL DEFAULT 1 COMMENT '是否首次登录: 0-否, 1-是(需强制改密)',
+    status TINYINT NOT NULL DEFAULT 1 COMMENT '状态: 0-禁用, 1-启用',
+    last_login_at DATETIME NULL COMMENT '最后登录时间',
+    last_login_ip VARCHAR(45) NULL COMMENT '最后登录IP',
+    login_fail_count INT NOT NULL DEFAULT 0 COMMENT '连续登录失败次数',
+    locked_until DATETIME NULL COMMENT '锁定截止时间',
+    created_by BIGINT NULL COMMENT '创建人ID',
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    deleted_at DATETIME NULL COMMENT '删除时间(软删除)',
+
+    INDEX idx_username (username),
+    INDEX idx_school_id (school_id),
+    INDEX idx_role (role),
+    INDEX idx_status (status)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='管理员表';

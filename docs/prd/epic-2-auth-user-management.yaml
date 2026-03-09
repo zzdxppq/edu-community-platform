@@ -1,0 +1,119 @@
+epic_id: 2
+title: 认证与用户管理系统
+description: >
+  实现 JWT 认证体系、管理后台登录、RBAC 权限控制、
+  用户管理及越权登录功能
+target_platform: fullstack
+stories:
+
+  - story_id: "2.1"
+    title: 管理员数据模型与基础 API
+    description: >
+      实现管理员账号表 CRUD API（参见 7.1.8），包含手机号唯一校验、
+      BCrypt 密码加密、账号状态管理
+    acceptance_criteria:
+      - 管理员表 CRUD 接口完整（新增/查询/更新/删除）
+      - 账号字段校验：手机号11位数字格式
+      - 密码 BCrypt 加密存储
+      - 新增时默认密码为手机号后6位
+      - is_first_login 默认为 1（首次登录标记）
+    estimated_complexity: S
+    priority: 高
+
+  - story_id: "2.2"
+    title: JWT 认证体系实现
+    description: >
+      实现 Access Token（15min）+ Refresh Token（7天）双令牌机制，
+      Redis Token 黑名单，网关层统一鉴权过滤器
+    acceptance_criteria:
+      - 登录成功返回 accessToken 和 refreshToken
+      - Access Token 过期后可通过 Refresh Token 无感刷新
+      - 登出时 Token 加入 Redis 黑名单
+      - API Gateway 过滤器拦截无效/过期 Token
+      - 白名单路径（登录接口、前端公开接口）可免鉴权访问
+    estimated_complexity: L
+    priority: 高
+
+  - story_id: "2.3"
+    title: 管理后台登录页面与登录流程
+    description: >
+      开发独立管理后台登录页面，提供身份选择（超级管理员/学校管理员），
+      登录账号输入框提示"请输入手机号"，密码输入框提示"请输入密码"
+    acceptance_criteria:
+      - 登录页包含身份选择（超级管理员/学校管理员）
+      - 输入框 placeholder 正确（"请输入手机号"/"请输入密码"）
+      - 登录成功后根据角色跳转对应后台（超管/学校）
+      - 登录失败显示具体错误信息（账号不存在/密码错误/账号已禁用）
+      - 前端官网登录入口提供"管理员登录"链接跳转此页面
+    estimated_complexity: M
+    priority: 高
+
+  - story_id: "2.4"
+    title: 首次登录强制修改密码
+    description: >
+      首次登录后强制跳转修改密码页面，密码必须满足 8-20位，
+      包含大写字母、小写字母和数字，修改后方可进入后台
+    acceptance_criteria:
+      - 首次登录（is_first_login=1）自动跳转修改密码页面
+      - 密码校验规则：8-20位，必须包含大写字母+小写字母+数字
+      - 新密码不能与原密码相同
+      - 修改成功后 is_first_login 置为 0
+      - 未完成改密无法访问后台其他页面（路由守卫拦截）
+    estimated_complexity: S
+    priority: 高
+
+  - story_id: "2.5"
+    title: 学校管理员账号管理
+    description: >
+      超级管理员可查看、新增、编辑学校管理员；支持按账号（手机号）搜索、
+      按所属学校下拉筛选；新增时账号必须为手机号，无姓名字段
+    acceptance_criteria:
+      - 管理员列表分页展示，显示账号（手机号）、所属学校、状态、最后登录时间
+      - 支持按手机号模糊搜索
+      - 支持按所属学校下拉筛选
+      - 新增管理员：手机号格式校验、必须关联示范校、无姓名字段
+      - 默认密码为手机号后6位（不在页面展示）
+    estimated_complexity: M
+    priority: 中
+
+  - story_id: "2.6"
+    title: 账号管控功能
+    description: >
+      超级管理员可禁用/启用学校管理员账号，可重置密码
+      （重置为手机号后6位并标记需首次改密）
+    acceptance_criteria:
+      - 禁用后该账号无法登录，已登录的 Token 立即失效
+      - 启用后账号恢复正常登录能力
+      - 重置密码后密码恢复为手机号后6位
+      - 重置密码后 is_first_login 标记为 1
+      - 操作需二次确认弹框
+    estimated_complexity: S
+    priority: 中
+
+  - story_id: "2.7"
+    title: RBAC 权限控制与路由守卫
+    description: >
+      实现基于角色的权限控制（super_admin / school_admin），
+      前端路由守卫根据角色动态生成菜单和可访问路由
+    acceptance_criteria:
+      - super_admin 可访问超管后台所有功能
+      - school_admin 仅可访问学校后台功能（数据隔离到本校）
+      - 前端侧边栏菜单根据角色动态渲染
+      - 后端接口层权限校验（注解方式）
+      - 越权访问返回 403 并重定向
+    estimated_complexity: M
+    priority: 中
+
+  - story_id: "2.8"
+    title: 越权登录功能
+    description: >
+      超级管理员可在示范校列表点击"登录后台"按钮，
+      一键模拟登录该校管理后台（用于运维排查），操作记录日志
+    acceptance_criteria:
+      - 示范校列表每行提供"登录后台"操作按钮
+      - 点击后生成该校管理员临时 Token 并跳转学校后台
+      - 越权登录操作写入操作日志（记录操作人、目标学校、IP、时间）
+      - 学校后台页面显示"越权登录"标识（区别于正常登录）
+      - 越权登录 Token 有效期缩短（建议30分钟）
+    estimated_complexity: M
+    priority: 低

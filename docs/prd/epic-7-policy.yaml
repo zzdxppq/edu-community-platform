@@ -1,0 +1,65 @@
+epic_id: 7
+title: 政策文件模块
+description: >
+  实现政策文件全流程：后台发布管理（含分类、发文机构），
+  前端分类浏览、详情查看、PDF 下载与打印
+target_platform: fullstack
+stories:
+
+  - story_id: "7.1"
+    title: 政策文件数据模型与后端 API
+    description: >
+      实现政策文件表 CRUD API（参见 7.1.5），支持分类（国家政策/省级政策）、
+      状态筛选、置顶、发文机构字段、三种发布方式
+    acceptance_criteria:
+      - CRUD 接口完整
+      - 支持按分类（国家政策/省级政策）筛选
+      - 支持按发布状态筛选（已发布/草稿/全部）
+      - 发文机构字段非必填
+      - 详情页接口不返回文号字段（后台存储但前端不展示）
+      - 置顶排序逻辑正确
+    estimated_complexity: S
+    priority: 高
+
+  - story_id: "7.2"
+    title: 政策文件后台管理页面
+    description: >
+      超级管理员发布/编辑/删除政策文件；支持分类选择、状态筛选、
+      置顶设置、发文机构录入、三种发布方式
+    acceptance_criteria:
+      - 列表分页展示（标题/分类/发文机构/状态/置顶/发布时间）
+      - 支持按分类和发布状态联合筛选
+      - 发布表单包含发文机构输入框（非必填）
+      - 使用统一内容发布组件（三种模式）
+      - 支持定时发布
+    estimated_complexity: M
+    priority: 高
+
+  - story_id: "7.3"
+    title: 政策文件前端展示
+    description: >
+      前端政策文件页面：左侧分类导航（国家政策/省级政策），
+      右侧列表（分页+置顶优先）、详情页（不展示文号）
+    acceptance_criteria:
+      - 左侧分类导航栏，点击可快速切换分类
+      - 列表显示标题、发布时间、所属分类、发文机构
+      - 按发布时间倒序，置顶优先
+      - 详情页展示标题、发布时间、正文内容（不展示文号）
+      - 外部链接类型直接跳转
+      - 支持分页
+    estimated_complexity: M
+    priority: 中
+
+  - story_id: "7.4"
+    title: 政策文件 PDF 下载与在线打印
+    description: >
+      政策文件详情页支持 PDF 下载和在线打印，
+      下载/打印按钮固定在页面顶部
+    acceptance_criteria:
+      - 详情页顶部固定显示"下载PDF"和"打印"按钮
+      - PDF 下载功能正常（支持已上传的 PDF 和富文本转 PDF）
+      - 在线打印功能正常（调用浏览器打印）
+      - 打印样式优化（隐藏导航、页脚等无关元素）
+      - 下载首字节响应时间 ≤ 3秒
+    estimated_complexity: M
+    priority: 低

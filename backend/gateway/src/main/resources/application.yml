@@ -1,4 +1,10 @@
 spring:
+  data:
+    redis:
+      host: ${SPRING_DATA_REDIS_HOST:localhost}
+      port: 6379
+      database: 0
+      timeout: 3000ms
   cloud:
     gateway:
       routes:
@@ -20,6 +26,16 @@ spring:
             - Path=/api/file/**
           filters:
             - StripPrefix=2
+
+jwt:
+  secret: ${JWT_SECRET:edu-community-platform-jwt-secret-key-at-least-32-chars}
+
+auth:
+  whitelist:
+    - /api/core/v1/auth/login
+    - /api/core/v1/auth/refresh
+    - /api/content/v1/portal/**
+    - /actuator/**
 
 management:
   endpoints:

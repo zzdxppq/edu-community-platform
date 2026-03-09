@@ -1,0 +1,27 @@
+CREATE TABLE policies (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '主键ID',
+    title VARCHAR(200) NOT NULL COMMENT '标题',
+    doc_number VARCHAR(100) NULL COMMENT '文号(后台存储,前端详情页不展示)',
+    issuing_authority VARCHAR(200) NULL COMMENT '发文机构(非必填)',
+    category TINYINT NOT NULL COMMENT '分类: 1-国家政策, 2-省级政策',
+    content LONGTEXT NOT NULL COMMENT '内容(富文本)',
+    pdf_url VARCHAR(500) NULL COMMENT 'PDF文件地址',
+    external_link VARCHAR(500) NULL COMMENT '外部链接',
+    interpretation TEXT NULL COMMENT '解读材料',
+    publish_date DATE NOT NULL COMMENT '发布日期',
+    is_top TINYINT NOT NULL DEFAULT 0 COMMENT '是否置顶: 0-否, 1-是',
+    status TINYINT NOT NULL DEFAULT 1 COMMENT '状态: 0-草稿, 1-已发布',
+    sort_order INT NOT NULL DEFAULT 0 COMMENT '排序',
+    view_count INT NOT NULL DEFAULT 0 COMMENT '浏览次数',
+    download_count INT NOT NULL DEFAULT 0 COMMENT '下载次数',
+    created_by BIGINT NOT NULL COMMENT '创建人ID',
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    deleted_at DATETIME NULL COMMENT '删除时间(软删除)',
+
+    INDEX idx_category (category),
+    INDEX idx_publish_date (publish_date),
+    INDEX idx_status (status),
+    INDEX idx_is_top (is_top),
+    FULLTEXT INDEX ft_title (title) WITH PARSER ngram
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='政策文件表';

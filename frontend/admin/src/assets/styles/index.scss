@@ -1,0 +1,32 @@
+@use './variables' as *;
+@use './element';
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: $font-primary;
+  font-size: 14px;
+  color: $neutral-800;
+  background-color: #f5f7fa;
+}
+
+#app {
+  height: 100%;
+}
+
+a {
+  color: $accent-600;
+  text-decoration: none;
+}
+
+a:hover {
+  color: $primary-700;
+}

@@ -1,0 +1,94 @@
+epic_id: 11
+title: 系统设置与运维
+description: >
+  实现超管工作台、基础配置、权限设置、敏感词管理、
+  数据备份及内容管控功能
+target_platform: fullstack
+stories:
+
+  - story_id: "11.1"
+    title: 超管工作台
+    description: >
+      超级管理后台工作台：统计卡片（示范校数量/管理员数量/本月活动数/本月月报数）
+      和快捷操作入口（添加管理员/发布政策/发布资源/发布新闻）
+    acceptance_criteria:
+      - 统计卡片实时显示四项数据
+      - 快捷操作按钮跳转到对应功能页面
+      - 发布新闻/政策的快捷入口直接打开发布表单
+      - 数据统计接口响应 ≤ 500ms
+      - 页面为登录后默认首页
+    estimated_complexity: M
+    priority: 中
+
+  - story_id: "11.2"
+    title: 基础配置管理
+    description: >
+      超级管理员管理网站基础配置：网站Logo（支持上传维护）、
+      网站名称、版权信息、友情链接
+    acceptance_criteria:
+      - Logo 支持图片上传和预览
+      - 网站名称、版权信息为文本编辑
+      - 友情链接支持 CRUD（名称+URL+排序）
+      - 保存后前端页脚/导航栏实时更新
+      - 配置数据有 Redis 缓存
+    estimated_complexity: M
+    priority: 高
+
+  - story_id: "11.3"
+    title: 权限设置
+    description: >
+      超级管理员配置管理员权限，支持新增子账号
+      （超管角色下的子账号，非学校管理员）
+    acceptance_criteria:
+      - 支持为超管角色创建子账号
+      - 子账号可配置可访问的功能模块
+      - 权限变更后立即生效
+      - 子账号列表管理（查看/编辑/禁用）
+    estimated_complexity: M
+    priority: 低
+
+  - story_id: "11.4"
+    title: 敏感词管理
+    description: >
+      超级管理员维护敏感词库：支持批量导入、手动添加、删除；
+      内容发布时自动检测敏感词并提示修改
+    acceptance_criteria:
+      - 敏感词列表分页展示，支持搜索
+      - 支持手动逐条添加
+      - 支持批量导入（TXT/CSV 文件）
+      - 支持单条删除和批量删除
+      - 发布内容时自动检测敏感词
+      - 命中敏感词时前端提示具体词汇，阻止发布直到修改
+    estimated_complexity: M
+    priority: 中
+
+  - story_id: "11.5"
+    title: 数据备份功能
+    description: >
+      实现自动每日备份（凌晨2:00-4:00）和手动备份；
+      备份内容含数据库和上传文件；保留30天，超期自动清理
+    acceptance_criteria:
+      - 定时任务每日凌晨 2:00-4:00 执行全量备份
+      - 备份包含数据库数据和上传文件（图片/附件）
+      - 备份文件存储于独立服务器/云存储
+      - 保留最近30天备份，超期自动清理
+      - 支持手动触发备份（每日限1次）
+      - 后台可查看备份历史和状态
+      - 备份失败时告警通知
+    estimated_complexity: M
+    priority: 低
+
+  - story_id: "11.6"
+    title: 内容管控
+    description: >
+      超级管理员查看全平台内容（含学校发布的活动），
+      可直接删除/编辑，保留删除记录
+    acceptance_criteria:
+      - 按模块分类展示全平台内容（新闻/政策/资源/活动/月报）
+      - 支持按模块、学校、时间筛选
+      - 可直接编辑或删除任意内容
+      - 删除需二次确认
+      - 保留删除记录（删除人、时间、原内容摘要）
+      - 删除后前端立即不可见
+    estimated_complexity: M
+    priority: 中
