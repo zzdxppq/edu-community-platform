@@ -38,12 +38,14 @@
 - 安全等级：等保三级
 
 架构要求：
-1. 微服务拆分：core-service（认证+用户+学校）、content-service（内容+搜索）、file-service（文件管理）
+1. 微服务拆分：core-service（认证+用户+学校）、content-service（内容+搜索）、file-service（文件管理）、knowledge-service（二期：知识库+智能体）
 2. API 网关：Spring Cloud Gateway，统一认证、路由、限流
-3. 认证方案：JWT + Redis Token 黑名单，支持首次登录强制改密、越权登录
+3. 认证方案：JWT + Redis Token 黑名单，支持首次登录强制改密、越权登录；二期需支持普通用户 Token 体系
 4. 文件存储抽象层：策略模式，支持 COS/MinIO 动态切换
 5. 全站搜索：MySQL FULLTEXT 索引（一期），预留 Elasticsearch 扩展
 6. 部署架构：Docker Compose（开发/测试）、Docker + K8s（生产）
+7. 二期知识库架构：向量数据库选型（Milvus/Weaviate/Chroma 待评估）、通义千问 Embedding + Chat API 集成、RAG 检索管道设计
+8. 二期智能体架构：SSE/WebSocket 流式输出、对话上下文管理、推荐引擎（规则+协同混合推荐）、异步消息推送
 
 请生成：
 - 完整的系统架构文档（含服务拓扑、API 契约、数据库设计）

@@ -1,0 +1,157 @@
+schema: 1
+story: "4.5"
+story_title: "内容发布三模式框架"
+gate: PASS
+status_reason: "Story 4.5 全部 69 项自动化测试通过（ContentPublisher 53 + AttachmentUpload 16），6 个 AC 100% 覆盖且可追溯。代码质量高，架构评审 9.5/10。任务复选框未勾选为流程疏忽，不影响交付质量。"
+reviewer: "宋慈 (Test Architect)"
+updated: "2026-03-10T00:00:00Z"
+
+review_round: 1
+review_mode_type: full
+issues_from_previous_round: 0
+issues_resolved: 0
+improvement_percentage: 0
+
+incremental_context:
+  cached_risk_level: "MEDIUM"
+  cached_review_mode: "automated_plus_spot_check"
+  cached_project_type: "web_frontend"
+  failed_acs: []
+  failed_e2e_scenarios: []
+  missing_blind_spots: []
+  checkbox_issues: []
+
+waiver: { active: false }
+architecture_concern: false
+escalation_reason: ""
+
+top_issues:
+  - id: "PROC-001"
+    severity: medium
+    finding: "Tasks/Subtasks 所有复选框均未勾选（0/20+），Dev 完成实现但遗忘更新任务状态"
+    suggested_action: "Dev 在后续 Story 中严格执行 TDD 流程：完成一项勾选一项"
+  - id: "PROC-002"
+    severity: low
+    finding: "Dev Log 文件缺失（docs/dev/logs/4.5-dev-log.md 不存在）"
+    suggested_action: "Dev 补充 dev log 或在后续 Story 中确保完成 Dev Log"
+  - id: "INFO-001"
+    severity: low
+    finding: "RichTextEditor 为 stub 组件（Story 4.3 未交付），接口契约已确认兼容"
+    suggested_action: "Story 4.3 交付后替换 stub 即可，当前不阻塞"
+
+test_results:
+  automated:
+    executed: true
+    passed: true
+    total: 69
+    passed_count: 69
+    failed_count: 0
+    skipped_count: 0
+    pass_rate: 100
+    coverage_percentage: 100
+    failed_tests: []
+  e2e:
+    executed: false
+    passed: true
+    skipped: true
+    skip_reason: "MEDIUM 风险 — 自动化测试已充分覆盖，组件为独立 UI 组件无路由依赖"
+    scenarios_tested: 0
+    scenarios_passed: 0
+    scenarios_failed: 0
+    console_errors_found: false
+    network_errors_found: false
+
+evidence:
+  directory: ""
+  issues: []
+
+risk_assessment:
+  risk_level: MEDIUM
+  review_mode: automated_plus_spot_check
+  complexity_count: 2
+  security_sensitive: false
+  dev_gate_score: 95
+
+risk_summary:
+  totals: { critical: 0, high: 0, medium: 1, low: 2 }
+  recommendations:
+    must_fix: []
+    monitor:
+      - "Dev 流程纪律：任务复选框更新"
+      - "Dev Log 补充"
+
+# AC Coverage Verification
+ac_coverage:
+  total_acs: 6
+  verified: 6
+  coverage_rate: 100
+  matrix:
+    - ac_id: AC1
+      description: "发布方式切换"
+      code_verified: true
+      test_verified: true
+      status: VERIFIED
+      test_count: 7
+    - ac_id: AC2
+      description: "图文编辑模式"
+      code_verified: true
+      test_verified: true
+      status: VERIFIED
+      test_count: 6
+    - ac_id: AC3
+      description: "附件上传模式"
+      code_verified: true
+      test_verified: true
+      status: VERIFIED
+      test_count: 12
+    - ac_id: AC4
+      description: "外部链接模式"
+      code_verified: true
+      test_verified: true
+      status: VERIFIED
+      test_count: 5
+    - ac_id: AC5
+      description: "外部链接协议限制"
+      code_verified: true
+      test_verified: true
+      status: VERIFIED
+      test_count: 5
+    - ac_id: AC6
+      description: "组件可复用性"
+      code_verified: true
+      test_verified: true
+      status: VERIFIED
+      test_count: 12
+
+# Deliverable Binding Verification
+binding_verification:
+  result: PASS
+  total_bindings: 5
+  verified: 5
+  failed: 0
+  details:
+    - deliverable: "frontend/admin/src/types/content.ts"
+      consumer: "frontend/admin/src/components/common/ContentPublisher.vue"
+      binding_type: import_usage
+      status: PASS
+      evidence: "Line 106/112: from '@/types/content'"
+    - deliverable: "frontend/admin/src/components/common/ContentPublisher.vue"
+      consumer: "frontend/admin/src/components/common/__tests__/ContentPublisher.test.ts"
+      binding_type: import_usage
+      status: PASS
+      evidence: "Line 14: import ContentPublisher from '../ContentPublisher.vue'"
+    - deliverable: "frontend/admin/src/components/common/AttachmentUpload.vue"
+      consumer: "frontend/admin/src/components/common/ContentPublisher.vue"
+      binding_type: import_usage
+      status: PASS
+      evidence: "Line 101: import AttachmentUpload from './AttachmentUpload.vue'"
+    - deliverable: "frontend/admin/src/components/common/__tests__/ContentPublisher.test.ts"
+      consumer: vitest
+      binding_type: cli_register
+      status: PASS
+      evidence: "AC1-AC6 describe blocks present"
+    - deliverable: "frontend/admin/src/components/common/__tests__/AttachmentUpload.test.ts"
+      consumer: vitest
+      binding_type: cli_register
+      status: PASS
+      evidence: "describe('AttachmentUpload: ...') blocks present"

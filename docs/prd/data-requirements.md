@@ -250,4 +250,163 @@
 | 媒体 | 新闻媒体从业人员 |
 | 县级教育行政部门工作人员 | 教育局等部门人员 |
 
+## 7.3 二期数据模型
+
+### 7.3.1 普通用户
+
+| 字段名 | 字段类型 | 必填 | 说明 |
+|--------|----------|------|------|
+| id | bigint | 是 | 主键 |
+| phone | varchar(20) | 否 | 手机号（与email至少填一项） |
+| email | varchar(100) | 否 | 邮箱（与phone至少填一项） |
+| password | varchar(255) | 是 | 密码（加密存储） |
+| nickname | varchar(50) | 否 | 昵称 |
+| identity_tag | varchar(50) | 是 | 身份标签（教师/教研员/学校管理者/教育研究者/家长/媒体/县级教育行政部门工作人员），不可修改 |
+| avatar | varchar(500) | 否 | 头像URL |
+| ai_authorized | tinyint | 是 | 是否授权使用智能体（0-否/1-是） |
+| ai_daily_quota | int | 是 | 智能体每日使用额度（默认10次） |
+| invite_code | varchar(50) | 否 | 激活使用的邀请码 |
+| status | int | 是 | 状态（1-正常/0-禁用） |
+| last_login_at | datetime | 否 | 最后登录时间 |
+| created_at | datetime | 是 | 注册时间 |
+| updated_at | datetime | 是 | 更新时间 |
+
+### 7.3.2 浏览历史
+
+| 字段名 | 字段类型 | 必填 | 说明 |
+|--------|----------|------|------|
+| id | bigint | 是 | 主键 |
+| user_id | bigint | 是 | 用户ID |
+| target_type | varchar(50) | 是 | 内容类型（policy/news/resource/school/activity/report） |
+| target_id | int | 是 | 内容ID |
+| target_title | varchar(200) | 是 | 内容标题（冗余存储，避免关联查询） |
+| viewed_at | datetime | 是 | 浏览时间 |
+
+> 注：浏览历史保留最近3个月，定时任务自动清理过期数据。
+
+### 7.3.3 用户收藏
+
+| 字段名 | 字段类型 | 必填 | 说明 |
+|--------|----------|------|------|
+| id | bigint | 是 | 主键 |
+| user_id | bigint | 是 | 用户ID |
+| target_type | varchar(50) | 是 | 内容类型（policy/news/resource/school/activity/report） |
+| target_id | int | 是 | 内容ID |
+| target_title | varchar(200) | 是 | 内容标题 |
+| created_at | datetime | 是 | 收藏时间 |
+
+> 注：收藏内容永久保存，user_id + target_type + target_id 联合唯一。
+
+### 7.3.4 知识条目
+
+| 字段名 | 字段类型 | 必填 | 说明 |
+|--------|----------|------|------|
+| id | bigint | 是 | 主键 |
+| source_type | varchar(50) | 是 | 来源类型（auto_policy/auto_news/auto_resource/auto_school/manual_faq/manual_expert） |
+| source_id | int | 否 | 来源内容ID（自动采集时关联原始记录） |
+| title | varchar(200) | 是 | 知识标题 |
+| content | text | 是 | 知识内容（纯文本，用于向量化） |
+| rich_content | text | 否 | 富文本内容（用于前端展示） |
+| category_id | int | 是 | 知识分类ID |
+| tags | json | 否 | 标签列表 |
+| vector_id | varchar(100) | 否 | 向量数据库中的ID |
+| is_vectorized | tinyint | 是 | 是否已向量化（0-否/1-是） |
+| audit_status | int | 是 | 审核状态（1-待审核/2-已通过/3-已拒绝），自动采集默认已通过 |
+| audited_by | int | 否 | 审核人ID |
+| audited_at | datetime | 否 | 审核时间 |
+| status | int | 是 | 状态（1-已发布/0-已下架） |
+| created_by | int | 是 | 创建人ID |
+| created_at | datetime | 是 | 创建时间 |
+| updated_at | datetime | 是 | 更新时间 |
+
+### 7.3.5 知识分类
+
+| 字段名 | 字段类型 | 必填 | 说明 |
+|--------|----------|------|------|
+| id | int | 是 | 主键 |
+| name | varchar(50) | 是 | 分类名称 |
+| parent_id | int | 否 | 父分类ID（支持两级） |
+| sort_order | int | 是 | 排序 |
+| created_at | datetime | 是 | 创建时间 |
+
+> 预置分类：政策法规、教学资源、校共体经验、常见问题、专家解答。
+
+### 7.3.6 FAQ（常见问答）
+
+| 字段名 | 字段类型 | 必填 | 说明 |
+|--------|----------|------|------|
+| id | bigint | 是 | 主键 |
+| question | varchar(500) | 是 | 问题 |
+| answer | text | 是 | 标准答案（纯文本） |
+| rich_answer | text | 否 | 富文本答案（用于前端展示） |
+| category_id | int | 是 | 所属知识分类 |
+| sort_order | int | 是 | 排序（常用在前） |
+| view_count | int | 是 | 查看次数 |
+| helpful_count | int | 是 | 有帮助计数 |
+| status | int | 是 | 状态（1-已发布/0-已下架） |
+| created_by | int | 是 | 创建人ID |
+| created_at | datetime | 是 | 创建时间 |
+| updated_at | datetime | 是 | 更新时间 |
+
+### 7.3.7 专家问答
+
+| 字段名 | 字段类型 | 必填 | 说明 |
+|--------|----------|------|------|
+| id | bigint | 是 | 主键 |
+| question | varchar(500) | 是 | 问题 |
+| answer | text | 是 | 专家回答（纯文本） |
+| rich_answer | text | 否 | 富文本回答 |
+| expert_name | varchar(50) | 是 | 专家姓名 |
+| expert_title | varchar(100) | 否 | 专家职称/头衔 |
+| expert_org | varchar(200) | 否 | 专家所属机构 |
+| category_id | int | 是 | 所属知识分类 |
+| view_count | int | 是 | 查看次数 |
+| status | int | 是 | 状态（1-已发布/0-已下架） |
+| created_by | int | 是 | 创建人ID |
+| created_at | datetime | 是 | 创建时间 |
+| updated_at | datetime | 是 | 更新时间 |
+
+### 7.3.8 智能体对话记录
+
+| 字段名 | 字段类型 | 必填 | 说明 |
+|--------|----------|------|------|
+| id | bigint | 是 | 主键 |
+| session_id | varchar(64) | 是 | 会话ID（一次对话的多轮归属同一session） |
+| user_id | bigint | 是 | 用户ID |
+| role | varchar(20) | 是 | 角色（user/assistant） |
+| content | text | 是 | 消息内容 |
+| references | json | 否 | 引用的知识来源列表（[{title, url, knowledge_id}]） |
+| token_usage | int | 否 | 本次消息消耗的Token数 |
+| satisfaction | tinyint | 否 | 用户满意度评分（1-5，用户手动评价） |
+| quality_flag | tinyint | 否 | 质量标记（0-正常/1-低质量，管理员标记） |
+| created_at | datetime | 是 | 消息时间 |
+
+### 7.3.9 邀请码
+
+| 字段名 | 字段类型 | 必填 | 说明 |
+|--------|----------|------|------|
+| id | bigint | 是 | 主键 |
+| code | varchar(50) | 是 | 邀请码（唯一） |
+| batch_no | varchar(50) | 是 | 批次号（批量生成时的标识） |
+| max_uses | int | 是 | 最大使用次数（默认1） |
+| used_count | int | 是 | 已使用次数 |
+| expires_at | datetime | 是 | 过期时间 |
+| status | int | 是 | 状态（1-有效/0-已失效） |
+| created_by | int | 是 | 创建人ID |
+| created_at | datetime | 是 | 创建时间 |
+
+### 7.3.10 用户消息/提醒
+
+| 字段名 | 字段类型 | 必填 | 说明 |
+|--------|----------|------|------|
+| id | bigint | 是 | 主键 |
+| user_id | bigint | 是 | 接收用户ID |
+| type | varchar(50) | 是 | 提醒类型（favorite_update/policy_new/system） |
+| title | varchar(200) | 是 | 提醒标题 |
+| content | varchar(500) | 是 | 提醒内容摘要 |
+| target_type | varchar(50) | 否 | 关联内容类型 |
+| target_id | int | 否 | 关联内容ID |
+| is_read | tinyint | 是 | 是否已读（0-否/1-是） |
+| created_at | datetime | 是 | 创建时间 |
+
 ---
